@@ -1,0 +1,290 @@
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- навигация, прогресс, появление ---------- */
+const secs=$$('section[id]');
+const chapters=$('#chapters'), dots=$('#dots');
+secs.forEach(s=>{
+  chapters.insertAdjacentHTML('beforeend',`<a href="#${s.id}">${esc(s.dataset.title)}</a>`);
+  dots.insertAdjacentHTML('beforeend',`<a href="#${s.id}"><span>${esc(s.dataset.title)}</span></a>`);
+});
+const prog=$('#prog');
+const onScroll=()=>{const h=document.documentElement;const m=h.scrollHeight-h.clientHeight;prog.style.width=(m>0?h.scrollTop/m*100:0)+'%';};
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+const setOn=id=>$$('#chapters a, #dots a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setOn(e.target.id);}),{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(s=>io.observe(s));
+  const rv=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target);}}),{threshold:.12});
+  $$('.reveal').forEach(el=>rv.observe(el));
+}else{$$('.reveal').forEach(el=>el.classList.add('in'));}
+
+/* ---------- конвейер в шапке ---------- */
+const nodes=$$('#conveyor .node');let ni=0;
+setInterval(()=>{nodes.forEach((n,i)=>n.classList.toggle('on',i===ni));ni=(ni+1)%nodes.length;},1800);
+
+/* ---------- таймлайн ---------- */
+const TL=[
+ {y:2005.63,l:'2005',t:'Рождение проекта',d:'17 августа 2005',p:'Команда Mambo уходит от владельца марки и основывает независимый проект; имя — от суахили jumla, «все вместе».'},
+ {y:2012.75,l:'3.0',t:'Joomla 3',d:'сентябрь 2012',p:'Ветка, на которой до сих пор работает 51,9 % сайтов с Joomla и все найденные крупные порталы.'},
+ {y:2021.63,l:'4.0',t:'Joomla 4',d:'17 августа 2021',p:'Новая архитектура, процессы публикации, планировщик задач, Web Services API, административный шаблон Atum.'},
+ {y:2023.79,l:'5.0',t:'Joomla 5',d:'17 октября 2023',p:'Schema.org в ядре, тёмная тема и TUF в 5.1, автообновления в 5.4.'},
+ {y:2025.79,l:'6.0',t:'Joomla 6.0 «Kuimarisha»',d:'14 октября 2025',p:'Автообновления ядра, дочерний шаблон с настройкой цветов, версии полей, тегов и категорий, TinyMCE 8. Переход с 5.4 — обновлением.'},
+ {y:2026.29,l:'6.1',t:'Joomla 6.1 «Nyota»',d:'14 апреля 2026',p:'Proof-of-Work CAPTCHA без внешних сервисов, визуальный редактор процессов, медиаполя для аудио, видео и документов, версии и ассоциации модулей.'},
+ {y:2026.79,l:'6.2',t:'Joomla 6.2',d:'13 октября 2026 (релиз-кандидат — 29 сентября)',p:'Новая система сборки, многоуровневое меню, CSS-классы для изображений, цепочки запасных языков интерфейса, PHPUnit 12.'},
+ {y:2027.79,l:'5.x',t:'Конец безопасности ветки 5',d:'12 октября 2027',p:'Исправления ошибок для 5.x завершились 13 октября 2026 года; ещё год ветка получает только исправления безопасности.'},
+ {y:2027.79,l:'7.0',t:'Joomla 7.0 — уже в разработке',d:'план — 12 октября 2027',p:'В репозитории ядра открыты ветки 6.3-dev и 7.0-dev; в Version.php седьмой ветки стоит плановая дата выпуска 12 октября 2027 года — ровно по двухлетнему ритму.'},
+ {y:2029.79,l:'6.x',t:'Конец безопасности ветки 6',d:'16 октября 2029',p:'Исправления ошибок — до 17 октября 2028 года, безопасность — до 16 октября 2029 года.'}
+];
+(function timeline(){
+  const W=900,H=150,x0=40,x1=870,y=78,Y0=2005,Y1=2030;
+  const X=v=>x0+(v-Y0)/(Y1-Y0)*(x1-x0);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Таймлайн версий Joomla">`;
+  s+=`<rect x="${X(2023.79)}" y="${y-46}" width="${X(2026.79)-X(2023.79)}" height="8" rx="2" fill="rgba(111,179,184,.35)"/><rect x="${X(2026.79)}" y="${y-46}" width="${X(2027.79)-X(2026.79)}" height="8" rx="2" fill="rgba(111,179,184,.15)"/>`;
+  s+=`<rect x="${X(2025.79)}" y="${y+16}" width="${X(2028.79)-X(2025.79)}" height="8" rx="2" fill="rgba(242,193,78,.4)"/><rect x="${X(2028.79)}" y="${y+16}" width="${X(2029.79)-X(2028.79)}" height="8" rx="2" fill="rgba(242,193,78,.15)"/>`;
+  s+=`<text x="${X(2027.79)}" y="${y-52}" text-anchor="end" font-family="var(--mono)" font-size="10" fill="var(--teal)">ветка 5: исправления до 13.10.2026 → безопасность до 12.10.2027</text>`;
+  s+=`<text x="${X(2029.79)}" y="${y+38}" text-anchor="end" font-family="var(--mono)" font-size="10" fill="var(--gold)">ветка 6: исправления до 17.10.2028 → безопасность до 16.10.2029</text>`;
+  s+=`<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="var(--line-2)" stroke-width="2"/>`;
+  for(let yr=2005;yr<=2029;yr+=3){s+=`<text x="${X(yr)}" y="${H-10}" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--muted)">${yr}</text><line x1="${X(yr)}" y1="${y-4}" x2="${X(yr)}" y2="${y+4}" stroke="var(--line-2)"/>`;}
+  TL.forEach((m,i)=>{s+=`<g class="tl-marker" data-i="${i}"><circle cx="${X(m.y)}" cy="${y}" r="6" fill="${i===4?'var(--gold)':'var(--rust)'}"/><text x="${X(m.y)}" y="${y-16-(i%2?14:0)}" text-anchor="middle">${esc(m.l)}</text></g>`;});
+  s+='</svg>';
+  $('#timeline').innerHTML=s;
+  const card=$('#tlcard');
+  const show=i=>{const m=TL[i];card.innerHTML=`<div class="date">${esc(m.d)}</div><div><h3>${esc(m.t)}</h3><p>${esc(m.p)}</p></div>`;$$('.tl-marker').forEach(g=>g.classList.toggle('on',+g.dataset.i===i));};
+  $$('.tl-marker').forEach(g=>{g.addEventListener('click',()=>show(+g.dataset.i));g.addEventListener('mouseenter',()=>show(+g.dataset.i));});
+  show(4);
+})();
+
+/* ---------- рынок ---------- */
+const SHARE=[{n:'WordPress',all:40.1,cms:58.6},{n:'Shopify',all:5.4,cms:7.8},{n:'Wix',all:4.2,cms:6.1},{n:'Squarespace',all:2.4,cms:3.6},{n:'Joomla',all:1.1,cms:1.6,hi:1},{n:'Drupal',all:0.6,cms:0.9}];
+const fmt=v=>String(v).replace('.',',');
+function bars(el,rows,max,unit='%'){
+  el.innerHTML=rows.map(r=>`<div class="row ${r.hi?'hi':''} ${r.gold?'gold':''}"><span>${esc(r.n)}</span><div class="bar"><i data-w="${r.v/max*100}"></i></div><span class="val">${fmt(r.v)}${unit}</span></div>`).join('');
+  requestAnimationFrame(()=>setTimeout(()=>$$('i[data-w]',el).forEach(i=>i.style.width=i.dataset.w+'%'),60));
+}
+function drawShare(k){bars($('#shareBars'),SHARE.map(r=>({n:r.n,v:r[k],hi:r.hi})),k==='all'?42:60);}
+drawShare('all');
+$$('#segShare button').forEach(b=>b.addEventListener('click',()=>{$$('#segShare button').forEach(x=>x.classList.remove('on'));b.classList.add('on');drawShare(b.dataset.k);}));
+/* donut версий */
+(function(){
+  const V=[{n:'3.x',v:51.9,c:'#C84B4B'},{n:'5.x',v:20.6,c:'#6FB3B8'},{n:'6.x',v:9.2,c:'#F2C14E'},{n:'4.x',v:8.0,c:'#8FB996'},{n:'2.x',v:6.0,c:'#39434A'},{n:'1.x',v:4.4,c:'#2A3238'}];
+  const R=80,C=2*Math.PI*R;let off=0,s='';
+  V.forEach(d=>{const len=C*d.v/100;s+=`<circle cx="100" cy="100" r="${R}" fill="none" stroke="${d.c}" stroke-width="26" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"><title>${d.n}: ${fmt(d.v)} %</title></circle>`;off+=len;});
+  s+=`<text x="100" y="96" text-anchor="middle" font-family="var(--serif)" font-size="30" fill="var(--ink)">51,9</text><text x="100" y="116" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--muted)">% на ветке 3</text>`;
+  $('#donutVer').innerHTML=s;
+  $('#legVer').innerHTML=V.map(d=>`<li><i style="background:${d.c}"></i>Joomla ${d.n}<b>${fmt(d.v)} %</b></li>`).join('');
+})();
+bars($('#langBars'),[{n:'английский',v:24.6},{n:'немецкий',v:15.9},{n:'русский',v:12.3,hi:1},{n:'испанский',v:6.2},{n:'другие',v:41.0}],45);
+$('#ladder').innerHTML=[['первая тысяча','0,4'],['первые 10 тыс.','0,5'],['первые 100 тыс.','1,1'],['первый миллион','1,2']].map(r=>`<div class="step"><small>${r[0]}</small><b>${r[1]}</b></div>`).join('');
+
+/* ---------- матрица ядра ---------- */
+const CAP=[
+ ['Процесс публикации со стадиями и переходами','стадии, переходы, права на переход, письма; свой процесс на категорию; визуальный редактор в 6.1','core','plug','core'],
+ ['Роли и права на уровне категории','девять групп; права на сайт, компонент и категорию; зона ответственности редактора отдела — его категория','core','plug','core'],
+ ['Версии материала с откатом','кто, когда и зачем; с 6.0 — вместе с пользовательскими полями, тегами, категориями; в 6.1 — модули','core','core','core'],
+ ['Эмбарго, снятие по дате, окно избранного','начало и конец публикации, начало и конец «избранности»; с лицевой стороны тоже','core','part','core'],
+ ['Многоязычие с ассоциациями переводов','ассоциации материалов, категорий, меню, модулей; с 6.2 — запасной язык интерфейса','core','plug','core'],
+ ['Вложенные метки поверх любого содержимого','дерево «родитель — потомок»; страница метки с включёнными потомками; общие для материалов, контактов, лент','core','part','core'],
+ ['Баннеры с кампаниями и учётом показов','клиенты, кампании, лимиты показов, клики — рекламный отдел без плагина','core','plug','plug'],
+ ['Поиск с индексом и статистикой запросов','Smart Search: индексация, подсказки, фильтры, статистика; для очень больших сайтов — Solr','core','part','part'],
+ ['Web Services API','JSON:API с токеном: материалы, категории, метки, пользователи — для приложений и партнёрских лент','core','core','core'],
+ ['Разметка Schema.org в JSON-LD','типовые плагины Article, BlogPosting, Organization, Custom…; NewsArticle с автозаполнением — готовыми расширениями (Google Structured Data, PSA Schema) или своим плагином','part','plug','plug'],
+ ['Планировщик задач и консоль','переиндексация, рассылки, карты сайта по расписанию; запуск из CLI','core','part','core'],
+ ['Многофакторная аутентификация и ключи доступа','первая крупная CMS с двухфакторной защитой; WebAuthn без пароля','core','plug','plug']
+];
+const PL={core:'<span class="pill core">в ядре</span>',plug:'<span class="pill plug">плагин</span>',part:'<span class="pill part">частично</span>'};
+(function(){
+  const t=$('#matrix');
+  t.innerHTML='<thead><tr><th>возможность</th><th class="c">Joomla 6</th><th class="c">WordPress 7</th><th class="c">Drupal 11</th></tr></thead><tbody>'+
+   CAP.map((r,i)=>`<tr data-i="${i}"><td class="cap">${esc(r[0])}<small hidden>${esc(r[1])}</small></td><td class="c">${PL[r[2]]}</td><td class="c">${PL[r[3]]}</td><td class="c">${PL[r[4]]}</td></tr>`).join('')+'</tbody>';
+  $$('tbody tr',t).forEach(tr=>tr.addEventListener('click',()=>{const sm=$('small',tr);sm.hidden=!sm.hidden;}));
+})();
+
+/* ---------- симулятор ролей ---------- */
+const STAGES=['Черновик','На редактуре','На корректуре','На утверждении','Опубликовано'];
+const ROLES={
+ reporter:{n:'Репортёр',s:'создаёт и правит своё',av:'Р',menu:['Материалы'],ids:[0]},
+ editor:{n:'Редактор отдела',s:'правит и публикует в своей категории',av:'РО',menu:['Материалы','Категории','Метки','Медиа'],ids:[0,1]},
+ proof:{n:'Корректор',s:'правит чужое, состояние не меняет',av:'К',menu:['Материалы','Медиа'],ids:[0,2]},
+ chief:{n:'Главред',s:'утверждает особо важное, видит всё редакционное',av:'Г',menu:['Материалы','Категории','Метки','Медиа','Модули','Меню','Баннеры','Пользователи'],ids:[0,1,2,3]}
+};
+const MENU=[['cap','содержимое'],'Материалы','Категории','Метки','Медиа',['cap','сайт'],'Модули','Меню','Баннеры',['cap','служба'],'Пользователи','Система'];
+const TR=[
+ {f:0,t:1,l:'Отправить на редактуру',roles:['reporter','editor','chief'],go:1,mail:'редакторам отдела'},
+ {f:1,t:0,l:'Вернуть автору',roles:['editor','chief'],back:1,mail:'автору'},
+ {f:1,t:2,l:'На корректуру',roles:['editor','chief'],go:1,mail:'корректорам'},
+ {f:2,t:1,l:'Вернуть редактору',roles:['proof','chief'],back:1,mail:'редактору отдела'},
+ {f:2,t:4,l:'Опубликовать',roles:['editor','chief'],go:1,pub:1,mail:'автору',noImportant:1},
+ {f:2,t:3,l:'На утверждение главреду',roles:['editor','chief'],go:1,mail:'главреду'},
+ {f:3,t:1,l:'Вернуть в отдел',roles:['chief'],back:1,mail:'редактору отдела'},
+ {f:3,t:4,l:'Утвердить и опубликовать',roles:['chief'],go:1,pub:1,mail:'отделу'},
+ {f:4,t:1,l:'Снять с публикации',roles:['chief'],back:1,mail:'редактору отдела'}
+];
+let role='reporter',stage=0,published=false;
+const rolesEl=$('#roles'),menuEl=$('#menu'),acts=$('#acts'),lock=$('#lock'),log=$('#log');
+rolesEl.innerHTML=Object.entries(ROLES).map(([k,r])=>`<button class="role ${k===role?'on':''}" data-r="${k}"><span class="av">${r.av}</span><span><b>${r.n}</b><small>${r.s}</small></span></button>`).join('');
+const addLog=(t)=>{log.insertAdjacentHTML('afterbegin',`<div>${new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})} · ${t}</div>`);};
+function renderSim(){
+  const R=ROLES[role],imp=$('#important').checked,front=$('#frontend').checked;
+  $('#adminTitle').textContent=(front?'Лицевая сторона сайта · форма материала · ':'Панель управления · ')+R.n.toLowerCase();
+  menuEl.innerHTML=MENU.map(m=>Array.isArray(m)?`<div class="cap">${m[1]}</div>`:`<div class="${R.menu.includes(m)?'':'off'}">${m}</div>`).join('');
+  menuEl.style.display=front?'none':'';
+  $('#stageBar').innerHTML=STAGES.map((s,i)=>`<i class="${i<stage?'done':i===stage?'cur':''}" title="${s}"></i>`).join('');
+  const st=$('#artState');st.textContent='стадия: '+STAGES[stage].toLowerCase()+(published?' · состояние: опубликовано':' · состояние: не опубликовано');st.classList.toggle('pub',published);
+  const avail=TR.filter(t=>t.f===stage&&!(imp&&t.noImportant));
+  acts.innerHTML=avail.map((t,i)=>{const ok=t.roles.includes(role);return `<button class="btn small ${t.back?'back':t.go?'go':''}" data-i="${TR.indexOf(t)}" ${ok?'':'disabled'} title="${ok?'право «выполнить переход» есть':'у группы нет права на этот переход'}">${t.l}</button>`;}).join('');
+  const denied=avail.filter(t=>!t.roles.includes(role));
+  lock.textContent=denied.length?`Недоступно для роли «${R.n.toLowerCase()}»: ${denied.map(t=>t.l.toLowerCase()).join(', ')} — право на переход закреплено за другими группами.`:(avail.length?'':'Материал на сайте; изменить состояние может только главред.');
+  if(imp&&stage===2&&role==='editor')lock.textContent='Материал особой важности: кнопка публикации у редактора отдела снята, путь идёт через главреда.';
+}
+rolesEl.addEventListener('click',e=>{const b=e.target.closest('.role');if(!b)return;role=b.dataset.r;$$('.role').forEach(x=>x.classList.toggle('on',x===b));addLog(`вход: <b>${ROLES[role].n}</b>; админ-меню собрано по правам группы`);renderSim();});
+acts.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b||b.disabled)return;const t=TR[+b.dataset.i];stage=t.t;if(t.pub)published=true;if(t.back&&stage!==4)published=false;addLog(`<b>${t.l}</b> → стадия «${STAGES[stage].toLowerCase()}»${t.pub?', состояние published':''}; письмо: ${t.mail}`);renderSim();});
+$('#important').addEventListener('change',()=>{addLog($('#important').checked?'категория «особой важности»: процесс требует стадии главреда':'обычная категория: редактор отдела публикует сам');renderSim();});
+$('#frontend').addEventListener('change',()=>{addLog($('#frontend').checked?'подача с лицевой стороны: те же стадии и права во вкладке «Публикация»':'возврат в панель управления');renderSim();});
+renderSim();addLog('новость создана репортёром и сохранена в стадии «черновик»');
+
+/* ---------- дерево меток ---------- */
+const TREE={n:'метки',c:[
+ {n:'Темы',c:[{n:'Энергетика',c:[{n:'Нефть и газ'},{n:'Электроэнергетика'}]},{n:'Финансы',c:[{n:'Банки',c:[{n:'Платёжные системы'}]}]},{n:'Транспорт'}]},
+ {n:'Регионы',c:[{n:'Астана'},{n:'Мангистау',c:[{n:'Актау'}]},{n:'Алматы'}]},
+ {n:'Форматы',c:[{n:'Интервью'},{n:'Разбор'},{n:'Фотогалерея'}]}
+]};
+const ART=[
+ {t:'Биржа открылась ростом: индекс прибавил 1,4 %',c:'Экономика',g:['Финансы','Банки']},
+ {t:'Банки РК переходят на мгновенные переводы по QR',c:'Экономика',g:['Банки','Платёжные системы','Астана']},
+ {t:'Как устроен тариф на электроэнергию: разбор',c:'Экономика',g:['Электроэнергетика','Разбор']},
+ {t:'Актау: порт готовится к зимней навигации',c:'Регионы',g:['Актау','Транспорт']},
+ {t:'Новое месторождение в Мангистау: что известно',c:'Экономика',g:['Нефть и газ','Мангистау']},
+ {t:'Интервью с главой платёжного оператора',c:'Экономика',g:['Платёжные системы','Интервью']},
+ {t:'Фоторепортаж: ночная смена на ТЭЦ',c:'Общество',g:['Электроэнергетика','Фотогалерея','Астана']},
+ {t:'Алматы расширяет сеть метро: три станции',c:'Регионы',g:['Алматы','Транспорт']},
+ {t:'Нефтяники пересмотрели прогноз добычи',c:'Экономика',g:['Нефть и газ','Разбор']},
+ {t:'Город на Каспии: фотогалерея набережной',c:'Общество',g:['Актау','Фотогалерея']}
+];
+const treeEl=$('#tree'),feed=$('#feed');let sel=new Set(['Финансы']);
+const desc=node=>{const out=[node.n];(node.c||[]).forEach(ch=>out.push(...desc(ch)));return out;};
+const find=(node,n)=>node.n===n?node:(node.c||[]).map(ch=>find(ch,n)).find(Boolean);
+const count=n=>{const names=new Set(desc(find(TREE,n)));return ART.filter(a=>a.g.some(g=>names.has(g))).length;};
+const renderTree=(node,root)=>`<ul>${(node.c||[]).map(ch=>`<li class="${root?'root':''}"><button data-n="${esc(ch.n)}" class="${sel.has(ch.n)?'on':''}">${esc(ch.n)}<span class="n">${count(ch.n)}</span></button>${ch.c?renderTree(ch,false):''}</li>`).join('')}</ul>`;
+function renderTax(){
+  treeEl.innerHTML=renderTree(TREE,true);
+  const withKids=$('#children').checked,all=$('#matchAll').checked;
+  const sets=[...sel].map(n=>new Set(withKids?desc(find(TREE,n)):[n]));
+  const hit=ART.filter(a=>sets.length&&(all?sets.every(s=>a.g.some(g=>s.has(g))):sets.some(s=>a.g.some(g=>s.has(g)))));
+  const hits=new Set(sets.flatMap(s=>[...s]));
+  $('#feedTitle').textContent=sel.size?`страница меток: ${[...sel].join(' + ')} · ${withKids?'с потомками':'без потомков'} · ${all?'все метки':'любая метка'} · материалов: ${hit.length}`:'выберите метку в дереве';
+  feed.innerHTML=hit.length?hit.map(a=>`<div class="it"><div><b>${esc(a.t)}</b><div class="tags">${a.g.map(g=>`<span class="${hits.has(g)?'hit':''}">${esc(g)}</span>`).join('')}</div></div><span class="cat">${esc(a.c)}</span></div>`).join(''):'<div class="empty">по такому сочетанию материалов нет — ослабьте условие или включите потомков</div>';
+}
+treeEl.addEventListener('click',e=>{const b=e.target.closest('button[data-n]');if(!b)return;const n=b.dataset.n;if(sel.has(n))sel.delete(n);else sel.add(n);renderTax();});
+$('#children').addEventListener('change',renderTax);$('#matchAll').addEventListener('change',renderTax);
+renderTax();
+$('#flat').innerHTML=['Новости','Экономика','Бизнес','Финансы','Банки','Деньги','Регионы','Мангистау','Актау','Энергетика','ТЭК','Транспорт','Фото','Интервью','Аналитика','Общество'].map(x=>`<span>${x}</span>`).join('');
+
+/* ---------- нагрузка ---------- */
+const rps=$('#rps');
+function renderLoad(){
+  const v=+rps.value;$('#rpsVal').innerHTML=`${v.toLocaleString('ru-RU')}<small>зап./с</small>`;
+  const cdn=Math.round(v*.90),rest=v-cdn,redis=Math.round(rest*.65),php=rest-redis,db=Math.round(php*.55);
+  const L=[['CDN отдаёт из кеша','cdn',cdn],['Redis — объектный кеш','redis',redis],['PHP собирает страницу','php',php],['запросов к базе','db',db]];
+  $('#layers').innerHTML=L.map(l=>`<div class="layer"><span>${l[0]}</span><div class="bar"><i class="${l[1]}" style="width:${Math.max(1,l[2]/v*100)}%"></i></div><span class="n">${l[2].toLocaleString('ru-RU')} зап./с</span></div>`).join('');
+}
+rps.addEventListener('input',renderLoad);renderLoad();
+(function(){
+  const M=[['главная с категориями',20,1,'с'],['выборка 200 материалов',94,5,'с'],['модель материалов в админке',53,0.085,'с'],['время до первого байта',0.336,0.224,'с']];
+  const lg=v=>Math.log10(v*1000),mx=lg(100);
+  $('#measure').innerHTML=M.map(m=>`<div class="row"><span>${m[0]}<br><small class="src">до → после</small></span><div class="pair"><div class="b before"><i data-w="${lg(m[1])/mx*100}"></i><span>${fmt(m[1])} ${m[3]}</span></div><div class="b after"><i data-w="${lg(m[2])/mx*100}"></i><span>${fmt(m[2])} ${m[3]}</span></div></div></div>`).join('')+'<p class="src" style="margin-top:14px">шкала логарифмическая</p>';
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('i[data-w]',e.target).forEach(i=>i.style.width=i.dataset.w+'%');io.unobserve(e.target);}}),{threshold:.3});
+  io.observe($('#measure'));
+})();
+
+/* ---------- генератор NewsArticle ---------- */
+const GT=['Финансы','Банки','Платёжные системы','Нефть и газ','Астана','Разбор','Интервью'];let gsel=new Set(['Финансы','Банки']);
+$('#gTags').innerHTML=GT.map(t=>`<button class="${gsel.has(t)?'on':''}" data-t="${esc(t)}">${esc(t)}</button>`).join('');
+function renderSchema(){
+  const now=new Date();const iso=d=>d.toISOString().replace(/\.\d{3}Z$/,'+00:00');
+  const title=$('#gTitle').value.trim()||'Без заголовка';
+  const author=$('#gAuthor').value==='org'?{'@type':'Organization',name:'Редакция',url:'https://example.kz/'}:{'@type':'Person',name:'Айгерим Серикова',url:'https://example.kz/authors/aigerim-serikova'};
+  const o={'@context':'https://schema.org','@type':'NewsArticle',headline:title,articleSection:$('#gSection').value,keywords:[...gsel],datePublished:iso(now),dateModified:iso(now),author,publisher:{'@type':'Organization',name:'Редакция',logo:{'@type':'ImageObject',url:'https://example.kz/images/logo.png'}},image:['https://example.kz/images/2026/10/birzha-1200x675.webp'],mainEntityOfPage:{'@type':'WebPage','@id':'https://example.kz/ekonomika/'+(title.toLowerCase().replace(/[^a-zа-яё0-9]+/gi,'-').replace(/^-|-$/g,'').slice(0,40)||'novost')},inLanguage:'ru'};
+  const j=JSON.stringify(o,null,2).replace(/"([^"]+)":/g,'<span class="k">"$1"</span>:').replace(/: "([^"]*)"/g,': <span class="s">"$1"</span>');
+  $('#gOut').innerHTML=`<span class="c">&lt;script type="application/ld+json"&gt;</span>\n${j}\n<span class="c">&lt;/script&gt;</span>`;
+}
+['gTitle','gSection','gAuthor'].forEach(id=>$('#'+id).addEventListener('input',renderSchema));
+$('#gTags').addEventListener('click',e=>{const b=e.target.closest('button[data-t]');if(!b)return;const t=b.dataset.t;gsel.has(t)?gsel.delete(t):gsel.add(t);b.classList.toggle('on');renderSchema();});
+renderSchema();
+
+
+/* ---------- дочерние шаблоны: демо стилей ---------- */
+const PAGES=[
+ {n:'Главная',s:'Cassiopeia — Default',bg:'#FFFFFF',hd:'#1F2A48',ac:'#1F4F8B',d:'штатный стиль родителя: лента новостей, боковые колонки, фирменный синий'},
+ {n:'Раздел «Экономика»',s:'Cassiopeia Extended — свой стиль',bg:'#F7F4EE',hd:'#172026',ac:'#B54A24',d:'дочерний шаблон: тёмная шапка, тёплый фон, терракотовые ссылки; переключение — одно поле «Стиль шаблона» у пункта меню'},
+ {n:'Лонгрид',s:'дочерний стиль без колонок',bg:'#0F1316',hd:'#0F1316',ac:'#F2C14E',d:'спецпроект на всю ширину: без шапки и боковых модулей, только интерактивная страница внутри сайта'}
+];
+(function(){const el=$('#styleDemo');if(!el)return;
+ el.innerHTML=PAGES.map((p,i)=>`<button class="panel" data-i="${i}" style="text-align:left;cursor:pointer;border-color:var(--paper-line)"><div style="border-radius:4px;overflow:hidden;border:1px solid #D9D4C8;margin-bottom:12px"><div style="background:${p.hd};height:22px"></div><div style="background:${p.bg};height:96px;padding:8px;display:grid;grid-template-columns:${i===2?'1fr':'2fr 1fr'};gap:6px"><div style="background:${i===2?'#1B2126':'#fff'};border-radius:2px;border-top:4px solid ${p.ac}"></div>${i===2?'':`<div style="background:#fff;border-radius:2px;opacity:.8"></div>`}</div></div><b style="display:block;font-size:14px">${p.n}</b><small style="font-family:var(--mono);font-size:11px;color:var(--paper-muted)">${p.s}</small><p style="font-size:13.5px;color:var(--paper-muted);margin:8px 0 0">${p.d}</p></button>`).join('');
+ el.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;$$('button[data-i]',el).forEach(x=>x.style.borderColor=x===b?'var(--rust-2)':'var(--paper-line)');});
+})();
+
+/* ---------- порталы ---------- */
+const PORT=[
+ {h:'Jutarnji.hr',c:'Хорватия · Hanza Media',r:'первая тысяча мира',top:1,s:['Joomla 3.9.8','Cloudflare','HTTP/3','Brotli','JSON-LD'],p:'Второй по посещаемости новостной сайт Хорватии после Index.hr; издатель — крупнейшая медиагруппа страны и Юго-Восточной Европы.',x:0.03},
+ {h:'Slobodnadalmacija.hr',c:'Хорватия · Hanza Media',r:'первые 10 тыс.',s:['Joomla','Cloudflare','HTTP/3'],p:'Вторая газета той же медиагруппы: два главных портала издательского дома на одной платформе.',x:0.33},
+ {h:'CNN.gr',c:'Греция',r:'первые 10 тыс.',s:['Joomla 3.10.12','Nginx','Akamai','JSON-LD'],p:'Греческая редакция мирового бренда: Nginx за сетью Akamai, структурированные данные в JSON-LD.',x:0.36},
+ {h:'Newsbomb.gr',c:'Греция',r:'первые 10 тыс.',s:['Joomla','Nginx','Akamai','Piano'],p:'Общенациональный новостной портал с аналитикой Piano и той же связкой Nginx и Akamai.',x:0.39},
+ {h:'Dnews.gr',c:'Греция',r:'первые 10 тыс.',s:['«Joomla 3.15.0»','Hetzner · LeaseWeb','Cloudflare'],p:'Генератор показывает версию, которой не выходило, — редакция ведёт собственную ветвь третьей линии.',x:0.42},
+ {h:'Primocanale.it',c:'Италия · Лигурия',r:'первые 100 тыс.',s:['Joomla 3.10.12','IIS 10','Windows'],p:'Региональный телеканал, перешедший на Joomla недавно; редкое сочетание — Joomla на сервере Microsoft.',x:0.72}
+];
+$('#portals').innerHTML=PORT.map(p=>`<div class="portal reveal"><span class="rank ${p.top?'top1k':''}">${p.r}</span><h3>${p.h}</h3><div class="country">${p.c}</div><div class="stack">${p.s.map(s=>`<span>${s}</span>`).join('')}</div><p>${p.p}</p></div>`).join('');
+$('#rankbar').innerHTML='<div class="ax"></div>'+[['топ-1000',0.03],['топ-10 тыс.',0.37],['топ-100 тыс.',0.72],['топ-1 млн',0.97]].map(t=>`<div class="tick" style="left:${t[1]*100}%">${t[0]}</div>`).join('')+PORT.map((p,i)=>`<div class="pin" style="left:${p.x*100}%"><span style="${i>0&&i<5?'display:none':''}">${i===1?'4 греко-хорватских':p.h}</span><i></i></div>`).join('');
+$$('.portal.reveal').forEach(el=>{if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});io.observe(el);}else el.classList.add('in');});
+
+/* ---------- созвездие ---------- */
+const STARS=[
+ {n:'Сергей Толкачёв · WebTolk',x:300,y:140,r:9,d:'<b>Сергей Толкачёв</b>, Саратов: 113 расширений, 581 версия, около 891 тыс. загрузок. SW JProjects с собственным сервером обновлений, библиотеки AmoCRM, WT IndexNow, Telegram-бот, карты Яндекса; ведёт дайджесты Joomla на Хабре и с 2026 года выпускает JL Sitemap.',l:[1,4,6,7]},
+ {n:'JL Sitemap · Joomline',x:470,y:80,r:7,d:'<b>JL Sitemap</b> (com_jlsitemap): карта сайта готовым файлом на диске, плагины-поставщики для материалов, меток, контактов, VirtueMart, JoomShopping, Phoca; версия 2.2.0 от 25 мая 2026 года — Joomla 6, атомарная запись, карта изображений.',l:[0,7]},
+ {n:'Quantum Manager · NorrNext',x:640,y:150,r:8,d:'<b>Quantum Manager</b> (PKG_QUANTUMMANAGER): бесплатный медиаменеджер NorrNext и «Делового дизайна» Дмитрия Цымбала — пакетная загрузка, автоуменьшение, WebP, области файлов, подмена штатного com_media; версия 3.3.0 от 3 марта 2026 года совместима с Joomla 6.',l:[3,8]},
+ {n:'Евгений Сивоконь · NorrNext',x:760,y:230,r:7,d:'<b>NorrNext</b>: Quantum Manager, NorrCompetition; к двадцатилетию Joomla собрал сорок шесть интервью с людьми проекта.',l:[2]},
+ {n:'RadicalMart',x:180,y:260,r:8,d:'<b>RadicalMart</b>: компонент электронной коммерции под нагрузку — Joomla 4–6, версия 3.0.17 от 29 апреля 2026 года, еженедельные обновления, 43 службы доставки, интеграции с 1С и AmoCRM; тарифы от 3 000 ₽ в год.',l:[0,5]},
+ {n:'JoomShopping',x:80,y:150,r:6,d:'<b>JoomShopping 5.9.2</b>: бесплатный магазин с платными плагинами; официальный модуль Freedom Pay (PayBox) написан под версии 3.13 и 4.18.',l:[4]},
+ {n:'Игорь Бердичевский · Septdir',x:420,y:290,r:7,d:'<b>Игорь Бердичевский</b> (Septdir): регулярные стримы по разработке Joomla на YouTube и Twitch, разборы устройства ACL и HTTP-ответа.',l:[0,7]},
+ {n:'joomlaportal.ru · @joomlaru',x:560,y:330,r:8,d:'<b>Joomla Portal</b> сам работает на Joomla 6.1.4 и публикует новости релизов в день выхода; Telegram-канал «Joomla по-русски» — 1 292 участника, рядом ленты @joomlafeed и чат @projoomla.',l:[0,1,6,8]},
+ {n:'JPathRu · локализация',x:860,y:110,r:6,d:'<b>JPathRu</b>: русская локализация на GitHub; пакет ru-RU для Joomla 6.0.1 вышел 25 ноября 2025 года и скачан более 12 тыс. раз.',l:[2,7]}
+];
+(function(){
+  let s='<svg viewBox="0 0 960 400" role="img" aria-label="Созвездие русской экосистемы Joomla">';
+  for(let i=0;i<60;i++){s+=`<circle cx="${(i*163)%960}" cy="${(i*97)%400}" r="${(i%3)*.5+.4}" fill="var(--line-2)"/>`;}
+  STARS.forEach((a,i)=>a.l.forEach(j=>{if(j>i){const b=STARS[j];s+=`<line class="link" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`;}}));
+  STARS.forEach((a,i)=>{s+=`<g class="star" data-i="${i}"><circle cx="${a.x}" cy="${a.y}" r="${a.r+10}" fill="transparent"/><circle cx="${a.x}" cy="${a.y}" r="${a.r}" fill="var(--teal)"/><text x="${a.x}" y="${a.y+a.r+16}" text-anchor="middle">${esc(a.n)}</text></g>`;});
+  s+='</svg>';$('#sky').innerHTML=s;
+  const card=$('#skycard');
+  $$('.star').forEach(g=>{const show=()=>{card.innerHTML=STARS[+g.dataset.i].d;$$('.star').forEach(x=>x.classList.toggle('on',x===g));};g.addEventListener('mouseenter',show);g.addEventListener('click',show);});
+})();
+
+/* ---------- запасной язык ---------- */
+const STR=[['JSAVE','Сақтау','Сохранить',true],['JPUBLISHED','Жарияланған','Опубликовано',true],['JSEARCH','Іздеу','Поиск',true],['COM_WORKFLOW_TRANSITIONS','—','Переходы процесса',false],['COM_SCHEDULER_TASKS','—','Запланированные задачи',false],['PLG_SCHEMAORG_ARTICLE','—','Schema.org — Article',false]];
+function renderStr(){const fb=$('#fb').checked;$('#strings').innerHTML=STR.map(r=>`<li class="${r[3]?'':(fb?'ru':'miss')}"><span>${r[0]}</span><span>${r[3]?r[1]:(fb?r[2]+' ·  ru-RU':r[0])}</span></li>`).join('');}
+$('#fb').addEventListener('change',renderStr);renderStr();
+bars($('#payBars'),[{n:'Kaspi Pay',v:10},{n:'Freedom Pay',v:45},{n:'ЮKassa (шлюз РК)',v:80,gold:1}],100,' / 100');
+$('#payBars').insertAdjacentHTML('beforeend','<p class="src" style="margin-top:8px">условная шкала готовности плагинов под Joomla 6: нет → не подтверждено → есть</p>');
+
+/* ---------- весы ---------- */
+const PROS=[['Редакционный контур в ядре',3,'процесс, роли, версии, график, многоязычие, баннеры'],['Двухлетний ритм мажоров выдержан дважды',2,'6.0 в октябре 2025, 6.2 в октябре 2026'],['Живые порталы в первой тысяче и десятке тысяч',2,'Jutarnji, Slobodna Dalmacija, CNN.gr, Newsbomb, Dnews'],['Русское сообщество третье в мире',2,'локализация в день релиза, разработчики под рукой'],['Признание: Digital Public Good, награды CMS Critic',1,'2021, 2023–2025']];
+const CONS=[['Доля рынка упала в 5,8 раза за 12 лет',3,'сужает круг разработчиков и расширений'],['Крупные порталы остаются на ветке 3',2,'предупреждение о бюджете на обновления'],['Поиск и Schema.org требуют доработки',2,'Solr на больших архивах, свой плагин NewsArticle'],['Правка не сбрасывает кеш страниц',1,'решается внешним слоем или плагином'],['Проект ищет мейнтейнеров',1,'сентябрьский номер JCM 2026']];
+function wlist(el,arr,prefix){el.insertAdjacentHTML('beforeend',arr.map((w,i)=>`<label><input type="checkbox" checked data-w="${w[1]}" id="${prefix}${i}"><span>${w[0]}<small>${w[2]}</small></span></label>`).join(''));}
+wlist($('#pros'),PROS,'p');wlist($('#cons'),CONS,'c');
+$('#beam').innerHTML=`<svg viewBox="0 0 360 200" role="img" aria-label="Весы рисков"><line x1="180" y1="70" x2="180" y2="180" stroke="var(--line-2)" stroke-width="4"/><path d="M130 180 L230 180" stroke="var(--line-2)" stroke-width="4"/><g class="arm" id="arm"><line x1="40" y1="70" x2="320" y2="70" stroke="var(--ink-2)" stroke-width="4" stroke-linecap="round"/><g id="lp"><line x1="60" y1="70" x2="60" y2="120" stroke="var(--line-2)"/><path d="M30 120 L90 120 L80 142 L40 142 Z" fill="var(--sage)"/></g><g id="rp"><line x1="300" y1="70" x2="300" y2="120" stroke="var(--line-2)"/><path d="M270 120 L330 120 L320 142 L280 142 Z" fill="var(--rust)"/></g></g><circle cx="180" cy="70" r="7" fill="var(--gold)"/></svg>`;
+function weigh(){const sum=sel=>$$(sel+' input:checked').reduce((a,i)=>a+ +i.dataset.w,0);const p=sum('#pros'),c=sum('#cons');const ang=Math.max(-14,Math.min(14,(c-p)*2.2));$('#arm').style.transform=`rotate(${ang}deg)`;$('#verdict').textContent=p>c?`за — ${p} против ${c}: решение склоняется к Joomla`:p<c?`против — ${c} против ${p}: риски перевешивают`:`${p} на ${p}: равновесие — решайте по бюджету обновлений`;}
+$$('.weights input').forEach(i=>i.addEventListener('change',weigh));weigh();
+
+/* ---------- чек-лист ---------- */
+const TODO=['Платформа: Joomla 6.2, PHP 8.4, MariaDB 11+, Nginx за CDN, Redis в консервативном режиме','Конвейер: четыре собственные группы, процесс из пяти стадий, уведомления переходов, своё административное меню на роль','Таксономия: категории как отделы (не больше восьми), дерево меток в пяти ветвях, право создавать метки — у редакторов отделов','Видимость: JL Sitemap по планировщику с картой изображений, новостная карта Google News, WT IndexNow, разметка NewsArticle через Google Structured Data или свой плагин','Медиа: Quantum Manager с автоуменьшением и WebP, области для фотоархива и документов','База и поиск: индекс по catid и state с первого дня, ночная переиндексация из CLI, Solr при архиве свыше 300 тыс. материалов','Казахстан: запасной язык ru-RU для kk-KZ с версии 6.2; плагин Kaspi Pay или Freedom Pay — первая разработка проекта','Бюджет: обновления ядра и расширений как постоянная статья — минор раз в полгода, мажор раз в два года'];
+$('#check').innerHTML=TODO.map((t,i)=>`<li><label><input type="checkbox" id="t${i}"><span>${t}</span></label></li>`).join('');
+const meter=()=>{const n=$$('#check input:checked').length;$('#meter').style.width=(n/TODO.length*100)+'%';};
+$$('#check input').forEach(i=>i.addEventListener('change',meter));
+})();
+</script>
+</body>
+</html>

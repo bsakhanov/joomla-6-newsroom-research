@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joomla 6 для новостной редакции — исследование-доклад о платформе для высоконагруженного новостного сайта</title>
+<meta name="description" content="Исследование-доклад: Joomla 6 как платформа для высоконагруженного новостного сайта — релизы, редакционный контур, конвейер новости, таксономия, нагрузка, видимость, живые порталы, русская и казахстанская экосистема.">
+<meta name="author" content="Бейбит Саханов">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F3F4EF;--paper-raised:#FBFBF8;--ink:#171A1C;--ink-soft:#565D60;--ink-faint:#8B9190;--line:#DBDDD2;--line-strong:#C7CABC;--accent:#B54A24;--accent-ink:#7C3216;--steel:#33505E;--steel-soft:#DEE6E7;--serif:'Newsreader',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;--container:1120px;}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+section[id]{scroll-margin-top:84px}
+a{color:inherit}
+.wrap{max-width:var(--container);margin:0 auto;padding:0 40px}
+@media (max-width:720px){.wrap{padding:0 22px}}
+.progress-track{position:fixed;top:0;left:0;width:100%;height:2px;background:var(--line);z-index:200}
+.progress-fill{height:100%;width:0%;background:var(--accent)}
+.topnav{position:sticky;top:2px;z-index:190;background:rgba(243,244,239,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.topnav-inner{max-width:var(--container);margin:0 auto;padding:0 40px;display:flex;align-items:center;gap:28px;height:56px}
+@media (max-width:720px){.topnav-inner{padding:0 22px;gap:18px}}
+.topnav-mark{font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--ink);white-space:nowrap;text-decoration:none;font-weight:500}
+.topnav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.topnav-links::-webkit-scrollbar{display:none}
+.topnav-links a{font-family:var(--mono);font-size:12px;white-space:nowrap;color:var(--ink-soft);text-decoration:none;padding:8px 10px;border-radius:2px;transition:color .15s,background-color .15s}
+.topnav-links a:hover{color:var(--ink);background:var(--steel-soft)}
+.topnav-links a.active{color:var(--accent-ink);font-weight:600}
+.side-rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:10px}
+.side-rail a{font-family:var(--mono);font-size:10px;color:var(--ink-faint);text-decoration:none;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:50%;transition:all .2s}
+.side-rail a:hover{border-color:var(--line-strong);color:var(--ink)}
+.side-rail a.active{color:var(--paper);background:var(--accent);border-color:var(--accent)}
+@media (max-width:1240px){.side-rail{display:none}}
+.hero-report{position:relative;overflow:hidden;padding:110px 0 80px}
+.hero-report::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(23,26,28,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,26,28,.055) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:linear-gradient(to bottom,black,transparent 82%);mask-image:linear-gradient(to bottom,black,transparent 82%)}
+.hero-inner{position:relative}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--steel);margin:0 0 20px}
+.hero-report h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.4rem,5.6vw,4.4rem);line-height:1.04;letter-spacing:-.01em;margin:0 0 26px;max-width:16ch}
+.hero-lead{font-size:19px;max-width:680px;margin:0 0 18px;line-height:1.6}
+.hero-sub{font-size:15px;color:var(--ink-soft);max-width:640px;margin:0 0 36px}
+.method-box{border:1px solid var(--line-strong);background:var(--paper-raised);padding:22px 26px;max-width:780px;border-radius:2px}
+.method-box .eyebrow{margin-bottom:10px}
+.method-box p{margin:0;font-size:14px;color:var(--ink-soft);line-height:1.65}
+.section{padding:72px 0;border-top:1px solid var(--line)}
+.section.apparatus{background:var(--paper-raised)}
+.section-head{max-width:760px;margin-bottom:34px}
+.section-head .eyebrow{margin-bottom:14px}
+.section-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.7rem,3.2vw,2.3rem);letter-spacing:-.01em;margin:0;line-height:1.15}
+.prose{max-width:780px}
+.prose p{margin:0 0 1.1em;font-size:16.5px;line-height:1.7}
+.prose h3{font-family:var(--serif);font-weight:500;font-size:1.45rem;margin:2.2em 0 .7em;line-height:1.2}
+.prose ol,.prose ul{padding-left:1.3em;margin:0 0 1.2em}
+.prose li{margin:.35em 0;line-height:1.6}
+.prose code{font-family:var(--mono);font-size:.86em;background:var(--steel-soft);padding:1px 5px;border-radius:2px}
+.prose strong{font-weight:700}
+.prose table{border-collapse:collapse;width:100%;max-width:100%;margin:1.4em 0 1.8em;font-size:14.5px;display:block;overflow-x:auto}
+.prose th,.prose td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+.prose th{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--steel);font-weight:600;border-bottom:1px solid var(--line-strong)}
+.prose tr:hover td{background:rgba(222,230,231,.35)}
+a.cite{font-family:var(--mono);font-size:.72em;color:var(--accent-ink);text-decoration:none;vertical-align:super;line-height:0;padding:0 1px}
+a.cite:hover{text-decoration:underline}
+figure.diagram{margin:2em -10px 2.2em;padding:18px 10px 10px;border:1px solid var(--line);background:var(--paper-raised);border-radius:2px;max-width:none}
+figure.diagram svg{width:100%;height:auto;display:block}
+figure.diagram figcaption{font-size:13px;color:var(--ink-soft);margin:10px 10px 0;line-height:1.55}
+.prose{max-width:none}
+.prose > p,.prose > ol,.prose > ul,.prose > h3,.prose > dl{max-width:780px}
+dl.glossary dt{font-weight:700;margin-top:1.1em}
+dl.glossary dd{margin:.3em 0 0;color:var(--ink);font-size:15.5px;line-height:1.65}
+ol.sources{font-size:14px;line-height:1.55;padding-left:2.2em;max-width:900px}
+ol.sources li{margin:.45em 0;overflow-wrap:anywhere}
+ol.sources li:target{background:var(--steel-soft);outline:2px solid var(--steel-soft)}
+.closing{padding:60px 0 56px;border-top:1px solid var(--line)}
+.closing-box{max-width:820px;padding:28px 32px;border:1px solid var(--line-strong);background:var(--paper-raised);border-radius:2px}
+.closing-box p{margin:0 0 .6em;font-size:15px;line-height:1.7}
+.closing-box p:last-child{margin:0;color:var(--ink-soft);font-size:13.5px}
+@media print{.progress-track,.topnav,.side-rail{display:none}.section{padding:28px 0;page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+<nav class="topnav" aria-label="Оглавление"><div class="topnav-inner">
+<a class="topnav-mark" href="#top">joomla 6 · новостная редакция</a>
+<div class="topnav-links"><a href="#rezyume">резюме</a><a href="#chto-takoe">что такое</a><a href="#relizy">релизы</a><a href="#fundament">фундамент</a><a href="#rynok">рынок</a><a href="#kontur">контур</a><a href="#konveyer">конвейер</a><a href="#taksonomiya">таксономия</a><a href="#adminka">админка</a><a href="#nagruzka">нагрузка</a><a href="#vidimost">видимость</a><a href="#portaly">порталы</a><a href="#ekosistema">экосистема</a><a href="#shablony">шаблоны</a><a href="#riski">риски</a><a href="#rekomendatsii">рекомендации</a><a href="#glossariy">глоссарий</a><a href="#reestry">реестры</a><a href="#ukazatel">указатель</a><a href="#istochniki">источники</a></div>
+</div></nav>
+<aside class="side-rail" aria-hidden="true"><a href="#rezyume" title="Резюме">01</a><a href="#chto-takoe" title="Что такое Joomla сегодня">02</a><a href="#relizy" title="Релизы и дорожная карта">03</a><a href="#fundament" title="Технический фундамент">04</a><a href="#rynok" title="Рынок без прикрас">05</a><a href="#kontur" title="Редакционный контур в ядре">06</a><a href="#konveyer" title="Конвейер новости">07</a><a href="#taksonomiya" title="Таксономия: костяк и дерево смыслов">08</a><a href="#adminka" title="Админка и инструменты автора">09</a><a href="#nagruzka" title="Высокая нагрузка на практике">10</a><a href="#vidimost" title="Видимость: поиск, схемы, карты сайта">11</a><a href="#portaly" title="Живые порталы на Joomla">12</a><a href="#ekosistema" title="Русская и казахстанская экосистема">13</a><a href="#shablony" title="Шаблоны и конструкторы">14</a><a href="#riski" title="Конкуренты и риски">15</a><a href="#rekomendatsii" title="Рекомендации">16</a></aside>
+<header class="hero-report" id="top"><div class="wrap hero-inner">
+<p class="eyebrow">исследование-доклад · редакция 1.1 · 8 октября 2026</p>
+<h1>Joomla 6 для новостной редакции</h1>
+<p class="hero-lead">Исследование-доклад о платформе для высоконагруженного новостного сайта: что система даёт редакции в ядре, как выстроить конвейер новости и дерево смыслов, где она держит нагрузку и где требует инженерной работы.</p>
+<p class="hero-sub">Автор — Бейбит Саханов, Астана. Все цифры и даты сверены по первоисточникам 8 октября 2026 года; расхождения и белые пятна вынесены в реестры, а не спрятаны в тексте.</p>
+<div class="method-box"><p class="eyebrow">метод</p><p>Факты взяты с официальных страниц проекта Joomla, из руководства пользователя и разработчика, исходного кода ядра, карточек W3Techs и репозиториев расширений. Каждое утверждение несёт номер источника; список источников построен по первому упоминанию. Текст прошёл языковой прогон по четырём проходам и вычитку Редколлегией; типографика поставлена детерминированным типографом.</p></div>
+</div></header>
+<main>
+<section id="rezyume" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 01</p><h2>Резюме</h2></div><div class="prose">
+<p>Доклад отвечает на один вопрос: годится ли свободная система управления содержимым Joomla в её шестом поколении на роль платформы для новостного сайта с большим потоком материалов и большим трафиком, и если годится, то на каких условиях. Ответ — да, годится, и условия эти перечислены ниже без умолчаний.</p>
+<p>Три довода держат вывод. Первый — зрелость: проекту двадцать один год, шестое поколение вышло 14 октября 2025 года, за ним без задержек последовали 6.1 и четыре исправления, а 6.2 назначена на 13 октября 2026 года; в репозитории уже открыта ветка седьмой версии с плановой датой выпуска 12 октября 2027 года <a class="cite" href="#src-1">1</a><a class="cite" href="#src-2">2</a><a class="cite" href="#src-3">3</a><a class="cite" href="#src-4">4</a>. Второй — редакционный контур: роли, многостадийный процесс публикации, версии материалов, график выхода, многоязычие, рекламные баннеры живут в ядре и обновляются вместе с ним, а не собираются из сторонних плагинов <a class="cite" href="#src-5">5</a>. Третий — живые примеры: второй по посещаемости новостной сайт Хорватии и ещё пять греческих, хорватских и итальянских порталов из первых десяти и ста тысяч сайтов мира работают на Joomla за сетями доставки содержимого <a class="cite" href="#src-6">6</a>–<a class="cite" href="#src-7">7</a>.</p>
+<p>Доклад не скрывает слабых мест. Доля Joomla на рынке за двенадцать лет упала в 5,8 раза <a class="cite" href="#src-8">8</a><a class="cite" href="#src-9">9</a>; все найденные крупные порталы сидят на третьей ветке; штатный поиск и штатная разметка Schema.org для больших новостных сайтов недостаточны; архив в сотни тысяч записей требует индексов и кеша сверх штатных <a class="cite" href="#src-10">10</a><a class="cite" href="#src-11">11</a><a class="cite" href="#src-12">12</a>. Каждое из этих мест получает в докладе инженерный ответ, а не оговорку.</p>
+<p>Для казахстанского заказчика выделены три вещи: русская локализация живёт и обновляется в день выхода ядра, казахский пакет застыл на четвёртой ветке, а платёжные плагины для Kaspi Pay и Freedom Pay под Joomla 6 ещё предстоит написать — это пробел и одновременно свободная ниша <a class="cite" href="#src-13">13</a><a class="cite" href="#src-14">14</a><a class="cite" href="#src-15">15</a><a class="cite" href="#src-16">16</a>.</p>
+</div></div></section><section id="chto-takoe" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 02</p><h2>Что такое Joomla сегодня</h2></div><div class="prose">
+<p>Слово <em>Joomla</em> — английская запись суахилийского <em>jumla</em>, «все вместе», «целиком»; имя выбрали в сентябре 2005 года участники проекта Mambo, ушедшие от владельца торговой марки ради независимой разработки. Отсюда датировка: проекту исполнился двадцать один год, и отсчёт ведётся с 17 августа 2005 года <a class="cite" href="#src-17">17</a>. Юридическое лицо проекта — некоммерческая организация Open Source Matters, Inc., устроенная по американскому праву; её правление делится на департаменты, которых на странице структуры шесть, а на странице «О проекте» названы с портретами три — производство, операции и внешние связи <a class="cite" href="#src-17">17</a><a class="cite" href="#src-18">18</a>. Расхождение занесено в реестр как Р-01.</p>
+<p>Система распространяется под лицензией GNU GPL версии 2 и выше. В 2025–2026 годах к этому прибавилось признание извне: Joomla включена в реестр цифровых общественных благ Digital Public Goods Alliance — инициативы, действующей при поддержке ООН, которая отбирает свободное программное обеспечение по критериям открытости, безопасности и пользы для общества <a class="cite" href="#src-19">19</a>. Награды последних лет — «Лучшая открытая CMS» по версии CMS Critic в 2021 и 2023–2025 годах и премии 20i FOSS Awards 2023 и 2025 годов <a class="cite" href="#src-20">20</a>.</p>
+<p>Безопасностью занимается постоянная команда JSST, Joomla Security Strike Team: она принимает сообщения об уязвимостях, присваивает идентификаторы CVE и выпускает исправления в плановых релизах <a class="cite" href="#src-1">1</a><a class="cite" href="#src-21">21</a>. Отдельная политика регулирует генеративный искусственный интеллект в разработке: код, написанный с помощью моделей, обязан нести метку, «вайб-кодинг» — слепая сдача машинного кода без понимания — запрещён, нарушители теряют доступ к репозиторию <a class="cite" href="#src-22">22</a>. Для новостной редакции это означает, что ядро, на котором она строит сайт, проверяется людьми.</p>
+<p>Ежегодная конференция Joomla World Conference 2026 проходит в Потсдаме 16–18 октября — в дни выхода этого доклада <a class="cite" href="#src-23">23</a>.</p>
+</div></div></section><section id="relizy" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 03</p><h2>Релизы и дорожная карта</h2></div><div class="prose">
+<p>Политика выпусков Joomla подчинена семантическому версионированию: мажорная версия выходит раз в два года, минорная — раз в полгода, исправления — по мере готовности <a class="cite" href="#src-24">24</a>. Главный тезис шестого поколения разработчики сформулировали так: мажор — это <em>слепок, а не слом</em>. Переход с 5.4 на 6.0 выполняется штатным обновлением, не миграцией, и путь обновления гарантирован между всеми версиями <a class="cite" href="#src-1">1</a><a class="cite" href="#src-3">3</a>.</p>
+<table>
+<thead>
+<tr>
+<th>событие</th>
+<th>дата</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Joomla 6.0.0 «Kuimarisha» и 5.4.0</td>
+<td>14 октября 2025</td>
+</tr>
+<tr>
+<td>Joomla 6.1.0 «Nyota»</td>
+<td>14 апреля 2026</td>
+</tr>
+<tr>
+<td>исправления 6.1.1 — 6.1.4</td>
+<td>26 мая, 7 июля, 18 августа, 29 сентября 2026</td>
+</tr>
+<tr>
+<td>Joomla 6.2 — релиз-кандидат</td>
+<td>29 сентября 2026</td>
+</tr>
+<tr>
+<td>Joomla 6.2.0 — стабильный выпуск</td>
+<td>13 октября 2026</td>
+</tr>
+<tr>
+<td>конец исправлений ошибок в ветке 5.x</td>
+<td>13 октября 2026</td>
+</tr>
+<tr>
+<td>конец исправлений безопасности 5.x</td>
+<td>12 октября 2027</td>
+</tr>
+<tr>
+<td>конец исправлений ошибок 6.x</td>
+<td>17 октября 2028</td>
+</tr>
+<tr>
+<td>конец исправлений безопасности 6.x</td>
+<td>16 октября 2029</td>
+</tr>
+<tr>
+<td>Joomla 7.0.0 — плановая дата в ветке 7.0-dev</td>
+<td>12 октября 2027</td>
+</tr>
+</tbody>
+</table>
+<p>Источник таблицы — официальная дорожная карта и анонсы релизов; данные сверены 8 октября 2026 года <a class="cite" href="#src-2">2</a><a class="cite" href="#src-3">3</a><a class="cite" href="#src-25">25</a><a class="cite" href="#src-21">21</a>.</p>
+<p>Что принесли версии шестого поколения. В 6.0 — автоматические обновления ядра, дочерний шаблон Cassiopeia с настройкой цветов и размеров шрифта без правки CSS, версионирование пользовательских полей, тегов и категорий, новые типы полей «заметка» и «число», редактор TinyMCE 8 <a class="cite" href="#src-1">1</a>. В 6.1 — проверка Proof-of-Work CAPTCHA без внешних сервисов, визуальный редактор процессов публикации, медиаполя для аудио, видео и документов, версии и языковые ассоциации модулей, автообновления с 5.4 и 6.0 <a class="cite" href="#src-2">2</a>. В 6.2 — новая система сборки, улучшения TinyMCE, CSS-классы для изображений в материалах, многоуровневое меню, PHPUnit 12 и цепочки запасных языков интерфейса <a class="cite" href="#src-25">25</a><a class="cite" href="#src-26">26</a>.</p>
+<p>Седьмое поколение уже в работе: наряду с ветками <code>6.2-dev</code> и <code>6.3-dev</code> в репозитории открыта <code>7.0-dev</code>, и в её файле <code>Version.php</code> стоит плановая дата выпуска 12 октября 2027 года — ровно по двухлетнему ритму <a class="cite" href="#src-4">4</a>. Обновления с версии 5.1 проходят через The Update Framework — открытую спецификацию защищённой доставки обновлений, которая проверяет подписи и метаданные пакетов и тем закрывает атаки на цепочку поставки; в 5.4 и 6.0 к ней добавились автоматические обновления <a class="cite" href="#src-27">27</a>. Менеджеры релиза 6.1 — Харальд Лейтнер и Стефан Вендхаузен, релиза 6.2 — Вивиана Менцель и Мартин Копп <a class="cite" href="#src-2">2</a><a class="cite" href="#src-25">25</a>.</p>
+</div></div></section><section id="fundament" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 04</p><h2>Технический фундамент</h2></div><div class="prose">
+<p>Требования шестой ветки сверены по руководству разработчика <a class="cite" href="#src-28">28</a>.</p>
+<table>
+<thead>
+<tr>
+<th>компонент</th>
+<th>рекомендуется</th>
+<th>поддерживается</th>
+<th>минимум</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PHP</td>
+<td>8.4</td>
+<td>8.3.0</td>
+<td>8.3.0</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>8.4</td>
+<td>8.0.13</td>
+<td>8.0.13</td>
+</tr>
+<tr>
+<td>MariaDB</td>
+<td>12.0</td>
+<td>10.6</td>
+<td>10.4</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>17.6</td>
+<td>14.0</td>
+<td>12.0</td>
+</tr>
+<tr>
+<td>Apache</td>
+<td>2.4</td>
+<td>2.4</td>
+<td> —</td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>1.29</td>
+<td>1.26</td>
+<td> —</td>
+</tr>
+</tbody>
+</table>
+<p>Текущая стабильная ветка самого языка — PHP 8.5, вышедшая 20 ноября 2025 года; на дату проверки актуален выпуск 8.5.8 <a class="cite" href="#src-29">29</a>. Joomla 6 работает на 8.5 и готовится к ветке, которую ядро PHP выпустит в ноябре 2026 года.</p>
+<p>Отдельного разговора заслуживает Joomla Framework — самостоятельный набор пакетов PHP для веб- и консольных приложений без накладных расходов CMS <a class="cite" href="#src-30">30</a>. Около тридцати двух активных пакетов ставятся через Composer под именами <code>joomla/*</code>; суммарно их скачали более 14,6 млн раз, лидеры — <code>string</code> (2,56 млн), <code>filter</code> (1,68 млн), <code>uri</code> (827 тыс.), <code>http</code> (767 тыс.). Серия 4.x фреймворка легла в основу CMS 6.0, серия 3.x — в основу CMS 5 <a class="cite" href="#src-30">30</a>. Для разработчика расширений это важно двояко: те же имена классов переносят знания с сайта на автономные службы, а пакеты версионируются независимо и могут обновляться чаще ядра. Фреймворк ведёт рабочая группа внутри департамента производства; на нём работает трекер проекта issues.joomla.org <a class="cite" href="#src-30">30</a><a class="cite" href="#src-18">18</a>.</p>
+<p>Репозиторий ядра на GitHub на дату проверки насчитывал 5,1 тыс. звёзд, 3,9 тыс. ответвлений, 52 919 коммитов и 498 релизов; язык — PHP на 89,8%, JavaScript на 7,3%. Ветка <code>5.4-dev</code> принимает исправления, <code>6.2-dev</code> — новую функциональность <a class="cite" href="#src-31">31</a>.</p>
+</div></div></section><section id="rynok" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 05</p><h2>Рынок без прикрас</h2></div><div class="prose">
+<p>Доклад, который хвалит, не имея цифр, не стоит чтения. Поэтому цифры — первыми.</p>
+<p>По данным W3Techs на 6 октября 2026 года WordPress стоит на 40,1% всех сайтов и занимает 58,6% рынка систем управления содержимым; Shopify — 5,4% и 7,8%; Wix — 4,2% и 6,1%; Squarespace — 2,4% и 3,6%; Joomla — 1,1% всех сайтов и 1,6% рынка CMS; Drupal — 0,6% и 0,9% <a class="cite" href="#src-32">32</a><a class="cite" href="#src-8">8</a>. В 2014 году доля Joomla на рынке CMS составляла 9,3% <a class="cite" href="#src-9">9</a>; падение за двенадцать лет — в 5,8 раза. Среди сайтов на Joomla 51,9% работают на третьей ветке, 20,6% — на пятой, 9,2% — на шестой, 8,0% — на четвёртой <a class="cite" href="#src-8">8</a>.</p>
+<p>Ранговый срез показывает, где Joomla сильнее: в первом миллионе сайтов её доля 1,2%, в первой сотне тысяч — 1,1%, в первой десятке тысяч — 0,5%, в первой тысяче — 0,4% <a class="cite" href="#src-33">33</a>. То есть система держится в среднем и верхнем сегменте пропорционально своей общей доле, а не исчезает там.</p>
+<p>Языковой срез важнее для казахстанской редакции: среди сайтов на Joomla 24,6% написаны по-английски, 15,9% — по-немецки и 12,3% — по-русски. В немецкоязычном сегменте всего веба Joomla занимает 4,0% — в два с половиной раза больше своей мировой доли; в испаноязычном — 1,4%, в англоязычном — 0,8% <a class="cite" href="#src-34">34</a>. Русскоязычное присутствие — третье в мире, и это объясняет живость русского сообщества, о котором речь в главе тринадцатой.</p>
+<p>Каталог расширений JED на дату проверки содержал 4 938 расширений; рубрика «Вывод новостей» — 402 из них, «Фотографии и изображения» — 411, «Стиль и дизайн» — 353, «Доступ и безопасность» — 324, «Электронная коммерция» — 277 <a class="cite" href="#src-35">35</a>. Исторический максимум загрузок из каталога — 138 млн при шести тысячах листингов <a class="cite" href="#src-36">36</a>. Руководство пользователя при этом говорит о «более чем 8 000 расширений» — устаревшее число, занесённое в реестр как Р-02 <a class="cite" href="#src-5">5</a>.</p>
+<p>Вывод из цифр честный: Joomla — нишевая система, но ниша эта — содержательные сайты с редакцией, а не визитки и лендинги, где выигрывают конструкторы.</p>
+</div></div></section><section id="kontur" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 06</p><h2>Редакционный контур в ядре</h2></div><div class="prose">
+<p>Здесь главный довод доклада. Он не в скорости и не в красоте, а в том, что набор функций, нужный именно редакции, в Joomla встроен в ядро и обновляется вместе с ним. Перечень взят из официального руководства пользователя <a class="cite" href="#src-5">5</a><a class="cite" href="#src-37">37</a>.</p>
+<p>Девять групп пользователей с готовыми ролями автора, редактора и публикатора; списки доступа (ACL) с правами на трёх ярусах — глобально, на компонент, на категорию. Компонент <em>процессов публикации</em> — стадии и переходы между ними, несколько процессов на сайте, свой процесс на категорию. Версии материалов с ответом «кто, когда и зачем» и откатом к любой версии; блокировка материала на время правки (check-in), чтобы два человека не затёрли друг друга. График выхода: начало и конец публикации, начало и конец «избранности»; до назначенного часа материал считается ожидающим, после конечной даты — истёкшим, и то и другое видно в списке особыми значками <a class="cite" href="#src-37">37</a>. Псевдоним автора вместо имени учётной записи. Правка с лицевой стороны сайта, включая график. Вложенные категории без ограничения глубины и вложенные метки. Умный поиск с индексацией, подсказками и статистикой запросов. Многоязычие с ассоциациями переводов. Синдикация RSS и агрегация чужих лент. Баннерная система с клиентами, кампаниями, лимитами показов и учётом кликов — рекламный отдел новостного сайта в коробке. Пользовательские поля всех типов, включая медиа, подформы и SQL-выборки. Разметка Schema.org в JSON-LD. Шаблоны писем для уведомлений и массовая рассылка. Web Services API в формате JSON: API для приложений и партнёрских лент <a class="cite" href="#src-38">38</a>.</p>
+<p>Сравнение уместно. В WordPress многостадийный процесс, многоязычие и версии полей достигаются плагинами, у каждого — свой цикл обновлений и своя лицензия; в Drupal процесс публикации встроен, но порог входа выше. Joomla занимает середину: редакционная модель — часть ядра, а шаблоны и расширения остаются свободными для выбора.</p>
+<p>Границы названы прямо. Совместного редактирования одного текста в реальном времени нет; комментариев читателей в ядре нет; живой трансляции нет; штатный плагин Schema.org выводит тип <code>Article</code>, а не <code>NewsArticle</code>, и не заполняет поля сам — подробности в главе одиннадцатой.</p>
+</div></div></section><section id="konveyer" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 07</p><h2>Конвейер новости</h2></div><div class="prose">
+<p>Эта глава показывает, как на штатных средствах собрать редакционный конвейер с четырьмя ролями: репортёр-автор, редактор тематического отдела, корректор и главный редактор для материалов особой важности. Все механизмы проверены по руководству пользователя и двум его разобранным примерам <a class="cite" href="#src-39">39</a><a class="cite" href="#src-40">40</a><a class="cite" href="#src-41">41</a>.</p>
+<figure class="diagram">
+<svg viewBox="0 0 980 330" role="img" aria-labelledby="d1t" xmlns="http://www.w3.org/2000/svg">
+<title id="d1t">Конвейер новости: стадии и переходы процесса публикации</title>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs>
+<g font-family="var(--sans)" font-size="14" fill="var(--ink)">
+<rect x="20" y="90" width="150" height="70" rx="3" fill="var(--paper-raised)" stroke="var(--line-strong)"/>
+<text x="95" y="120" text-anchor="middle" font-weight="700">Черновик</text>
+<text x="95" y="142" text-anchor="middle" font-size="12" fill="var(--ink-soft)">репортёр</text>
+<rect x="220" y="90" width="150" height="70" rx="3" fill="var(--paper-raised)" stroke="var(--line-strong)"/>
+<text x="295" y="120" text-anchor="middle" font-weight="700">На редактуре</text>
+<text x="295" y="142" text-anchor="middle" font-size="12" fill="var(--ink-soft)">редактор отдела</text>
+<rect x="420" y="90" width="150" height="70" rx="3" fill="var(--paper-raised)" stroke="var(--line-strong)"/>
+<text x="495" y="120" text-anchor="middle" font-weight="700">На корректуре</text>
+<text x="495" y="142" text-anchor="middle" font-size="12" fill="var(--ink-soft)">корректор</text>
+<rect x="600" y="200" width="220" height="70" rx="3" fill="var(--paper-raised)" stroke="var(--accent)"/>
+<text x="710" y="230" text-anchor="middle" font-weight="700">На утверждении</text>
+<text x="710" y="252" text-anchor="middle" font-size="12" fill="var(--ink-soft)">главред · особая важность</text>
+<rect x="810" y="90" width="150" height="70" rx="3" fill="var(--accent)" stroke="var(--accent)"/>
+<text x="885" y="120" text-anchor="middle" font-weight="700" fill="var(--paper)">Опубликовано</text>
+<text x="885" y="142" text-anchor="middle" font-size="12" fill="var(--paper)">состояние: published</text>
+<g stroke="var(--ink-soft)" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+<path d="M170 115 L218 115"/><path d="M370 115 L418 115"/><path d="M570 115 L808 115"/>
+<path d="M545 160 C 575 200, 590 228, 598 235"/><path d="M820 235 C 850 232, 872 200, 885 162"/>
+</g>
+<g stroke="var(--ink-faint)" stroke-width="1.2" fill="none" stroke-dasharray="4 4" marker-end="url(#arr)">
+<path d="M220 140 C 200 175, 160 175, 172 142"/><path d="M420 140 C 400 175, 360 175, 372 142"/>
+<path d="M630 200 C 560 182, 525 176, 508 162"/>
+</g>
+<text x="300" y="196" text-anchor="middle" font-size="12" fill="var(--ink-faint)">пунктир — возврат на предыдущую стадию</text>
+<text x="490" y="300" text-anchor="middle" font-size="12" fill="var(--ink-soft)">каждый переход: действие над состоянием · письмо группе · право «выполнить переход» по группам</text>
+</g></svg>
+<figcaption>Схема 1. Стадии и переходы процесса «Новости»; оранжевая ветка — необязательная стадия утверждения главредом.</figcaption>
+</figure>
+
+<p><strong>Роли как группы.</strong> Руководство советует не перегружать штатные группы, а завести свои — детьми группы Registered: «Репортёр», «Редактор отдела», «Корректор», «Главред» <a class="cite" href="#src-41">41</a>. Отделы — это категории: «Экономика», «Политика», «Общество». Редактор отдела получает право править и менять состояние внутри своей категории, репортёр — создавать и править своё, корректор — править чужое без смены состояния, главред — всё, включая публикацию. Чужие материалы в списке у каждого видны без ссылки на правку — так ядро показывает границу зоны ответственности <a class="cite" href="#src-40">40</a>.</p>
+<p><strong>Процесс.</strong> В компоненте процессов заводится процесс «Новости» со стадиями из схемы 1. У каждого перехода четыре вкладки: откуда и куда; действия — какое состояние публикации и «избранности» принять; уведомления — письмо группам или отдельным людям с дополнительным текстом; права — какие группы вправе этот переход выполнить <a class="cite" href="#src-40">40</a>. Переход «На корректуре → Опубликовано» ставит состояние <em>published</em> и принадлежит редактору отдела; переход «На корректуре → На утверждении» он же выбирает, когда тема требует главреда. Так материал особой важности идёт тем же конвейером с одной дополнительной стадией, а не отдельным процессом. Второй способ — отдельный процесс, привязанный к категории «Особой важности»: процесс закрепляется за материалом при первом сохранении по категории, и сменить его позже может лишь суперпользователь пакетной операцией «Сменить стадию» <a class="cite" href="#src-40">40</a>. Поэтому категорию такого материала задают сразу.</p>
+<p><strong>Что стоит за стадиями.</strong> Корректор сравнивает версии и видит, что правил редактор; заметка к версии объясняет зачем <a class="cite" href="#src-5">5</a>. Блокировка на время правки не даёт двоим работать над одним текстом одновременно. Предпросмотр показывает материал как на сайте до выхода; проверка доступности подсвечивает ошибки разметки авторам. Главред ставит дату выхода на вкладке «Публикация», и список покажет «опубликовано, но ожидает» <a class="cite" href="#src-37">37</a>. Журнал действий пользователей фиксирует, кто что сделал. Письма переходов идут через редактируемые шаблоны; получателям должна быть включена отметка «получать системные письма» <a class="cite" href="#src-41">41</a>.</p>
+<p><strong>Своя часть админки каждому.</strong> Доступ в панель — отдельное право: глобально «вход в административную часть», на компоненте — «доступ к интерфейсу администрирования» <a class="cite" href="#src-40">40</a>. Репортёру открывается только «Материалы», корректору — «Материалы» и «Медиа», редактору отдела — ещё «Метки», главреду — всё редакционное без «Системы». Главный дашборд ужимается до разрешённого; модули дашборда, видимые всем, переводятся на уровень доступа Special <a class="cite" href="#src-42">42</a>. Для полной чистоты меню делается своё административное меню: новое меню типа «администратор», связанный модуль в позиции <code>menu</code>, пункт «Контейнер меню компонентов», в котором скрыто всё, кроме нужного. Руководство честно называет границу: штатный контейнер при этом остаётся частью меню — «неизбежное дублирование» <a class="cite" href="#src-42">42</a>. Поля формы материала по группам ядро не прячет, но поля, требующие прав, — состояние, автор, даты — у того, кто этих прав лишён, не активны.</p>
+<p><strong>Подача с лицевой стороны.</strong> Пункт меню «Блог категории» или «Список категории» с уровнем доступа «Редакция» показывает допущенным кнопку «Новый материал» и ссылки правки у каждого текста; стадии и переходы доступны и в лицевой форме — руководство для четвёртой ветки помещает поле на вкладку «Публикация», а в 6.1.4 оно стоит на вкладке «Параметры» (Р-05) <a class="cite" href="#src-41">41</a>. Чтобы автор видел собственный неопубликованный черновик, его группу включают в уровень Special или в свой уровень «Редакция» — именно на этом спотыкается пример с штатной группой Author и это решает второй пример руководства <a class="cite" href="#src-40">40</a><a class="cite" href="#src-41">41</a>. Мобильному репортёру тот же контур доступен через Web Services API по токену: создание материала — запрос к <code>/api/index.php/v1/content/articles</code> <a class="cite" href="#src-38">38</a>.</p>
+<p>Весь конвейер собран и снят на чистой Joomla 6.1.4 — тридцать шесть экранов глазами администратора и четырёх ролей, с лицевой стороной и дочерними шаблонами, — в приложении «Конвейер новости в скриншотах». Границы конвейера: переходы не ветвятся по значению поля, поэтому «особая важность» — это категория или добровольный переход, а не флажок; замечания живут в заметке к версии и в поле «примечание», комментариев на полях нет.</p>
+</div></div></section><section id="taksonomiya" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 08</p><h2>Таксономия: костяк и дерево смыслов</h2></div><div class="prose">
+<p>Слово <em>таксономия</em> пришло из биологии: греческое <em>taxis</em>, «порядок», и <em>nomos</em>, «закон»; ботаник Огюстен Пирам Декандоль ввёл его в 1813 году для классификации растений, библиотекари перенесли на знание, а веб-разработчики — к структуре сайта. В Joomla таксономия двухосная, и это её главное преимущество перед плоскими рубрикаторами обычных новостных сайтов.</p>
+<figure class="diagram">
+<svg viewBox="0 0 980 360" role="img" aria-labelledby="d2t" xmlns="http://www.w3.org/2000/svg">
+<title id="d2t">Две оси таксономии: категории как костяк и дерево меток как семантика</title>
+<g font-family="var(--sans)" font-size="13" fill="var(--ink)">
+<text x="30" y="34" font-weight="700" font-size="15">Категории — костяк</text>
+<text x="30" y="54" font-size="12" fill="var(--ink-soft)">одна на материал · адрес · права · процесс</text>
+<g stroke="var(--line-strong)" stroke-width="1.4" fill="none">
+<path d="M60 80 L60 300"/><path d="M60 110 L90 110"/><path d="M60 150 L90 150"/><path d="M60 190 L90 190"/><path d="M60 230 L90 230"/><path d="M60 270 L90 270"/><path d="M60 300 L90 300"/>
+<path d="M110 190 L110 212 L130 212"/>
+</g>
+<rect x="30" y="68" width="110" height="24" rx="2" fill="var(--steel)"/><text x="85" y="85" text-anchor="middle" fill="var(--paper)" font-size="12">Новости</text>
+<text x="96" y="114">Политика</text><text x="96" y="154">Экономика</text><text x="96" y="194">Общество</text><text x="136" y="216" fill="var(--ink-soft)" font-size="12">Образование</text>
+<text x="96" y="234">Спорт</text><text x="96" y="274">Мнения</text><text x="96" y="304">Спецпроекты</text>
+<line x1="348" y1="30" x2="348" y2="330" stroke="var(--line)" stroke-dasharray="3 5"/>
+<text x="370" y="34" font-weight="700" font-size="15">Метки — семантика</text>
+<text x="370" y="54" font-size="12" fill="var(--ink-soft)">сколько угодно на материал · дерево · общие для всех типов</text>
+<rect x="370" y="68" width="90" height="24" rx="2" fill="var(--accent)"/><text x="415" y="85" text-anchor="middle" fill="var(--paper)" font-size="12">Темы</text>
+<g stroke="var(--line-strong)" stroke-width="1.4" fill="none">
+<path d="M395 92 L395 230"/><path d="M395 120 L420 120"/><path d="M395 165 L420 165"/><path d="M395 230 L420 230"/>
+<path d="M445 165 L445 195 L470 195"/><path d="M495 195 L495 215 L520 215"/>
+</g>
+<text x="426" y="124">Энергетика</text><text x="426" y="169">Финансы</text><text x="476" y="199" fill="var(--ink-soft)" font-size="12">Банки</text><text x="526" y="219" fill="var(--ink-faint)" font-size="12">Платёжные системы</text><text x="426" y="234">Транспорт</text>
+<rect x="640" y="68" width="100" height="24" rx="2" fill="var(--accent)"/><text x="690" y="85" text-anchor="middle" fill="var(--paper)" font-size="12">Регионы</text>
+<g stroke="var(--line-strong)" stroke-width="1.4" fill="none"><path d="M665 92 L665 190"/><path d="M665 120 L690 120"/><path d="M665 150 L690 150"/><path d="M665 190 L690 190"/><path d="M715 150 L715 170 L740 170"/></g>
+<text x="696" y="124">Астана</text><text x="696" y="154">Мангистау</text><text x="746" y="174" fill="var(--ink-soft)" font-size="12">Актау</text><text x="696" y="194">Алматы</text>
+<rect x="830" y="68" width="110" height="24" rx="2" fill="var(--accent)"/><text x="885" y="85" text-anchor="middle" fill="var(--paper)" font-size="12">Форматы</text>
+<g stroke="var(--line-strong)" stroke-width="1.4" fill="none"><path d="M855 92 L855 190"/><path d="M855 120 L880 120"/><path d="M855 150 L880 150"/><path d="M855 190 L880 190"/></g>
+<text x="886" y="124">Интервью</text><text x="886" y="154">Разбор</text><text x="886" y="194">Фотогалерея</text>
+<rect x="370" y="258" width="590" height="76" rx="3" fill="var(--steel-soft)" stroke="none"/>
+<text x="665" y="281" text-anchor="middle" font-size="12">страница метки «Финансы» с включёнными потомками</text>
+<text x="665" y="301" text-anchor="middle" font-size="12">собирает и «Банки», и «Платёжные системы»;</text>
+<text x="665" y="321" text-anchor="middle" font-size="12">новая узкая метка сразу поднимается в широкую тему — дерево растёт без пересборки</text>
+</g></svg>
+<figcaption>Схема 2. Категории задают структуру и адреса, метки наращивают смысловую сеть; поперёк осей строятся пересечения вида «Регион + Тема».</figcaption>
+</figure>
+
+<p>У материала одна категория, у категорий нет предела вложенности, и категория несёт структуру: адрес страницы, права, процесс публикации, макет, пункт меню <a class="cite" href="#src-5">5</a><a class="cite" href="#src-43">43</a>. Меток у материала сколько угодно; они образуют дерево «родитель — потомок» и общие для всех типов содержимого — материалов, категорий, контактов, лент новостей <a class="cite" href="#src-43">43</a>. Отсюда правило доклада: категории — немногочисленный устойчивый костяк отделов; метки — растущая семантика.</p>
+<p>Что даёт дерево меток новостному сайту. Страница метки — готовая посадочная страница: свой макет, свои метаданные, свои изображения для анонса и для страницы, свой уровень доступа и статус <a class="cite" href="#src-43">43</a>. Пункт меню «Материалы по метке» умеет включать потомков: страница «Энергетика» собирает всё, что помечено «Нефть и газ», «Электроэнергетика» и их потомками, — новая узкая метка сразу поднимается в широкую тему без ручной пересборки <a class="cite" href="#src-44">44</a><a class="cite" href="#src-45">45</a>. Там же выбор режима совпадения — «все метки» или «любая из меток», так что пересечение «Регион: Мангистау» + «Тема: Энергетика» делается без кода <a class="cite" href="#src-44">44</a>. «Список всех меток» выводит дерево целиком — карту смыслов сайта <a class="cite" href="#src-45">45</a>. Модуль «Похожие метки» даёт блок «читать по теме» с настраиваемой близостью совпадения; «Популярные метки» — срез за период: о чём говорили на этой неделе <a class="cite" href="#src-43">43</a><a class="cite" href="#src-45">45</a>.</p>
+<p>Против распыления ядро предлагает прямую меру: право создавать метки отбирается у авторов и оставляется редакторам отдела — руководство предупреждает, что без этого метки «становятся контрпродуктивными» из-за дублей и опечаток <a class="cite" href="#src-43">43</a>. Дерево при этом растёт сверху вниз, а не россыпью: темы, регионы, персоны, организации, форматы.</p>
+<p>Границы: иерархия меток действует в списках по метке и в общем списке; у самого материала метки выводятся плоско; у метки нет собственного процесса публикации — только статус и версия; двух категорий у материала не бывает, для этого есть сторонние плагины, но лучше считать категорию отделом, а остальное отдавать меткам <a class="cite" href="#src-43">43</a>.</p>
+</div></div></section><section id="adminka" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 09</p><h2>Админка и инструменты автора</h2></div><div class="prose">
+<p>Административный шаблон Atum построен на Bootstrap 5 и соответствует требованиям доступности WCAG 2.2 уровня AA <a class="cite" href="#src-20">20</a>. С версии 5.1 в нём тёмная тема с переключателем, приветственный направляемый тур и расширенные туры по разделам <a class="cite" href="#src-27">27</a>. Девять последовательных клавиатурных сочетаний — J затем S сохраняет, J затем F переводит в поиск, J затем X показывает список; последовательность вместо одновременного нажатия выбрана ради доступности <a class="cite" href="#src-5">5</a>. На каждой странице кнопка справки, у форм — подстрочные подсказки к полям; дашборды — главный, контента, меню, компонентов, пользователей, системы — можно сузить до нужного роли <a class="cite" href="#src-5">5</a><a class="cite" href="#src-42">42</a>.</p>
+<p>Редактор TinyMCE 8 подсвечивает синтаксис и ищет-заменяет в HTML-виде, принимает картинки перетаскиванием прямо в текст, вставляет модуль в материал кнопкой без заучивания синтаксиса <a class="cite" href="#src-1">1</a><a class="cite" href="#src-5">5</a>. Проверка доступности — плагин на основе библиотеки Sa11y — подсвечивает автору пропущенные альтернативные тексты и ошибки заголовков до публикации <a class="cite" href="#src-5">5</a><a class="cite" href="#src-27">27</a>. Штатный медиаменеджер обрезает, поворачивает и масштабирует изображения, принимает SVG с проверкой, настраивает разрешённые типы файлов и с 6.0 показывает миниатюры для любых файлов <a class="cite" href="#src-1">1</a><a class="cite" href="#src-5">5</a>.</p>
+<p>Безопасность входа: многофакторная аутентификация — проект называет себя первой крупной CMS с двухфакторной защитой; вход по WebAuthn и ключам доступа без пароля; журнал действий; инструменты приватности для запросов пользователей <a class="cite" href="#src-5">5</a>. Планировщик задач с выбором исполнителя и запуском из командной строки берёт на себя ночную переиндексацию, рассылки, генерацию карт сайта <a class="cite" href="#src-5">5</a><a class="cite" href="#src-46">46</a>.</p>
+<p>Два сторонних компонента из русскоязычной экосистемы расширяют админку там, где редакции тесно в штатных средствах, — им посвящены схемы 3 и 4 в главе одиннадцатой: JL Sitemap от Joomline и Quantum Manager от NorrNext.</p>
+</div></div></section><section id="nagruzka" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 10</p><h2>Высокая нагрузка на практике</h2></div><div class="prose">
+<p>Кеш в Joomla трёхслойный <a class="cite" href="#src-47">47</a>. Системный плагин «Кеш страниц» хранит страницу целиком. Консервативный режим кеширует вывод компонентов и тех модулей, которым кеширование разрешено. Прогрессивный режим кеширует все модули — он годится лишь сайтам без личных блоков. Хранилище — файлы, Redis или Memcached. Руководство предупреждает о ловушке для новостников: правка материала не сбрасывает кеш страниц, где он показан, — сброс либо ручной, либо через внешний слой <a class="cite" href="#src-47">47</a>.</p>
+<p>Измерения Joomla Community Magazine за апрель 2025 года показали: сервер LiteSpeed снижает время до первого байта с 336 до 224 мс, Redis в консервативном режиме ускоряет начало отрисовки с 0,9 до 0,6 с; официальный плагин LiteSpeed Cache сам чистит кеш при обновлении содержимого, но ESI-вставки доступны только в платной Enterprise-редакции <a class="cite" href="#src-48">48</a>. Настройка в <code>configuration.php</code> занимает пять строк: <code>$caching = '2'</code>, <code>$cache_handler = 'redis'</code>, адрес, порт и пароль сервера <a class="cite" href="#src-48">48</a>.</p>
+<p>Все найденные новостные порталы на Joomla живут за сетью доставки содержимого: Cloudflare у хорватов и у Dnews, Akamai у CNN Greece и Newsbomb <a class="cite" href="#src-6">6</a><a class="cite" href="#src-49">49</a><a class="cite" href="#src-50">50</a><a class="cite" href="#src-51">51</a><a class="cite" href="#src-52">52</a>. Так устроена обычная архитектура: CDN принимает удар трафика, Redis держит объектный кеш, база даёт индексы.</p>
+<p>Разбор случая. Обсуждение #45737 в репозитории ядра описывает сайт на Joomla 3 с 150 тыс. материалов в 1 705 категориях: обновление до пятой ветки упёрлось в тайм-аут миграции базы, потребовался экспорт и импорт 3,9 ГБ; на тестовом сервере с одним процессором и гигабайтом памяти главная страница с категориями открывалась 20 с, выборка 200 материалов — 94 с <a class="cite" href="#src-11">11</a>. Два найденных исправления: индекс <code>CREATE INDEX idx_catid_state ON #__content (catid, state)</code> снизил время главной до 1 с, замена <code>LEFT JOIN</code> на <code>STRAIGHT_JOIN</code> для таблицы категорий — выборки до 5 с; рефакторинг модели материалов в админке дал 85 мс вместо 53 с <a class="cite" href="#src-11">11</a>. Заявленные к ядру 6.2 запросы на слияние #45542, #45660 и #44078 на дату проверки не подтверждены как влитые — М-01. Предупреждение Брайана Тимана из того же обсуждения стоит помнить: индексные эксперименты, помогавшие большим сайтам, вредили обычным <a class="cite" href="#src-11">11</a>.</p>
+<p>Поиск. Руководство говорит прямо: Smart Search — поисковый движок на чистом PHP, для очень больших сайтов советуют Solr; индекс растёт с каждым материалом даже при повторяющихся словах, сохранение материала во время полной переиндексации может испортить индекс, пакет индексации по умолчанию — 30 единиц <a class="cite" href="#src-46">46</a><a class="cite" href="#src-10">10</a>. Рецепт для редакции: ночной индексатор из командной строки <code>php joomla.php finder:index</code> по планировщику, подсказки отключены, если на сайте есть закрытые материалы <a class="cite" href="#src-46">46</a>.</p>
+</div></div></section><section id="vidimost" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 11</p><h2>Видимость: поиск, схемы, карты сайта</h2></div><div class="prose">
+<p>Новостной сайт живёт трафиком из поисковых систем, агрегаторов и, всё больше, из ответов языковых моделей. Что даёт ядро и где нужны расширения.</p>
+<p><strong>Schema.org.</strong> Системный плагин с версии 5.0 выводит JSON-LD, типовые плагины — Article (с 5.1), BlogPosting, Organization, Person, Event, Recipe, JobPosting, Book; каждый тип — отдельный плагин, что открывает дорогу сторонним <a class="cite" href="#src-53">53</a>. Проверка по исходникам ветки 6.1-dev показала границу: плагин Article выводит жёстко зашитый тип <code>Article</code>, поля формы — заголовок, описание, изображение, автор как Person или Organization, даты публикации и изменения, плюс универсальная пара «свойство — значение»; подтипа <code>NewsArticle</code> нет, полей <code>keywords</code> и <code>articleSection</code> нет, из материала плагин ничего не подставляет — лишь форматирует даты и картинку <a class="cite" href="#src-12">12</a>. В 6.2 к типовым плагинам добавился Custom — вставка собственного JSON-LD с проверкой синтаксиса, но без автозаполнения <a class="cite" href="#src-12">12</a>. Для редакции, выпускающей десятки новостей в день, ручное заполнение вкладки «Схема» нереально, и здесь ядро не одиноко: готовые решения давно есть в каталоге. Google Structured Data Тассоса Мариноса ставит на все материалы Article, BlogPosting или NewsArticle и сопоставляет свойства схемы с данными страницы — заголовком, датами, автором, изображением <a class="cite" href="#src-54">54</a>; бесплатный PSA Schema Vita Potentia генерирует разметку Article автоматически без настройки <a class="cite" href="#src-55">55</a>. Выбор у редакции такой: готовое расширение с подпиской за полную версию либо собственный плагин типа <code>NewsArticle</code>, подставляющий <code>keywords</code> из меток и <code>articleSection</code> из категории, — архитектура плагинов типов ядра это прямо приглашает.</p>
+<p><strong>Карты сайта.</strong> Ядро карт не строит. Для Google News годятся OSMap с новостной картой за последние двое суток и именем издания <a class="cite" href="#src-56">56</a>, бесплатный SchuWeb Sitemap с XML-, новостной и графической картами, платный JSitemap Pro с новостной, AMP- и видеокартами <a class="cite" href="#src-57">57</a>; EKS Виктора Фогеля строит семантические карты, где материалы сгруппированы по меткам, — версия 6.0.0.0 для Joomla 6 <a class="cite" href="#src-58">58</a>. Отдельное место занимает JL Sitemap, разобранный ниже.</p>
+<p><strong>IndexNow и уведомления.</strong> Плагин WT IndexNow Сергея Толкачёва извещает Яндекс и Bing о новых адресах; у него есть расширения для JoomShopping, Phoca Cart и RadicalMart <a class="cite" href="#src-59">59</a>.</p>
+<h3 id="jl-sitemap">JL Sitemap: карта сайта как файл, а не как запрос</h3>
+<p>Компонент <code>com_jlsitemap</code> от Joomline — главный инструмент видимости в русскоязычной экосистеме Joomla <a class="cite" href="#src-60">60</a><a class="cite" href="#src-61">61</a>. Его идея противоположна большинству генераторов: карта сайта строится заранее и лежит на диске настоящим файлом <code>sitemap.xml</code>, поэтому обращение поисковика не нагружает сервер. Данные компонент берёт не сам, а через плагины-поставщики: в поставке — материалы, метки и контакты Joomla, K2, Kunena, VirtueMart; сторонние разработчики написали поставщиков для JoomShopping, Phoca Gallery и Phoca Download <a class="cite" href="#src-60">60</a>. Генерация запускается кнопкой, из командной строки или плагином штатного планировщика задач; адреса строятся через маршрутизатор Joomla, то есть совпадают с реальными; ссылки исключаются по шаблонам, регулярным выражениям и наличию в меню; есть HTML-версия карты для людей <a class="cite" href="#src-61">61</a>.</p>
+<p>Версия 2.2.0 вышла 25 мая 2026 года уже под руководством Сергея Толкачёва и принесла совместимость с Joomla 6, атомарную запись файлов — новая карта пишется во временный файл и подменяет старую только после успешной сборки, графическую карту изображений из полей <code>image_fulltext</code>, экранирование XML, исправленные многоязычные адреса VirtueMart, минимальную версию Joomla 5.0 и немецкий перевод <a class="cite" href="#src-62">62</a>.</p>
+<figure class="diagram">
+<svg viewBox="0 0 980 300" role="img" aria-labelledby="d3t" xmlns="http://www.w3.org/2000/svg">
+<title id="d3t">Как работает JL Sitemap: поставщики, генератор, файлы, потребители</title>
+<defs><marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs>
+<g font-family="var(--sans)" font-size="13" fill="var(--ink)">
+<text x="20" y="28" font-size="12" fill="var(--ink-soft)">поставщики (плагины jlsitemap)</text>
+<g fill="var(--paper-raised)" stroke="var(--line-strong)">
+<rect x="20" y="40" width="190" height="30" rx="2"/><rect x="20" y="76" width="190" height="30" rx="2"/><rect x="20" y="112" width="190" height="30" rx="2"/><rect x="20" y="148" width="190" height="30" rx="2"/><rect x="20" y="184" width="190" height="30" rx="2"/>
+</g>
+<text x="115" y="60" text-anchor="middle">Материалы Joomla</text><text x="115" y="96" text-anchor="middle">Метки Joomla</text><text x="115" y="132" text-anchor="middle">Контакты</text><text x="115" y="168" text-anchor="middle">VirtueMart · JoomShopping</text><text x="115" y="204" text-anchor="middle">Phoca · Kunena · K2</text>
+<g stroke="var(--ink-soft)" stroke-width="1.4" fill="none" marker-end="url(#arr3)">
+<path d="M210 55 L283 120"/><path d="M210 91 L283 124"/><path d="M210 127 L283 128"/><path d="M210 163 L283 132"/><path d="M210 199 L283 136"/>
+</g>
+<rect x="286" y="60" width="300" height="140" rx="3" fill="var(--steel-soft)" stroke="var(--steel)"/>
+<text x="436" y="88" text-anchor="middle" font-weight="700">com_jlsitemap</text>
+<text x="436" y="110" text-anchor="middle" font-size="12">адреса через маршрутизатор Joomla</text>
+<text x="436" y="130" text-anchor="middle" font-size="12">исключения: шаблоны, regexp, меню</text>
+<text x="436" y="150" text-anchor="middle" font-size="12">запуск: кнопка · CLI · планировщик задач</text>
+<text x="436" y="170" text-anchor="middle" font-size="12">атомарная запись файлов (2.2.0)</text>
+<g stroke="var(--ink-soft)" stroke-width="1.4" fill="none" marker-end="url(#arr3)">
+<path d="M586 100 L636 70"/><path d="M586 130 L636 130"/><path d="M586 160 L636 190"/>
+</g>
+<g fill="var(--paper-raised)" stroke="var(--accent)">
+<rect x="640" y="50" width="190" height="40" rx="2"/><rect x="640" y="110" width="190" height="40" rx="2"/><rect x="640" y="170" width="190" height="40" rx="2"/>
+</g>
+<text x="735" y="74" text-anchor="middle">sitemap.xml · части</text><text x="735" y="134" text-anchor="middle">карта изображений</text><text x="735" y="194" text-anchor="middle">HTML-карта для людей</text>
+<g stroke="var(--ink-soft)" stroke-width="1.4" fill="none" marker-end="url(#arr3)"><path d="M830 70 L876 110"/><path d="M830 130 L876 125"/><path d="M830 190 L876 140"/></g>
+<rect x="878" y="100" width="94" height="50" rx="2" fill="var(--accent)"/>
+<text x="925" y="122" text-anchor="middle" fill="var(--paper)" font-size="12">поисковые</text><text x="925" y="138" text-anchor="middle" fill="var(--paper)" font-size="12">системы</text>
+<text x="490" y="270" text-anchor="middle" font-size="12" fill="var(--ink-soft)">карта лежит на диске готовым файлом — обращение робота не трогает базу данных</text>
+</g></svg>
+<figcaption>Схема 3. JL Sitemap собирает адреса у плагинов-поставщиков, строит их маршрутизатором Joomla и записывает готовые файлы; поисковики читают файл, а не запрос к базе.</figcaption>
+</figure>
+
+<h3 id="quantum">Quantum Manager: медиа редакции под контролем</h3>
+<p>Пакет <code>PKG_QUANTUMMANAGER</code> — бесплатный файловый и медиаменеджер, который разрабатывают NorrNext и компания «Деловой дизайн» Дмитрия Цымбала <a class="cite" href="#src-63">63</a><a class="cite" href="#src-64">64</a>. Он подменяет штатный медиаменеджер в полях выбора файла, в редакторах TinyMCE и JCE и в конструкторе SP Page Builder: системный плагин перенаправляет вызовы <code>com_media</code> на Quantum, второй плагин переносит настройки между сайтами <a class="cite" href="#src-64">64</a>. Для редакции важны пять свойств: пакетная загрузка файлов; автоматическое уменьшение изображений до заданного размера с сохранением оригиналов; смена формата между JPG, PNG и WebP; обрезка и масштабирование в окне менеджера; постфиксы в именах файлов <a class="cite" href="#src-63">63</a><a class="cite" href="#src-64">64</a>. <em>Области</em> — scopes — группируют файлы по типу: изображения, документы, видео, у каждой свои настройки, что отделяет фотоархив от служебных документов <a class="cite" href="#src-64">64</a>.</p>
+<p>Версия 3.3.0 от 3 марта 2026 года полностью совместима с Joomla 6 без плагина обратной совместимости, требует минимум Joomla 5, очищена от наследия третьей ветки, получила раздельную фильтрацию SVG для миниатюр и для загрузок администраторов и пользователей, безопасный предпросмотр SVG и обновлённую библиотеку EXIF <a class="cite" href="#src-65">65</a>. Бывший вице-президент Joomla Даниэль Дюбуа называет Quantum Manager расширением, которое ставит клиентам по умолчанию <a class="cite" href="#src-64">64</a>.</p>
+<figure class="diagram">
+<svg viewBox="0 0 980 300" role="img" aria-labelledby="d4t" xmlns="http://www.w3.org/2000/svg">
+<title id="d4t">Как работает Quantum Manager: загрузка, обработка, области, вставка</title>
+<defs><marker id="arr4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker></defs>
+<g font-family="var(--sans)" font-size="13" fill="var(--ink)">
+<rect x="20" y="80" width="160" height="130" rx="3" fill="var(--paper-raised)" stroke="var(--line-strong)"/>
+<text x="100" y="108" text-anchor="middle" font-weight="700">Загрузка</text>
+<text x="100" y="134" text-anchor="middle" font-size="12">пакетная загрузка</text>
+<text x="100" y="154" text-anchor="middle" font-size="12">перетаскиванием</text>
+<text x="100" y="174" text-anchor="middle" font-size="12">фильтр SVG по ролям</text>
+<text x="100" y="194" text-anchor="middle" font-size="12">проверка EXIF</text>
+<path d="M180 145 L226 145" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arr4)"/>
+<rect x="228" y="70" width="250" height="150" rx="3" fill="var(--steel-soft)" stroke="var(--steel)"/>
+<text x="353" y="98" text-anchor="middle" font-weight="700">Обработка</text>
+<text x="353" y="122" text-anchor="middle" font-size="12">автоуменьшение до размера</text>
+<text x="353" y="142" text-anchor="middle" font-size="12">JPG → WebP → PNG</text>
+<text x="353" y="162" text-anchor="middle" font-size="12">обрезка · масштаб · поворот</text>
+<text x="353" y="182" text-anchor="middle" font-size="12">постфикс имени · оригинал хранится</text>
+<path d="M478 145 L516 145" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#arr4)"/>
+<rect x="518" y="50" width="200" height="190" rx="3" fill="var(--paper-raised)" stroke="var(--line-strong)"/>
+<text x="618" y="78" text-anchor="middle" font-weight="700">Области (scopes)</text>
+<g fill="var(--paper)" stroke="var(--line-strong)"><rect x="538" y="94" width="160" height="30" rx="2"/><rect x="538" y="132" width="160" height="30" rx="2"/><rect x="538" y="170" width="160" height="30" rx="2"/></g>
+<text x="618" y="114" text-anchor="middle" font-size="12">изображения · фото</text>
+<text x="618" y="152" text-anchor="middle" font-size="12">документы · PDF</text>
+<text x="618" y="190" text-anchor="middle" font-size="12">видео · аудио</text>
+<text x="618" y="226" text-anchor="middle" font-size="11" fill="var(--ink-soft)">свои настройки у каждой</text>
+<g stroke="var(--ink-soft)" stroke-width="1.4" fill="none" marker-end="url(#arr4)"><path d="M718 100 L778 85"/><path d="M718 145 L778 145"/><path d="M718 190 L778 205"/></g>
+<g fill="var(--paper-raised)" stroke="var(--accent)"><rect x="780" y="65" width="180" height="40" rx="2"/><rect x="780" y="125" width="180" height="40" rx="2"/><rect x="780" y="185" width="180" height="40" rx="2"/></g>
+<text x="870" y="89" text-anchor="middle">редактор TinyMCE · JCE</text><text x="870" y="149" text-anchor="middle">поля типа media</text><text x="870" y="209" text-anchor="middle">SP Page Builder</text>
+<text x="490" y="275" text-anchor="middle" font-size="12" fill="var(--ink-soft)">системный плагин перенаправляет вызовы штатного com_media на Quantum Manager</text>
+</g></svg>
+<figcaption>Схема 4. Quantum Manager принимает файлы, приводит изображения к норме редакции, раскладывает их по областям и отдаёт в редактор, поля и конструктор.</figcaption>
+</figure>
+
+</div></div></section><section id="portaly" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 12</p><h2>Живые порталы на Joomla</h2></div><div class="prose">
+<p>Каждый адрес проверен по карточке W3Techs 8 октября 2026 года: ранг популярности и обнаруженный стек.</p>
+<table>
+<thead>
+<tr>
+<th>сайт</th>
+<th>страна и ранг</th>
+<th>что на карточке</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jutarnji.hr</td>
+<td>Хорватия, первая тысяча мира</td>
+<td>Joomla 3.9.8, Cloudflare, HTTP/3, Brotli, JSON-LD <a class="cite" href="#src-6">6</a></td>
+</tr>
+<tr>
+<td>Slobodnadalmacija.hr</td>
+<td>Хорватия, первые 10 тыс.</td>
+<td>Joomla, Cloudflare, HTTP/3 <a class="cite" href="#src-49">49</a></td>
+</tr>
+<tr>
+<td>CNN.gr</td>
+<td>Греция, первые 10 тыс.</td>
+<td>Joomla 3.10.12, Nginx, Akamai, JSON-LD <a class="cite" href="#src-50">50</a></td>
+</tr>
+<tr>
+<td>Newsbomb.gr</td>
+<td>Греция, первые 10 тыс.</td>
+<td>Joomla, Nginx, Akamai, аналитика Piano <a class="cite" href="#src-51">51</a></td>
+</tr>
+<tr>
+<td>Dnews.gr</td>
+<td>Греция, первые 10 тыс.</td>
+<td>«Joomla 3.15.0», Hetzner, LeaseWeb, Anexia за Cloudflare <a class="cite" href="#src-52">52</a></td>
+</tr>
+<tr>
+<td>Primocanale.it</td>
+<td>Италия, первые 100 тыс.</td>
+<td>Joomla 3.10.12 на IIS 10 под Windows; перешёл на Joomla недавно <a class="cite" href="#src-7">7</a></td>
+</tr>
+</tbody>
+</table>
+<p>Jutarnji list — второй по посещаемости новостной сайт Хорватии после Index.hr; его издатель Hanza Media — крупнейшая медиакомпания страны и Юго-Восточной Европы с пятью ежедневными газетами, двадцатью с лишним журналами и двадцатью цифровыми изданиями, которые в сумме читают 4,4 млн человек <a class="cite" href="#src-66">66</a><a class="cite" href="#src-67">67</a>. Slobodna Dalmacija — вторая газета того же дома. Два главных портала медиагруппы на одной платформе — довод сильнее любой рекламной страницы.</p>
+<p>Dnews.gr любопытен версией: Joomla 3.15.0 не выходила, значит, греки ведут собственную ветвь третьей линии — Р-03. Primocanale, региональный телеканал Лигурии, по W3Techs перешёл на Joomla недавно и работает на сервере Microsoft IIS — редкое, но живое сочетание <a class="cite" href="#src-7">7</a>.</p>
+<p>Отсев при проверке важен не меньше находок. Oe24.at держит Joomla 3.4.8 лишь на поддомене, основной портал — иное <a class="cite" href="#src-68">68</a>. Soorban.com оказался иранским свадебным порталом, а не новостным <a class="cite" href="#src-69">69</a>. iTWire часто называют примером новостного сайта на Joomla, но генератор Joomla в его коде сейчас не виден — статус не подтверждён, М-02 <a class="cite" href="#src-70">70</a>.</p>
+<p>Казахстанский штрих. Четвёртого июля 2011 года Tengrinews сообщал, что государственная компания KazContent при Министерстве связи и информации бесплатно строит сайты региональных печатных изданий именно на Joomla: десять готовы, шестнадцать в работе, цель — 100–150 к концу года, редакции платят лишь за домен, 4 300 ₸ <a class="cite" href="#src-71">71</a>. Опыт пятнадцатилетней давности показывает, что платформу для региональной прессы страны уже выбирали — и выбрали Joomla.</p>
+<p>Белое пятно честно: русско- и казахскоязычный новостной сайт верхнего эшелона на Joomla в открытых срезах W3Techs не ищется — нужна карточка конкретного домена, а определение версии идёт по тегу <code>generator</code>, который легко скрыть — М-03.</p>
+</div></div></section><section id="ekosistema" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 13</p><h2>Русская и казахстанская экосистема</h2></div><div class="prose">
+<p>Русское сообщество Joomla — третье в мире по числу сайтов и живое по темпу. Портал joomlaportal.ru сам работает на Joomla 6.1.4 и публикует новости релизов в день выхода; Telegram-канал «Joomla по-русски» насчитывает 1 292 участника, рядом живут ленты новостей и чат профессионалов <a class="cite" href="#src-72">72</a><a class="cite" href="#src-73">73</a>. Русская локализация ведётся на GitHub командой JPathRu; пакет ru-RU для Joomla 6.0.1 вышел 25 ноября 2025 года и скачан более 12 тыс. раз <a class="cite" href="#src-14">14</a><a class="cite" href="#src-74">74</a>.</p>
+<p>Ключевые разработчики. Сергей Толкачёв (Саратов, WebTolk) — 113 расширений, 581 версия, около 891 тыс. загрузок: каталог SW JProjects с собственным сервером обновлений, библиотеки для AmoCRM, плагины IndexNow, Telegram-бот для редакций и магазинов, карты Яндекса; он же ведёт дайджесты Joomla на Хабре и с 2026 года выпускает JL Sitemap <a class="cite" href="#src-59">59</a><a class="cite" href="#src-75">75</a><a class="cite" href="#src-62">62</a>. Игорь Бердичевский (Septdir) ведёт регулярные стримы по разработке на YouTube и Twitch и разбирает устройство ACL и HTTP-ответа <a class="cite" href="#src-76">76</a>. Команда RadicalMart строит компонент электронной коммерции под нагрузку: Joomla 4–6, версия 3.0.17 от 29 апреля 2026 года, еженедельные обновления, 43 службы доставки, интеграции с 1С и AmoCRM <a class="cite" href="#src-77">77</a>. NorrNext Евгения Сивоконя выпускает Quantum Manager и к двадцатилетию Joomla собрал сорок шесть интервью с людьми проекта <a class="cite" href="#src-78">78</a>. Joomline — JL Sitemap, JL Like, ContentCart <a class="cite" href="#src-60">60</a>.</p>
+<p>Электронная коммерция для сервисных сайтов и магазинов на Joomla 6, по сводке joomlaportal.ru за май 2026 года <a class="cite" href="#src-79">79</a>: JoomShopping 5.9.2 — бесплатно с платными плагинами; HikaShop 6.4.0 — условно-бесплатный; Phoca Cart 6.1.0 в бета-версии — бесплатно; RadicalMart 3.0.17 — от 3 000 ₽ в год; ContentCart 4.0.0 — бесплатно; VirtueMart 4.6.4 шестую ветку не поддерживает, пятая версия в бете.</p>
+<p>Платёжные системы РК — главный пробел. Kaspi Pay даёт официальный эквайринг через REST API с токеном, QR-кодом, счетами и обратными вызовами, подключение идёт через Kaspi Business <a class="cite" href="#src-16">16</a><a class="cite" href="#src-80">80</a>, но готовых плагинов для магазинов на Joomla в открытых источниках нет — М-04; посредники предлагают API-прослойки от 10 тыс. ₸ в месяц <a class="cite" href="#src-16">16</a>. Freedom Pay, бывший PayBox, выложил официальный модуль для JoomShopping, но тестировал его на JoomShopping 3.13 и 4.18 — совместимость с пятой версией магазина и Joomla 6 не подтверждена, М-05 <a class="cite" href="#src-15">15</a>. Плагин ЮKassa для Phoca Cart от profibits.ru умеет переключать шлюз между Россией и Казахстаном <a class="cite" href="#src-81">81</a>. Вывод: плагин Kaspi Pay или Freedom Pay под JoomShopping 5 либо RadicalMart — свободная ниша и конкурентное преимущество для того, кто напишет его первым.</p>
+<p>Казахский языковой пакет kk-KZ последний раз выходил для Joomla 4.4.0 в ноябре 2023 года; для пятой и шестой веток его нет — М-06 <a class="cite" href="#src-13">13</a>. Смягчение приходит из ядра: с версии 6.2 цепочки запасных языков дают назначить для kk-KZ запасным ru-RU, и непереведённые казахские строки интерфейса покажутся по-русски, а не по-английски <a class="cite" href="#src-26">26</a><a class="cite" href="#src-82">82</a>. Содержание при этом переводится руками — ассоциации лишь связывают версии материалов, категорий, меню и, с 6.1, модулей <a class="cite" href="#src-2">2</a><a class="cite" href="#src-5">5</a>.</p>
+</div></div></section><section id="shablony" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 14</p><h2>Шаблоны и конструкторы</h2></div><div class="prose">
+<p>YOOtheme Pro пятой версии совместим с Joomla 6 и остаётся сильнейшим конструктором страниц с динамическим содержимым из материалов и пользовательских полей; лицензия платная <a class="cite" href="#src-83">83</a>. Astroid 3.3.0 с многомакетностью — свободный фреймворк от TemplaZa <a class="cite" href="#src-84">84</a>. Gantry 5.6.0 от 25 февраля 2026 года — первый релиз новой команды Tiger12 после закрытия RocketTheme 30 июня 2025 года: нативная Joomla 5, PHP 8.1–8.3 <a class="cite" href="#src-85">85</a><a class="cite" href="#src-86">86</a>. Helix Ultimate на Bootstrap 5 популярен в СНГ; SP Page Builder 6.0.0 от JoomShaper берёт динамическое содержимое из материалов и совместим с Joomla 6 <a class="cite" href="#src-87">87</a>. Отдельного слова заслуживают дочерние шаблоны — механизм, который даёт редакции свободу над дизайном без риска при обновлениях. Дочерний шаблон наследует от родителя всё и переопределяет что угодно: макет материала, шапку, стили; живёт в собственной папке и потому не затирается обновлением родителя; создаётся одной кнопкой из карточки шаблона <a class="cite" href="#src-5">5</a>. Чистая Joomla 6 приходит уже с такой парой — Cassiopeia и Cassiopeia Extended с настройкой цветов и шрифтов в форме стиля <a class="cite" href="#src-1">1</a>. Стиль — шаблон с набором параметров — назначается пункту меню, поэтому у разных разделов одного сайта может быть совершенно разный дизайн: ленте новостей — плотный, спецпроекту — без шапки и колонок, архиву — компактный. Так же внутрь сайта встраивается интерактивный лонгрид: он кладётся в материал или в отдельный стиль и живёт рядом с навигацией и модулями Joomla; в приложении со скриншотами это показано на одной установке — главная на штатном стиле, раздел «Экономика» на дочернем, лонгрид внутри материала. Для новостного сайта под нагрузкой доклад рекомендует собственный лёгкий шаблон на фреймворке вроде UIkit 3 с переопределениями макетов ядра: конструкторы страниц удобны редакции спецпроектов, но на главной странице портала с десятками модулей их накладные расходы заметны.</p>
+</div></div></section><section id="riski" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 15</p><h2>Конкуренты и риски</h2></div><div class="prose">
+<p>WordPress 7.0 вышел 20 мая 2026 года с API соединителей искусственного интеллекта, представлениями данных, заметками для асинхронной работы редакции и адаптером MCP; настоящий совместный редактор отложен <a class="cite" href="#src-88">88</a>. Drupal 12.0.0 назначен на неделю 7 декабря 2026 года вместе с 11.5.0, требует PHP 8.5 и MariaDB 10.11; Drupal 10 завершает жизнь 9 декабря 2026 года <a class="cite" href="#src-89">89</a><a class="cite" href="#src-90">90</a>. Laravel 13 от 17 марта 2026 года и Symfony 8.0 от 27 ноября 2025 года — фреймворки, на которых строят собственные редакционные системы с нуля; Symfony 7.4 LTS поддерживается до ноября 2029 года <a class="cite" href="#src-91">91</a><a class="cite" href="#src-92">92</a>. Joomla стоит между ними: готовая редакционная модель против бесконечной гибкости фреймворка и против плагинного рынка WordPress.</p>
+<p>Риски для заказчика, названные без смягчений.</p>
+<p>Падение доли рынка — долгосрочный тренд, и он сужает круг разработчиков и расширений; противовес — политика двухлетних мажоров, выдержанная дважды подряд, и живые национальные сообщества, прежде всего немецкое и русское <a class="cite" href="#src-32">32</a><a class="cite" href="#src-8">8</a><a class="cite" href="#src-34">34</a>. Сентябрьский номер Joomla Community Magazine вышел с заметкой «Ищем мейнтейнеров Joomla» — проект открыто говорит о нехватке рук <a class="cite" href="#src-93">93</a>; при этом 6.2 выходит по графику, а релиз-команда названа поимённо <a class="cite" href="#src-25">25</a>. Все найденные крупные порталы сидят на третьей ветке, и это предупреждение: редакция, которая не заложит обновления в бюджет, через пять лет повторит их путь. Штатный поиск, штатная разметка Schema.org и отсутствие сброса кеша при правке требуют дополнительной работы — три задачи из главы десятой и одиннадцатой входят в смету проекта, а не в его риски.</p>
+</div></div></section><section id="rekomendatsii" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 16</p><h2>Рекомендации</h2></div><div class="prose">
+<ol>
+<li>Платформа — Joomla 6.2 на PHP 8.4, MariaDB 11+, Nginx, за Cloudflare или аналогичной сетью доставки; Redis под объектный кеш в консервативном режиме.</li>
+<li>Редакционный конвейер — четыре собственные группы, процесс «Новости» из пяти стадий с необязательной стадией главреда, уведомления переходов, своё административное меню на роль, подача с лицевой стороны для репортёров.</li>
+<li>Таксономия — категории как отделы, не больше восьми; дерево меток в пяти ветвях (темы, регионы, персоны, организации, форматы); право создавать метки — только у редакторов отделов.</li>
+<li>Видимость — JL Sitemap с планировщиком и картой изображений, OSMap или SchuWeb для новостной карты Google News, WT IndexNow, разметка <code>NewsArticle</code> через Google Structured Data или собственный плагин.</li>
+<li>Медиа — Quantum Manager с автоуменьшением до редакционного размера и преобразованием в WebP, области для фотоархива и документов.</li>
+<li>База и поиск — индекс по <code>catid, state</code> с первого дня, ночная переиндексация Smart Search из командной строки, переход на Solr при архиве свыше 300 тыс. материалов.</li>
+<li>Казахстан — запасной язык ru-RU для kk-KZ с версии 6.2; плагин Kaspi Pay или Freedom Pay под JoomShopping 5 или RadicalMart как первая разработка проекта.</li>
+<li>Бюджет — обновления ядра и расширений заложить как постоянную статью: минорные версии раз в полгода, мажор раз в два года.</li>
+</ol>
+</div></div></section><section id="glossariy" class="section apparatus"><div class="wrap"><div class="section-head"><p class="eyebrow">служебный аппарат</p><h2>Глоссарий</h2></div><div class="prose">
+<dl class="glossary">
+<dt>CMS, система управления содержимым</dt><dd>От английского content management system. Термин сложился в конце 1990-х, когда редакторы сайтов перестали править HTML руками: система отделила содержание от оформления и дала интерфейс для ввода, правки и публикации. Русское «движок» — разговорный синоним. В докладе — платформа, на которой живёт редакция и сайт.</dd>
+<dt>ACL, списки доступа</dt><dd>От access control list — перечень того, кому что разрешено. Понятие пришло из операционных систем 1970-х; в Joomla права раздаются действиями («создать», «править своё», «менять состояние», «выполнить переход») группам пользователей на трёх ярусах — сайт, компонент, категория — и наследуются вниз. Так зона ответственности сотрудника описывается один раз и действует везде.</dd>
+<dt>процесс публикации, workflow</dt><dd>Английское workflow — «поток работы» — пришло из промышленной организации труда начала XX века и обозначало движение изделия между постами. В Joomla процесс — это стадии и переходы между ними; переход несёт действие над состоянием, уведомление и право на выполнение. Статические состояния «опубликовано» и «снято» остаются и при выключенном процессе, поэтому процессы можно включать и выключать без потери содержания.</dd>
+<dt>уровень доступа</dt><dd>Отличается от прав: уровень отвечает на вопрос «кто видит», права — «кто действует». Уровни Public, Registered, Special и свои собственные назначаются материалам, меню, модулям; группа входит в уровень, и всё помеченное этим уровнем становится ей видно.</dd>
+<dt>таксономия</dt><dd>Греческое taxis — «порядок», nomos — «закон». Из биологической систематики Линнея слово перешло в библиотечное дело и информационную архитектуру. В Joomla таксономия двухосная: иерархия категорий задаёт структуру и адреса, иерархия меток — смысловую сеть поверх любого содержимого.</dd>
+<dt>CDN, сеть доставки содержимого</dt><dd>От content delivery network — распределённые серверы, которые отдают копии страниц и файлов ближе к читателю и принимают всплески трафика вместо сайта. Cloudflare, Akamai, Fastly — три сети, замеченные у порталов на Joomla в этом докладе.</dd>
+<dt>TUF, The Update Framework</dt><dd>Открытая спецификация защищённой доставки обновлений, разработанная Джастином Каппосом в Нью-Йоркском университете в 2010 году для системы обновлений Tor и принятая фондом Cloud Native Computing Foundation. Подписи и метаданные пакетов проверяются до установки, что закрывает атаки на цепочку поставки. В Joomla — с версии 5.1.</dd>
+<dt>JSON-LD и Schema.org</dt><dd>Schema.org — словарь типов и свойств, учреждённый в 2011 году поисковыми компаниями для разметки смысла страниц; JSON-LD — «JSON для связанных данных», способ записать эту разметку отдельным блоком, не трогая HTML. Поисковики и языковые модели читают блок, чтобы понять, что перед ними новость, кто автор и когда она вышла.</dd>
+<dt>IndexNow</dt><dd>Протокол 2021 года, предложенный Microsoft и Яндексом: сайт сам извещает поисковые системы о новых и изменённых адресах, вместо того чтобы ждать обхода роботом. Для новостей это минуты вместо часов.</dd>
+<dt>Composer</dt><dd>Менеджер зависимостей PHP, появившийся в 2012 году по образцу npm. Пакеты Joomla Framework ставятся им под именами joomla/*, что и делает фреймворк самостоятельным продуктом.</dd>
+<dt>ESI, Edge Side Includes</dt><dd>Язык разметки 2001 года, которым страницу собирают на границе сети из блоков с разным сроком кеширования: статичная статья и личный блок пользователя кешируются порознь. В Joomla доступен через LiteSpeed Enterprise.</dd>
+</dl>
+
+</div></div></section><section id="reestry" class="section apparatus"><div class="wrap"><div class="section-head"><p class="eyebrow">служебный аппарат</p><h2>Реестры</h2></div><div class="prose">
+<h3>расхождения источников (Р)</h3>
+<table>
+<thead>
+<tr>
+<th>код</th>
+<th>расхождение</th>
+<th>как принято в докладе</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Р-01</td>
+<td>joomla.org пишет о шести департаментах OSM; страница «О проекте» показывает с портретами три</td>
+<td>названы оба числа, за основу взята страница структуры <a class="cite" href="#src-17">17</a><a class="cite" href="#src-18">18</a></td>
+</tr>
+<tr>
+<td>Р-02</td>
+<td>руководство пользователя: «более 8 000 расширений»; каталог JED на дату проверки: 4 938</td>
+<td>взято число каталога <a class="cite" href="#src-35">35</a><a class="cite" href="#src-5">5</a></td>
+</tr>
+<tr>
+<td>Р-03</td>
+<td>W3Techs показывает у Dnews.gr «Joomla 3.15.0», официальной версии с таким номером не было</td>
+<td>трактуется как собственная ветвь, в тексте оговорено <a class="cite" href="#src-52">52</a></td>
+</tr>
+<tr>
+<td>Р-04</td>
+<td>руководство пользователя: «более 64 языков»; сайт шестой версии: «свыше 70 языковых пакетов»</td>
+<td>оба числа не используются как точные <a class="cite" href="#src-20">20</a><a class="cite" href="#src-5">5</a></td>
+</tr>
+<tr>
+<td>Р-05</td>
+<td>руководство (для ветки 4) помещает поле этапа лицевой формы на вкладку «Публикация»; в 6.1.4 оно на вкладке «Параметры»</td>
+<td>проверено на установке 6.1.4; в тексте указано текущее место <a class="cite" href="#src-41">41</a></td>
+</tr>
+</tbody>
+</table>
+<h3>белые пятна (М)</h3>
+<table>
+<thead>
+<tr>
+<th>код</th>
+<th>что не удалось проверить</th>
+<th>что сделано</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>М-01</td>
+<td>слияние в ядро запросов #45542, #45660, #44078 о производительности больших выборок</td>
+<td>названы как заявленные, не как влитые <a class="cite" href="#src-11">11</a></td>
+</tr>
+<tr>
+<td>М-02</td>
+<td>работает ли iTWire на Joomla сегодня: генератор в коде не виден</td>
+<td>в список порталов не включён <a class="cite" href="#src-70">70</a></td>
+</tr>
+<tr>
+<td>М-03</td>
+<td>русско- и казахскоязычные новостные сайты верхнего эшелона на Joomla</td>
+<td>требуется проверка конкретных доменов по карточкам W3Techs</td>
+</tr>
+<tr>
+<td>М-04</td>
+<td>готовые плагины Kaspi Pay для магазинов на Joomla</td>
+<td>не найдены в открытых источниках; названа ниша <a class="cite" href="#src-16">16</a></td>
+</tr>
+<tr>
+<td>М-05</td>
+<td>совместимость модуля PayBox для JoomShopping с JoomShopping 5 и Joomla 6</td>
+<td>тестировался на 3.13 и 4.18, статус открыт <a class="cite" href="#src-15">15</a></td>
+</tr>
+<tr>
+<td>М-06</td>
+<td>казахский языковой пакет для Joomla 5 и 6</td>
+<td>последний — 4.4.0; предложен запасной язык ru-RU с 6.2 <a class="cite" href="#src-26">26</a><a class="cite" href="#src-13">13</a></td>
+</tr>
+</tbody>
+</table>
+</div></div></section><section id="ukazatel" class="section apparatus"><div class="wrap"><div class="section-head"><p class="eyebrow">служебный аппарат</p><h2>Указатель систем и расширений</h2></div><div class="prose">
+<p>Astroid · Cloudflare · Composer · Drupal · EKS · Freedom Pay (PayBox) · Gantry · Helix Ultimate · HikaShop · IndexNow · JL Sitemap · JoomShopping · Joomla Framework · JSitemap Pro · Kaspi Pay · Laravel · LiteSpeed · MariaDB · OSMap · Phoca Cart · PHP · Quantum Manager · RadicalMart · Redis · Schema.org · SchuWeb Sitemap · Smart Search · Solr · SP Page Builder · Symfony · TinyMCE · TUF · VirtueMart · WordPress · WT IndexNow · YOOtheme Pro · ЮKassa.</p>
+</div></div></section><section id="istochniki" class="section apparatus"><div class="wrap"><div class="section-head"><p class="eyebrow">служебный аппарат</p><h2>Список использованных источников</h2></div><div class="prose">
+<p>Все адреса открыты 8 октября 2026 года. Порядок — по первому упоминанию.</p>
+<ol class="sources">
+<li id="src-1">Joomla 6.0 and Joomla 5.4 are here // Joomla! Announcements. URL: https://www.joomla.org/announcements/release-news/5939-joomla-6-0-and-joomla-5-4-are-here.html</li>
+<li id="src-2">Joomla 6.1 is here // Joomla! Announcements. URL: https://www.joomla.org/announcements/release-news/joomla-6-1-is-here.html</li>
+<li id="src-3">Roadmap // Joomla! Developer Network. URL: https://developer.joomla.org/roadmap.html</li>
+<li id="src-4">libraries/src/Version.php, ветка 7.0-dev // GitHub, joomla/joomla-cms. URL: https://raw.githubusercontent.com/joomla/joomla-cms/7.0-dev/libraries/src/Version.php</li>
+<li id="src-5">Joomla Core Features // Joomla! User Documentation. URL: https://guide.joomla.org/user-guide/getting-started/getting-started-joomla-core-features</li>
+<li id="src-6">Web Technologies used by Jutarnji.hr // W3Techs. URL: https://w3techs.com/sites/info/jutarnji.hr</li>
+<li id="src-7">Web Technologies used by Primocanale.it // W3Techs. URL: https://w3techs.com/sites/info/primocanale.it</li>
+<li id="src-8">Usage statistics and market share of Joomla // W3Techs. URL: https://w3techs.com/technologies/details/cm-joomla</li>
+<li id="src-9">CMS Market Share // Colorlib : сайт. URL: https://colorlib.com/wp/cms-market-share/</li>
+<li id="src-10">Smart Search on Large Sites // Joomla! User Documentation. URL: https://guide.joomla.org/user-manual/smart-search/smart-search-smart-search-on-large-sites</li>
+<li id="src-11">150k+ articles / 1700 categories performance improvements : discussion #45737 // GitHub, joomla/joomla-cms. URL: https://github.com/joomla/joomla-cms/discussions/45737</li>
+<li id="src-12">plugins/schemaorg/article/forms/schemaorg.xml, ветка 6.1-dev // GitHub, joomla/joomla-cms. URL: https://raw.githubusercontent.com/joomla/joomla-cms/6.1-dev/plugins/schemaorg/article/forms/schemaorg.xml</li>
+<li id="src-13">Joomla! 4 — Kazakh, 4.4.0.1 // Joomla! Downloads. URL: https://downloads.joomla.org/cy/language-packs/translations-joomla4/downloads/joomla4-kazakh/4-4-0-1</li>
+<li id="src-14">Joomla! 6 — Russian, 6.0.1.1 // Joomla! Downloads. URL: https://downloads.joomla.org/sk/cms/joomla6-russian/6-0-1-1</li>
+<li id="src-15">PayBox/module-joomla-JoomShopping // GitHub. URL: https://github.com/PayBox/module-joomla-JoomShopping</li>
+<li id="src-16">Интеграция Kaspi Pay // ApiPay.kz : сайт. URL: https://apipay.kz/kaspi-pay-integration</li>
+<li id="src-17">The Project // Joomla! : сайт. URL: https://www.joomla.org/about-joomla/the-project.html</li>
+<li id="src-18">Departments // Joomla! Volunteers Portal. URL: https://volunteers.joomla.org/departments</li>
+<li id="src-19">Joomla — Joomla Content Management System // Digital Public Goods Alliance. URL: https://www.digitalpublicgoods.net/r/joomla-joomla-content-management-system</li>
+<li id="src-20">Joomla 6 // Joomla! : сайт. URL: https://6.joomla.org/</li>
+<li id="src-21">Joomla 6.1.4 and 5.4.9 Security &amp; Bugfix Release // Joomla! Announcements. URL: https://www.joomla.org/announcements/release-news/joomla-6-1-4-5-4-9-security-bugfix-release.html</li>
+<li id="src-22">Generative AI Policy // Joomla! Developer Network. URL: https://developer.joomla.org/generative-ai-policy.html</li>
+<li id="src-23">Joomla! World Conference 2026 // Joomla! Community Portal. URL: https://community.joomla.org/events/joomla-world-conference-2026.html</li>
+<li id="src-24">Software Release Cycle // Joomla! Programmers Documentation. URL: https://manual.joomla.org/docs/development-strategy/software-release-cycle/</li>
+<li id="src-25">Joomla 6.2 Release Candidate — test the final package // Joomla! Announcements. URL: https://www.joomla.org/announcements/release-news/joomla-6-2-release-candidate-test-the-final-package.html</li>
+<li id="src-26">Language Fallbacks // Joomla! User Documentation. URL: https://guide.joomla.org/user-manual/languages/language-fallbacks</li>
+<li id="src-27">Joomla 5.1.0 and Joomla 4.4.4 are here // Joomla! Announcements. URL: https://www.joomla.org/announcements/release-news/joomla-5-1-0-and-joomla-4-4-4-are-here.html</li>
+<li id="src-28">Technical Requirements // Joomla! Programmers Documentation. URL: https://manual.joomla.org/docs/get-started/technical-requirements/</li>
+<li id="src-29">PHP 8.5 Release Announcement // PHP : сайт. URL: https://www.php.net/releases/8.5/en.php</li>
+<li id="src-30">Joomla! Framework // framework.joomla.org : сайт. URL: https://framework.joomla.org/</li>
+<li id="src-31">joomla/joomla-cms // GitHub. URL: https://github.com/joomla/joomla-cms</li>
+<li id="src-32">Usage statistics and market share of content management systems // W3Techs. URL: https://w3techs.com/technologies/overview/content_management</li>
+<li id="src-33">Distribution of Joomla among websites that use various site rankings // W3Techs. URL: https://w3techs.com/technologies/breakdown/cm-joomla/ranking</li>
+<li id="src-34">Usage of Joomla broken down by content languages // W3Techs. URL: https://w3techs.com/technologies/segmentation/cm-joomla/content_language</li>
+<li id="src-35">Joomla! Extensions Directory // extensions.joomla.org : сайт. URL: https://extensions.joomla.org/</li>
+<li id="src-36">Joomla! Extensions Directory reaches 138 million downloads // Joomla! Announcements. URL: https://www.joomla.org/announcements/general-news/joomla-extensions-directory-reaches-138-million-downloads.html</li>
+<li id="src-37">Article: Edit — Publishing // Joomla! User Documentation. URL: https://guide.joomla.org/user-guide/articles/articles-article-publishing</li>
+<li id="src-38">Web Services API // Joomla! Programmers Documentation. URL: https://manual.joomla.org/docs/web-services-api/</li>
+<li id="src-39">Publishing Workflow // Joomla! User Documentation. URL: https://guide.joomla.org/user-manual/workflows/workflows-workflow</li>
+<li id="src-40">Workflow Example 1 // Joomla! User Documentation. URL: https://guide.joomla.org/user-manual/workflows/workflows-workflow-example-1</li>
+<li id="src-41">Workflow Example 2 // Joomla! User Documentation. URL: https://guide.joomla.org/user-manual/workflows/workflows-workflow-example-2</li>
+<li id="src-42">Custom Administrator Menu // Joomla! User Documentation. URL: https://guide.joomla.org/user-guide/menus/menus-adding-a-custom-administrator-menu</li>
+<li id="src-43">Content Tags // Joomla! User Documentation. URL: https://guide.joomla.org/user-guide/tags/tags-content-tags</li>
+<li id="src-44">Help5.x: Menu Item: Tagged Items // Joomla! Documentation. URL: https://docs.joomla.org/Help5.x:Menu_Item:_Tagged_Items</li>
+<li id="src-45">Help5.x: Tags: Options // Joomla! Documentation. URL: https://docs.joomla.org/Help5.x:Tags:_Options</li>
+<li id="src-46">Smart Search Quickstart // Joomla! User Documentation. URL: https://guide.joomla.org/user-guide/smart-search/smart-search-smart-search-quickstart-guide</li>
+<li id="src-47">Cache // Joomla! Documentation. URL: https://docs.joomla.org/Cache</li>
+<li id="src-48">Gomiero Y. Boosting Joomla with LiteSpeed Cache and Redis // Joomla Community Magazine. 2025. April. URL: https://magazine.joomla.org/issues/2025/april-2025/boosting-joomla-with-litespeed-cache-and-redis</li>
+<li id="src-49">Web Technologies used by Slobodnadalmacija.hr // W3Techs. URL: https://w3techs.com/sites/info/slobodnadalmacija.hr</li>
+<li id="src-50">Web Technologies used by Cnn.gr // W3Techs. URL: https://w3techs.com/sites/info/cnn.gr</li>
+<li id="src-51">Web Technologies used by Newsbomb.gr // W3Techs. URL: https://w3techs.com/sites/info/newsbomb.gr</li>
+<li id="src-52">Web Technologies used by Dnews.gr // W3Techs. URL: https://w3techs.com/sites/info/dnews.gr</li>
+<li id="src-53">Schema.org // Joomla! User Documentation. URL: https://guide.joomla.org/user-manual/schema-org</li>
+<li id="src-54">Joomla Articles Structured Data // Google Structured Data : документация. URL: https://www.tassos.gr/docs/google-structured-data/integrations/articles</li>
+<li id="src-55">PSA Schema Vita Potentia // Joomla! Extensions Directory. URL: https://extensions.joomla.org/extension/psa-schema-vita-potentia/</li>
+<li id="src-56">How to Create a Google News Sitemap for Joomla Sites // Joomlashack. URL: https://www.joomlashack.com/blog/joomla/google-news/</li>
+<li id="src-57">Site Map : категория // Joomla! Extensions Directory. URL: https://extensions.joomla.org/category/structure-a-navigation/site-map/</li>
+<li id="src-58">Vogel V. EKS — Easy Keyword Sitemap // Kubik-Rubik. URL: https://kubik-rubik.de/en/eks-easy-keyword-sitemap</li>
+<li id="src-59">WebTolk — расширения для Joomla : сайт. URL: https://web-tolk.ru/</li>
+<li id="src-60">JL Sitemap — компонент карты сайта // Joomline : сайт. URL: https://joomline.ru/rasshirenija/komponenty/jlsitemap.html</li>
+<li id="src-61">JL Sitemap // Joomla! Extensions Directory. URL: https://extensions.joomla.org/extension/jl-sitemap/</li>
+<li id="src-62">JL Sitemap 2.2.0 : release // GitHub, Joomline/jlsitemap. URL: https://github.com/Joomline/jlsitemap/releases/tag/2.2.0</li>
+<li id="src-63">Quantum Manager — файловый менеджер для Joomla // GitHub, Quantum-Manager/quantummanager. URL: https://github.com/Quantum-Manager/quantummanager</li>
+<li id="src-64">Quantum Manager, by NorrNext // Joomla! Extensions Directory. URL: https://extensions.joomla.org/extension/quantum-manager</li>
+<li id="src-65">Quantum Manager 3.3.0 : release // GitHub, Quantum-Manager/start. URL: https://github.com/Quantum-Manager/start/releases/tag/3.3.0</li>
+<li id="src-66">Hanza Media // Wikipedia. URL: https://en.wikipedia.org/wiki/Hanza_Media</li>
+<li id="src-67">Hanza Media d.o.o. // AmCham Croatia. URL: https://www.amcham.hr/en/members/hanza-media-doo</li>
+<li id="src-68">Web Technologies used by Oe24.at // W3Techs. URL: https://w3techs.com/sites/info/oe24.at</li>
+<li id="src-69">Web Technologies used by Soorban.com // W3Techs. URL: https://w3techs.com/sites/info/soorban.com</li>
+<li id="src-70">About iTWire // iTWire : сайт. URL: https://itwire.com/about</li>
+<li id="src-71">Regional print media to go online in Kazakhstan // Tengrinews. 2011. 4 июля. URL: https://en.tengrinews.kz/internet/regional-print-media-to-go-online-in-kazakhstan-2933/</li>
+<li id="src-72">Joomla Portal — русское сообщество Joomla : сайт. URL: https://joomlaportal.ru/</li>
+<li id="src-73">Joomla по-русски // Telegram. URL: https://t.me/joomlaru</li>
+<li id="src-74">JPathRu/localisation // GitHub. URL: https://github.com/JPathRu/localisation</li>
+<li id="src-75">Толкачёв С. Публикации // Хабр. URL: https://habr.com/ru/users/sergeytolkachyov/</li>
+<li id="src-76">Septdir Workshop // Telegram. URL: https://t.me/SeptdirWorkshop</li>
+<li id="src-77">RadicalMart — компонент электронной коммерции для Joomla : сайт. URL: https://radicalmart.ru/</li>
+<li id="src-78">NorrNext Magazine: 20th birthday of Joomla // NorrNext. URL: https://norrnext.com/blog/norrnext-magazine-20th-birthday-of-joomla</li>
+<li id="src-79">Интернет-магазин на Joomla 6: выбор компонента в 2026 году // Joomla Portal. URL: https://joomlaportal.ru/faq/extensions/joomla-internet-magazin</li>
+<li id="src-80">Kaspi Bank API integration guide // OSN.kz : сайт. URL: https://osn.kz/blog/kaspi-bank-api-integration-guide</li>
+<li id="src-81">Плагин оплаты ЮKassa для Phoca Cart // Profibits : сайт. URL: https://profibits.ru/plaginy/phoca-cart/yookassa-phoca-cart</li>
+<li id="src-82">Per-string language fallback chain : PR #47933 // Joomla! Issue Tracker. URL: https://issues.joomla.org/tracker/joomla-cms/47933</li>
+<li id="src-83">Joomla 6 and YOOtheme Pro 5: extension status update // JPro Studio. URL: https://jpro.studio/news/joomla-6-yootheme-pro-5-extension-status-update</li>
+<li id="src-84">Astroid v3.3.0 is out now: say hello to Multi-Layout // Astroid Framework. URL: https://astroidframe.work/blog/astroid-v3-3-0-is-out-now-say-hello-to-multi-layout</li>
+<li id="src-85">Gantry 5.6 has been released // Gantry : сайт. URL: https://gantry.org/blog/gantry-5-6-has-been-released</li>
+<li id="src-86">RocketTheme is closing June 30, 2025 // RocketTheme Forum. URL: https://rockettheme.com/component/kunena/general-discussion/291237-rockettheme-is-closing-june-30-2025</li>
+<li id="src-87">SP Page Builder 6 // JoomShaper Blog. URL: https://www.joomshaper.com/blog/sp-page-builder-6</li>
+<li id="src-88">WordPress 7.0 // Raidboxes Blog. URL: https://raidboxes.io/en/blog/wordpress/wordpress-7-0/</li>
+<li id="src-89">Drupal core release cycle // Drupal.org. URL: https://www.drupal.org/core/release-cycle</li>
+<li id="src-90">Drupal 12 roadmap 2026 // Adevweb. URL: https://www.adevweb.com/ressources/drupal-12-roadmap-2026</li>
+<li id="src-91">Laravel 13 // Laravel News. URL: https://laravel-news.com/laravel-13</li>
+<li id="src-92">Preparing for Symfony 7.4 and Symfony 8.0 // Symfony Blog. URL: https://symfony.com/blog/preparing-for-symfony-7-4-and-symfony-8-0</li>
+<li id="src-93">We are looking for Joomla maintainers // Joomla Community Magazine. 2026. September. URL: https://magazine.joomla.org/issues/2026/september-2026/we-are-looking-for-joomla-maintainers</li>
+</ol></div></div></section>
+</main>
+<footer class="closing"><div class="wrap"><div class="closing-box">
+<p>Доклад подготовлен как основание для выбора платформы новостного сайта. Рекомендации главы шестнадцатой самодостаточны; главы о конвейере и таксономии годятся как техническое задание на настройку.</p>
+<p>Редакция 1.0 · 8 октября 2026 · Бейбит Саханов · материалы для внутреннего использования заказчика</p>
+</div></div></footer>
+<script>
+(function(){
+  var fill=document.getElementById('progressFill');
+  function up(){var h=document.documentElement;var s=h.scrollHeight-h.clientHeight;fill.style.width=(s>0?(h.scrollTop/s)*100:0)+'%';}
+  document.addEventListener('scroll',up,{passive:true});up();
+  var secs=[].slice.call(document.querySelectorAll('section[id]'));
+  var links=[].slice.call(document.querySelectorAll('.topnav-links a, .side-rail a'));
+  function setActive(id){links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+id);});}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setActive(e.target.id);}});},{rootMargin:'-40% 0px -55% 0px',threshold:0});
+    secs.forEach(function(s){io.observe(s);});
+  }
+})();
+</script>
+</body>
+</html>

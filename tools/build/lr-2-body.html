@@ -1,0 +1,235 @@
+<nav class="topbar"><div class="wrap">
+<a class="brand" href="#top"><b>joomla 6</b> · редакция в ядре</a>
+<div class="chapters" id="chapters"></div>
+</div></nav>
+<aside class="dots" id="dots" aria-hidden="true"></aside>
+
+<header class="hero" id="top"><div class="wrap">
+<p class="kicker">интерактивный лонгрид · по материалам исследования-доклада · октябрь 2026</p>
+<h1>Редакция, которую не нужно <em>собирать из плагинов</em></h1>
+<p class="lead">Роли, многостадийный процесс публикации, версии, график выхода, многоязычие, реклама — у Joomla 6 всё это живёт в ядре и обновляется вместе с ним. Ниже можно не читать об этом, а потрогать: переключить роль, провести новость по конвейеру, вырастить дерево меток, подать нагрузку.</p>
+<p class="sub">Каждая цифра в лонгриде сверена с первоисточником 8 октября 2026 года; расхождения и белые пятна вынесены в доклад, а не спрятаны.</p>
+<div class="cta"><a class="btn primary" href="#konveyer">Попробовать роль в редакции</a><a class="btn" href="#rynok">Сначала цифры</a></div>
+<div class="conveyor" id="conveyor">
+<div class="track"></div>
+<div class="node" style="left:8%"><i></i><span>черновик</span></div>
+<div class="node" style="left:29%"><i></i><span>редактура отдела</span></div>
+<div class="node" style="left:50%"><i></i><span>корректура</span></div>
+<div class="node" style="left:71%"><i></i><span>утверждение</span></div>
+<div class="node" style="left:92%"><i></i><span>на сайте</span></div>
+<div class="card-fly c1"><b>Биржа открылась ростом</b>Экономика · 2 мин назад</div>
+<div class="card-fly c2"><b>Градсовет утвердил проект</b>Город · 7 мин назад</div>
+<div class="card-fly c3"><b>Интервью с ректором</b>Образование · 12 мин назад</div>
+</div>
+</div></header>
+
+<section class="sec" id="slepok" data-title="слепок, не слом"><div class="wrap">
+<p class="eyebrow">01 · релизный цикл</p>
+<h2>Слепок, а не слом</h2>
+<p class="text">Мажорная версия Joomla выходит раз в два года, минорная — раз в полгода. Главный тезис шестого поколения разработчики сформулировали прямо: переход с 5.4 на 6.0 — штатное обновление, не миграция, и путь обновления гарантирован между всеми версиями. Нажмите на метки таймлайна: каждая раскрывает, что принесла версия и до какого дня она защищена.</p>
+<div class="timeline" id="timeline"></div>
+<div class="tl-card panel" id="tlcard"></div>
+</div></section>
+
+<section class="sec alt" id="rynok" data-title="рынок как есть"><div class="wrap">
+<p class="eyebrow">02 · цифры без прикрас</p>
+<h2>Нишевая система с нужной нишей</h2>
+<p class="text">Доклад, который хвалит без цифр, не стоит чтения. Поэтому сначала — доля рынка по W3Techs, включая падение за двенадцать лет. Потом — где ниша: содержательные сайты с редакцией, а не визитки.</p>
+<div class="grid g2" style="margin-top:28px">
+<div class="panel reveal">
+<h3>Системы управления содержимым, октябрь 2026</h3>
+<div class="seg" id="segShare"><button class="on" data-k="all">от всех сайтов</button><button data-k="cms">от рынка CMS</button></div>
+<div class="bars chart" id="shareBars"></div>
+<p class="note">В 2014 году Joomla занимала 9,3 % рынка CMS, сегодня — 1,6 %: падение в 5,8 раза. Это тренд, а не эпизод, и в докладе он назван риском.</p>
+</div>
+<div class="panel reveal">
+<h3>Какие версии стоят на сайтах с Joomla</h3>
+<div class="donut"><svg id="donutVer" viewBox="0 0 200 200" role="img" aria-label="Распределение версий Joomla"></svg><ul class="legend" id="legVer"></ul></div>
+<p class="note">Больше половины установок — третья ветка, вышедшая в 2012 году. Все найденные крупные новостные порталы тоже на ней: редакция, не заложившая обновления в бюджет, повторит их путь.</p>
+</div>
+<div class="panel reveal">
+<h3>Языки сайтов на Joomla</h3>
+<div class="bars chart" id="langBars"></div>
+<p class="note">Русскоязычное присутствие — третье в мире. Это и объясняет живость русского сообщества: локализация шестой версии вышла в день релиза ядра.</p>
+</div>
+<div class="panel reveal">
+<h3>Доля Joomla по ярусам популярности</h3>
+<div class="ladder" id="ladder"></div>
+<p class="note">Система держится в среднем и верхнем сегментах пропорционально общей доле, а не исчезает там: в первом миллионе сайтов она даже чуть сильнее среднего.</p>
+</div>
+</div>
+</div></section>
+
+<section class="sec" id="yadro" data-title="редакция в ядре"><div class="wrap">
+<p class="eyebrow">03 · главный довод</p>
+<h2>Что редакции даёт ядро — без единого плагина</h2>
+<p class="text">Набор, который нужен именно редакции, у Joomla встроен и обновляется вместе с ядром. Матрица показывает, где тот же набор у соседей достигается плагином или модулем со своим циклом обновлений и своей лицензией. Нажмите на строку, чтобы прочесть, как это устроено в Joomla.</p>
+<div class="mwrap"><table class="matrix" id="matrix"></table></div>
+<p class="note">Сравнение сделано по состоянию ядра систем на октябрь 2026 года; «плагин» значит, что функция доступна, но живёт вне ядра. Граница Joomla названа там же: совместного редактирования в реальном времени и комментариев читателей в ядре нет.</p>
+</div></section>
+
+<section class="sec paper" id="konveyer" data-title="конвейер новости"><div class="wrap">
+<p class="eyebrow">04 · симулятор</p>
+<h2>Проведите новость по конвейеру — в своей роли</h2>
+<p class="text">Выберите роль. Админка перестроится: останутся только разделы, разрешённые группе, а у материала — только те переходы, на которые у роли есть право. Включите «особую важность», и у редактора отдела исчезнет кнопка публикации: путь пойдёт через главреда. Всё это — штатные группы, уровни доступа, процесс публикации и собственное административное меню Joomla.</p>
+<div class="sim">
+<div>
+<div class="roles" id="roles"></div>
+<div style="margin-top:18px"><label class="toggle"><input type="checkbox" id="important"> материал особой важности</label></div>
+<div style="margin-top:12px"><label class="toggle"><input type="checkbox" id="frontend"> подача с лицевой стороны сайта</label></div>
+<p class="note">Пунктирная логика та же, что в руководстве Joomla: процесс закрепляется за материалом по категории при первом сохранении, переход несёт действие, письмо и право.</p>
+</div>
+<div class="admin">
+<div class="bar"><i></i><span id="adminTitle">Панель управления · репортёр</span></div>
+<div class="body">
+<div class="menu" id="menu"></div>
+<div class="work">
+<div class="article">
+<span class="st" id="artState">стадия: черновик</span>
+<h4 id="artTitle">Биржа открылась ростом: индекс прибавил 1,4 %</h4>
+<p>Экономика · автор: репортёр отдела · создано только что</p>
+<div class="stages" id="stageBar"></div>
+<div class="acts" id="acts"></div>
+<div class="lock" id="lock"></div>
+</div>
+<div class="log" id="log"></div>
+</div>
+</div>
+</div>
+</div>
+</div></section>
+
+<section class="sec paper" id="derevo" data-title="дерево меток" style="border-top:1px solid var(--paper-line)"><div class="wrap">
+<p class="eyebrow">05 · таксономия</p>
+<h2>Дерево смыслов вместо россыпи рубрик</h2>
+<p class="text">У материала одна категория — отдел — и сколько угодно меток, а метки образуют дерево. Выберите узел: лента соберёт всё, что помечено им. Включите потомков — страница «Финансы» подтянет и «Банки», и «Платёжные системы». Так новая узкая метка сразу поднимается в широкую тему, и семантика сайта растёт без пересборки.</p>
+<div class="tax">
+<div>
+<div class="taxctl"><label class="toggle"><input type="checkbox" id="children" checked> включать потомков</label><label class="toggle"><input type="checkbox" id="matchAll"> все выбранные метки</label></div>
+<div class="tree" id="tree"></div>
+<p class="note">Право создавать метки лучше оставить редакторам отделов — руководство Joomla предупреждает, что иначе метки «становятся контрпродуктивными» из-за дублей и опечаток.</p>
+</div>
+<div>
+<p class="muted" id="feedTitle" style="font-family:var(--mono);font-size:12px;margin:0 0 10px"></p>
+<div class="feed" id="feed"></div>
+<p class="note">Для сравнения — те же десять материалов, разложенные по плоским рубрикам обычного новостного сайта:</p>
+<div class="flat" id="flat"></div>
+</div>
+</div>
+</div></section>
+
+<section class="sec" id="nagruzka" data-title="под нагрузкой"><div class="wrap">
+<p class="eyebrow">06 · модель и измерения</p>
+<h2>Что принимает удар трафика</h2>
+<p class="text">Крупные порталы на Joomla живут за сетью доставки содержимого: Cloudflare у хорватов, Akamai у греков. Сдвиньте ползунок — модель покажет, сколько запросов доходит до каждого слоя. Доли в модели условные и подписаны как условные; измерения ниже — настоящие.</p>
+<div class="load">
+<div class="panel">
+<h3>Модель слоёв</h3>
+<label class="src" for="rps">запросов в секунду</label>
+<input type="range" id="rps" min="10" max="5000" step="10" value="800">
+<div class="big" id="rpsVal">800<small>зап./с</small></div>
+<div class="layers" id="layers"></div>
+<p class="note">Доли условны: CDN отдаёт кешированные страницы, Redis держит объектный кеш, до PHP и базы доходит остаток. Главная ловушка для новостей: правка материала не сбрасывает кеш страниц — сброс делает внешний слой или плагин вроде LiteSpeed Cache.</p>
+</div>
+<div class="panel">
+<h3>Измерения, не модель</h3>
+<div class="logbars" id="measure"></div>
+<p class="note">Первые три строки — обсуждение #45737 в репозитории ядра: сайт на 150 тыс. материалов в 1 705 категориях, сервер с одним процессором и гигабайтом памяти; индекс по `catid, state` и замена соединения таблиц. Четвёртая — Joomla Community Magazine, апрель 2025 года: время до первого байта без LiteSpeed и с ним.</p>
+</div>
+</div>
+</div></section>
+
+<section class="sec alt" id="vidimost" data-title="видимость"><div class="wrap">
+<p class="eyebrow">07 · поисковики и языковые модели</p>
+<h2>Разметка новости, которую стоит генерировать автоматически</h2>
+<p class="text">Штатный плагин Schema.org выводит тип Article и ничего не подставляет из материала сам — это проверено по исходному коду веток от 6.1 до 7.0. Редакции на десятки новостей в день нужна разметка NewsArticle с автозаполнением, и в экосистеме она давно есть: Google Structured Data сопоставляет свойства схемы с данными страницы, PSA Schema Vita Potentia работает без настройки; можно написать и свой плагин типа. Вот что любое из этих решений должно выдавать: впишите заголовок, выберите отдел и метки — разметка соберётся на лету.</p>
+<div class="gen">
+<div>
+<div class="field"><label>заголовок</label><input id="gTitle" value="Биржа открылась ростом: индекс прибавил 1,4 %"></div>
+<div class="field"><label>отдел → articleSection</label><select id="gSection"><option>Экономика</option><option>Политика</option><option>Общество</option><option>Спорт</option><option>Регионы</option></select></div>
+<div class="field"><label>метки → keywords</label><div class="chips" id="gTags"></div></div>
+<div class="field"><label>автор</label><select id="gAuthor"><option value="org">Редакция (Organization)</option><option value="person">Корреспондент (Person)</option></select></div>
+<p class="note">Готовые решения — Google Structured Data (Article, BlogPosting, NewsArticle с сопоставлением полей) и PSA Schema Vita Potentia; ядро со своей стороны приглашает писать плагины типов, а в 6.2 добавило плагин Custom для собственного JSON-LD.</p>
+</div>
+<pre class="code" id="gOut"></pre>
+</div>
+<div class="flow">
+<div class="box pulse"><b>материал в Joomla</b><ul><li>заголовок, текст, изображения</li><li>категория и метки</li><li>даты выхода и правки</li></ul></div>
+<div class="arrow">→</div>
+<div class="box"><b>три канала видимости</b><ul><li>JSON-LD NewsArticle в коде страницы</li><li>карта сайта — JL Sitemap файлом на диске</li><li>IndexNow — уведомление за минуты</li></ul></div>
+<div class="arrow">→</div>
+<div class="box"><b>кто читает</b><ul><li>Google и Яндекс, включая новостные ленты</li><li>агрегаторы и партнёры по Web Services API</li><li>языковые модели и их поисковые режимы</li></ul></div>
+</div>
+</div></section>
+
+<section class="sec paper" id="shablony" data-title="дочерние шаблоны"><div class="wrap">
+<p class="eyebrow">07½ · свобода над дизайном</p>
+<h2>Дочерние шаблоны: разным страницам — разный дизайн</h2>
+<p class="text">Шаблон в Joomla — не одна обёртка на весь сайт, а набор стилей, и стиль назначается пункту меню. Дочерний шаблон наследует всё от родителя, переопределяет что угодно и живёт в своей папке, поэтому обновление родителя его не затирает; создаётся он одной кнопкой из карточки шаблона. Чистая Joomla 6 приходит уже с парой — Cassiopeia и дочерний Cassiopeia Extended с настройкой цветов и шрифтов в форме. Нажмите на раздел — и посмотрите, какой стиль его обслуживает.</p>
+<div class="grid g3" style="margin-top:26px" id="styleDemo"></div>
+<p class="note">Так внутрь сайта встраивается и этот лонгрид: отдельный стиль без боковых колонок — и он живёт рядом с навигацией и модулями Joomla. В приложении «Конвейер новости в скриншотах» это показано на одной установке: главная на штатном стиле, раздел на дочернем, лонгрид внутри материала.</p>
+</div></section>
+
+<section class="sec" id="portaly" data-title="живые порталы"><div class="wrap">
+<p class="eyebrow">08 · проверено по карточкам W3Techs</p>
+<h2>Кто уже живёт на этом под нагрузкой</h2>
+<p class="text">Не витрины и не обещания — действующие новостные сайты с рангом популярности и обнаруженным стеком. Два главных портала крупнейшей медиагруппы Хорватии, три греческих ресурса из первой десятки тысяч сайтов мира и региональный телеканал Лигурии, который перешёл на Joomla недавно.</p>
+<div class="rankbar" id="rankbar"></div>
+<div class="portals" id="portals"></div>
+<p class="note">Отсев при проверке важен не меньше: Oe24.at держит Joomla лишь на поддомене, Soorban.com оказался свадебным порталом, а у iTWire генератор Joomla в коде не виден — все трое в список не вошли.</p>
+</div></section>
+
+<section class="sec alt" id="sozvezdie" data-title="созвездие"><div class="wrap">
+<p class="eyebrow">09 · русская экосистема</p>
+<h2>Созвездие, в котором есть к кому обратиться</h2>
+<p class="text">Третье в мире по числу сайтов русскоязычное сообщество Joomla — это люди и расширения, связанные между собой. Наведите на звезду: компоненты карт сайта, медиаменеджер, электронная коммерция, локализация, дайджесты, стримы.</p>
+<div class="sky" id="sky"></div>
+<div class="skycard panel" id="skycard">Наведите на звезду или коснитесь её.</div>
+</div></section>
+
+<section class="sec" id="kazakhstan" data-title="Казахстан"><div class="wrap">
+<p class="eyebrow">10 · РК</p>
+<h2>Казахстан: что есть, чего нет и что стоит написать первым</h2>
+<div class="grid g2" style="margin-top:28px">
+<div class="panel">
+<h3>Запасной язык для интерфейса — с версии 6.2</h3>
+<p class="muted" style="font-size:14.5px">Казахский пакет kk-KZ последний раз выходил для Joomla 4.4. С версии 6.2 ядро умеет цепочки запасных языков: непереведённая строка берётся не из английского, а из назначенного языка. Переключите — и посмотрите, что увидит казахскоязычный редактор.</p>
+<label class="toggle"><input type="checkbox" id="fb"> запасной язык ru-RU для kk-KZ</label>
+<div class="fallback"><ul class="strings" id="strings"></ul>
+<div class="note" style="margin:0">Содержание при этом переводится руками: ассоциации связывают версии материалов, категорий, меню и, с 6.1, модулей. Запасной язык решает только строки интерфейса.</div></div>
+</div>
+<div class="panel">
+<h3>Платёжные плагины — свободная ниша</h3>
+<p class="muted" style="font-size:14.5px">Kaspi Pay даёт официальный эквайринг через REST API с токеном, QR-кодом и обратными вызовами, но готовых плагинов для магазинов на Joomla в открытых источниках нет. Модуль Freedom Pay для JoomShopping тестировался на версиях 3.13 и 4.18 — совместимость с пятой версией магазина не подтверждена. Плагин ЮKassa для Phoca Cart умеет переключать шлюз между Россией и Казахстаном.</p>
+<div class="bars" id="payBars"></div>
+<p class="note">Пятнадцать лет назад платформу для региональной прессы страны уже выбирали: в июле 2011 года KazContent при Министерстве связи и информации бесплатно строил сайты региональных газет на Joomla — цель была 100–150 сайтов к концу года.</p>
+</div>
+</div>
+</div></section>
+
+<section class="sec alt" id="riski" data-title="честно о рисках"><div class="wrap">
+<p class="eyebrow">11 · весы</p>
+<h2>Честно о рисках: взвесьте сами</h2>
+<p class="text">Снимите или добавьте гири — коромысло покажет, куда склоняется решение. Веса расставлены по значимости для новостной редакции и открыты для спора; доклад называет каждый пункт с источником.</p>
+<div class="scale">
+<div class="weights" id="pros"><h3 style="color:var(--sage)">за</h3></div>
+<div><div class="beam" id="beam"></div><div class="verdict" id="verdict"></div></div>
+<div class="weights" id="cons"><h3 style="color:var(--rust)">против</h3></div>
+</div>
+</div></section>
+
+<section class="sec" id="chto-delat" data-title="что делать"><div class="wrap">
+<p class="eyebrow">12 · рекомендации</p>
+<h2>Восемь решений, которые превращают оценку в проект</h2>
+<p class="text">Отмечайте то, что уже решено. Каждый пункт разобран в соответствующей главе доклада; вместе они — техническое задание первого этапа.</p>
+<ul class="check" id="check"></ul>
+<div class="meter"><i id="meter"></i></div>
+</div></section>
+
+<footer><div class="wrap">
+<div class="cols">
+<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.0, 8 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
+<div><h4>интерактивные части</h4><ul><li>таймлайн релизов</li><li>симулятор ролей и конвейера</li><li>дерево меток с потомками</li><li>модель нагрузки</li><li>генератор NewsArticle</li><li>созвездие экосистемы</li><li>весы рисков</li></ul></div>
+<div><h4>главные источники</h4><ul><li>developer.joomla.org/roadmap</li><li>guide.joomla.org</li><li>manual.joomla.org</li><li>w3techs.com</li><li>github.com/joomla/joomla-cms</li><li>joomlaportal.ru</li></ul></div>
+</div>
+</div></footer>
