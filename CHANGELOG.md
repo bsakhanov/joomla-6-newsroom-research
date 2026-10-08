@@ -10,3 +10,6 @@
 
 ## 1.0 — 2026-10-08
 - Первая редакция доклада (16 глав, 90 источников) и интерактивного лонгрида.
+
+## 1.1.1 — 2026-10-08
+- На страницах копии GitHub Pages проставлен `rel="canonical"` на главную копию webmarka.kz/research/joomla-6-newsroom/; добавлен `tools/build/set_canonical.py` с картой `canonical.json`; README указывает главную копию.

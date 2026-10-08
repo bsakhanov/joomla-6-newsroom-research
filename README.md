@@ -27,7 +27,7 @@
 
 ## Как смотреть
 
-Все HTML-файлы самодостаточны — откройте в браузере. Если включены GitHub Pages: [доклад](https://bsakhanov.github.io/joomla-6-newsroom-research/doklad/joomla-6-news-platform-research.html) · [лонгрид](https://bsakhanov.github.io/joomla-6-newsroom-research/longread/joomla-6-longread-v1.1.html) · [конвейер в скриншотах](https://bsakhanov.github.io/joomla-6-newsroom-research/konveyer-v-skrinshotakh/).
+Главная копия исследования живёт на webmarka.kz: [титульная](https://webmarka.kz/research/joomla-6-newsroom/) · [доклад](https://webmarka.kz/research/joomla-6-newsroom/doklad/joomla-6-news-platform-research.html) · [лонгрид](https://webmarka.kz/research/joomla-6-newsroom/longread/joomla-6-longread-v1.1.html) · [конвейер в скриншотах](https://webmarka.kz/research/joomla-6-newsroom/konveyer-v-skrinshotakh/); страницы копии на GitHub Pages ссылаются на неё тегом canonical. Все HTML-файлы самодостаточны — откройте в браузере. Копия на GitHub Pages: [доклад](https://bsakhanov.github.io/joomla-6-newsroom-research/doklad/joomla-6-news-platform-research.html) · [лонгрид](https://bsakhanov.github.io/joomla-6-newsroom-research/longread/joomla-6-longread-v1.1.html) · [конвейер в скриншотах](https://bsakhanov.github.io/joomla-6-newsroom-research/konveyer-v-skrinshotakh/).
 
 ## Метод
 
@@ -81,7 +81,7 @@ Special attention goes to the Russian-speaking developer community, to Kazakhsta
 
 ## How to view
 
-Every HTML file is self-contained — open it in a browser. With GitHub Pages enabled: [report](https://bsakhanov.github.io/joomla-6-newsroom-research/doklad/joomla-6-news-platform-research.html) · [long-read](https://bsakhanov.github.io/joomla-6-newsroom-research/longread/joomla-6-longread-v1.1.html) · [walkthrough](https://bsakhanov.github.io/joomla-6-newsroom-research/konveyer-v-skrinshotakh/).
+The primary copy lives on webmarka.kz — [landing](https://webmarka.kz/research/joomla-6-newsroom/) · [report](https://webmarka.kz/research/joomla-6-newsroom/doklad/joomla-6-news-platform-research.html) · [long-read](https://webmarka.kz/research/joomla-6-newsroom/longread/joomla-6-longread-v1.1.html) · [walkthrough](https://webmarka.kz/research/joomla-6-newsroom/konveyer-v-skrinshotakh/); the GitHub Pages copy points to it with canonical links. Every HTML file is self-contained — open it in a browser. GitHub Pages copy: [report](https://bsakhanov.github.io/joomla-6-newsroom-research/doklad/joomla-6-news-platform-research.html) · [long-read](https://bsakhanov.github.io/joomla-6-newsroom-research/longread/joomla-6-longread-v1.1.html) · [walkthrough](https://bsakhanov.github.io/joomla-6-newsroom-research/konveyer-v-skrinshotakh/).
 
 ## Method
 
