@@ -60,7 +60,7 @@ python3 tools/screenshots/plans.py && tools/screenshots/run_shots.sh admin repor
 
 **A research report, an interactive long-read, and a step-by-step walkthrough of an editorial pipeline on a clean Joomla 6.1.4 install**
 
-*Edition 1.1 · 8 October 2026 · by Beibit Sakhanov, Astana*
+*Edition 1.2 · 15 October 2026 · by Beibit Sakhanov, Astana*
 
 ## What this is
 
@@ -72,7 +72,7 @@ Special attention goes to the Russian-speaking developer community, to Kazakhsta
 
 | folder | inside |
 |---|---|
-| `doklad/` | the research report: a self-contained HTML (16 chapters, 4 diagrams, 93 sources, registers of discrepancies and gaps, glossary) and its Markdown source |
+| `doklad/` | the research report: a self-contained HTML (16 chapters, 4 diagrams, 95 sources, registers of discrepancies and gaps, glossary) and its Markdown source |
 | `longread/` | the interactive long-read "Newsroom in the core": role and pipeline simulator, tag tree, load model, NewsArticle markup generator, ecosystem constellation, risk scales — one file, no external libraries |
 | `konveyer-v-skrinshotakh/` | the walkthrough on a real Joomla 6.1.4: 36 screenshots of the admin and the frontend as seen by the administrator and four roles, child templates, an embedded long-read |
 | `redkollegiya/` | the proofreading report produced with the author's editorial methodology |
