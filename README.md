@@ -2,7 +2,7 @@
 
 **Исследование-доклад, интерактивный лонгрид и пошаговый разбор редакционного конвейера на чистой Joomla 6.1.4**
 
-*Редакция 1.2 · 15 октября 2026 · автор — Бейбит Саханов, Астана*
+*Редакция 1.3 · 15 октября 2026 · автор — Бейбит Саханов, Астана*
 
 [English version below](#joomla-6-for-the-newsroom)
 
@@ -18,7 +18,7 @@
 
 | папка | что внутри |
 |---|---|
-| `doklad/` | исследование-доклад: самодостаточный HTML (16 глав, 4 схемы, 95 источников, реестры расхождений и белых пятен, глоссарий) и его Markdown-исходник |
+| `doklad/` | исследование-доклад: самодостаточный HTML (16 глав, 4 схемы, 100 источников, реестры расхождений и белых пятен, глоссарий) и его Markdown-исходник |
 | `longread/` | интерактивный лонгрид «Редакция в ядре»: симулятор ролей и конвейера, дерево меток, модель нагрузки, генератор разметки NewsArticle, созвездие экосистемы, весы рисков — один файл без внешних библиотек |
 | `konveyer-v-skrinshotakh/` | пошаговый разбор конвейера на реальной Joomla 6.1.4 — 36 скриншотов админки и лицевой стороны глазами администратора и четырёх ролей, дочерние шаблоны, встроенный лонгрид |
 | `redkollegiya/` | отчёт вычитки по методологии языкового прогона (Чуковский → Аграновский ∥ Слопотрон → Розенталь → Мильчин) |
@@ -60,7 +60,7 @@ python3 tools/screenshots/plans.py && tools/screenshots/run_shots.sh admin repor
 
 **A research report, an interactive long-read, and a step-by-step walkthrough of an editorial pipeline on a clean Joomla 6.1.4 install**
 
-*Edition 1.2 · 15 October 2026 · by Beibit Sakhanov, Astana*
+*Edition 1.3 · 15 October 2026 · by Beibit Sakhanov, Astana*
 
 ## What this is
 
@@ -72,7 +72,7 @@ Special attention goes to the Russian-speaking developer community, to Kazakhsta
 
 | folder | inside |
 |---|---|
-| `doklad/` | the research report: a self-contained HTML (16 chapters, 4 diagrams, 95 sources, registers of discrepancies and gaps, glossary) and its Markdown source |
+| `doklad/` | the research report: a self-contained HTML (16 chapters, 4 diagrams, 100 sources, registers of discrepancies and gaps, glossary) and its Markdown source |
 | `longread/` | the interactive long-read "Newsroom in the core": role and pipeline simulator, tag tree, load model, NewsArticle markup generator, ecosystem constellation, risk scales — one file, no external libraries |
 | `konveyer-v-skrinshotakh/` | the walkthrough on a real Joomla 6.1.4: 36 screenshots of the admin and the frontend as seen by the administrator and four roles, child templates, an embedded long-read |
 | `redkollegiya/` | the proofreading report produced with the author's editorial methodology |
