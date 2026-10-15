@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!-- build: joomla-6-longread v1.3 · 2026-10-15 -->
+<!-- build: joomla-6-longread v1.4 · 2026-10-15 -->
 <meta charset="UTF-8">
 <link rel="canonical" href="https://webmarka.kz/research/joomla-6-newsroom/longread/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -341,6 +341,98 @@ footer h4{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:va
 footer ul{margin:0;padding-left:16px}
 footer li{margin:4px 0}
 .src{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* ---------- 07¾: модули, адрес, каталог ---------- */
+.ln-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.ln-tabs button{border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink-2);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
+.ln-tabs button[aria-selected="true"]{background:var(--rust);border-color:var(--rust);color:#fff}
+.ln-stage{position:relative;min-height:340px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:16px;overflow:hidden}
+.ln-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;align-items:center}
+.ln-chips button{border:1px solid var(--line-2);background:transparent;color:var(--ink-2);border-radius:3px;padding:4px 10px;font-size:13px}
+.ln-chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ln-chips label{margin-left:auto;font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.ln-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ln-grid.masonry{display:block;columns:3;column-gap:12px}
+.ln-grid.masonry .ln-card{break-inside:avoid;margin-bottom:12px}
+.ln-card{background:var(--bg-3);border:1px solid var(--line);border-radius:5px;overflow:hidden;transition:opacity .35s,transform .35s;text-align:left;padding:0;color:inherit;width:100%}
+.ln-card.hide{opacity:0;transform:scale(.92);pointer-events:none;position:absolute;visibility:hidden}
+.ln-thumb{aspect-ratio:16/10;display:block}
+.ln-card .b{padding:9px 11px 11px;display:block}
+.ln-card .m{font-family:var(--mono);font-size:10.5px;color:var(--muted);display:block}
+.ln-card .t{font-size:13.5px;font-weight:600;line-height:1.35;margin-top:3px;display:block}
+.ln-slider{position:relative;padding:0 46px}
+.ln-view{overflow:hidden}
+.ln-track{display:flex;gap:12px;transition:transform .55s cubic-bezier(.2,.7,.2,1)}
+.ln-track .ln-card{flex:0 0 calc((100% - 24px)/3)}
+.ln-arrow{position:absolute;top:38%;width:34px;height:34px;border-radius:50%;border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);font-size:18px;line-height:1}
+.ln-arrow.l{left:0}.ln-arrow.r{right:0}
+.ln-dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.ln-dots button{width:9px;height:9px;border-radius:50%;border:0;padding:0;background:var(--line-2)}
+.ln-dots button.on{background:var(--gold)}
+.ln-status{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+.ln-modal{position:absolute;inset:0;background:rgba(8,10,12,.78);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s}
+.ln-modal.open{opacity:1;pointer-events:auto}
+.ln-dialog{background:var(--paper);color:var(--paper-ink);border-radius:6px;max-width:560px;width:100%;overflow:hidden;transform:translateY(12px);transition:transform .25s}
+.ln-modal.open .ln-dialog{transform:none}
+.ln-dialog .ln-thumb{aspect-ratio:16/8}
+.ln-dialog .b{padding:14px 18px 18px}
+.ln-dialog h4{margin:0 0 6px;font-family:var(--serif);font-size:21px;line-height:1.25}
+.ln-dialog p{margin:0 0 12px;font-size:14px;color:var(--paper-muted)}
+.ln-dialog .acts{display:flex;gap:8px;flex-wrap:wrap}
+.ln-dialog .acts button{border:1px solid var(--paper-line);background:#fff;border-radius:4px;padding:7px 12px;font-size:13.5px;color:var(--paper-ink)}
+.ln-dialog .acts button.p{background:var(--rust-2);border-color:var(--rust-2);color:#fff}
+.ln-gal{columns:4;column-gap:10px}
+.ln-tile{display:block;width:100%;margin:0 0 10px;border:0;padding:0;border-radius:4px;position:relative;overflow:hidden;break-inside:avoid;cursor:zoom-in}
+.ln-tile::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0);transition:background .25s}
+.ln-tile .z{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid #fff;opacity:0;transform:scale(.7);transition:.25s;z-index:1}
+.ln-tile .z::after{content:"";position:absolute;width:10px;height:2px;background:#fff;right:-8px;bottom:-4px;transform:rotate(45deg)}
+.ln-tile:hover::after,.ln-tile:focus-visible::after{background:rgba(0,0,0,.35)}
+.ln-tile:hover .z,.ln-tile:focus-visible .z{opacity:1;transform:scale(1)}
+.ln-lb{position:absolute;inset:0;background:rgba(5,6,8,.94);display:grid;grid-template-rows:1fr auto;padding:14px 56px;opacity:0;pointer-events:none;transition:opacity .25s}
+.ln-lb.open{opacity:1;pointer-events:auto}
+.ln-lb .ph{border-radius:4px;align-self:center;justify-self:center;width:min(100%,520px);aspect-ratio:3/2}
+.ln-lb .cap{text-align:center;padding-top:10px}
+.ln-lb .cap b{display:block;font-size:15px}
+.ln-lb .cap span{font-size:13px;color:var(--muted)}
+.ln-lb .cap a{font-size:13px;color:var(--gold)}
+.ln-lb .nav{position:absolute;top:45%;width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:#fff;font-size:18px}
+.ln-lb .nav.l{left:10px}.ln-lb .nav.r{right:10px}
+.ln-lb .x{position:absolute;right:10px;top:8px;border:0;background:transparent;color:#fff;font-size:22px}
+.ln-lb .cnt{position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.ln-about{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin-top:14px}
+.ln-about ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+.ln-about li{margin:3px 0}
+.ln-url{display:grid;gap:10px;margin-top:14px}
+.ln-row{border:1px solid var(--line);border-radius:5px;padding:10px 12px;background:var(--bg)}
+.ln-row .k{font-family:var(--mono);font-size:10.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.ln-row code{display:block;font-family:var(--mono);font-size:13px;word-break:break-all;margin-top:4px;color:var(--ink)}
+.ln-row s{color:var(--muted)}
+.ln-row .bad{color:var(--rust)}.ln-row .ok{color:var(--sage)}
+.ln-row.ta{border-color:var(--teal)}
+.ln-input{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:4px;color:var(--ink);padding:10px 12px;font:inherit;font-size:15px}
+.ln-ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.ln-ctl select{background:var(--bg);color:var(--ink);border:1px solid var(--line-2);border-radius:4px;padding:8px 10px;font:inherit;font-size:14px}
+.ln-myth{border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.ln-myth .q{padding:14px 16px;background:linear-gradient(135deg,rgba(224,104,60,.18),transparent);font-family:var(--serif);font-size:19px;line-height:1.3}
+.ln-myth .q small{display:block;font-family:var(--mono);font-size:10.5px;color:var(--rust);letter-spacing:.06em;margin-bottom:4px}
+.ln-myth ol{margin:0;padding:12px 16px 14px 34px;font-size:14px;color:var(--ink-2)}
+.ln-myth li{margin:6px 0}
+.ln-sea svg{width:100%;height:auto;display:block}
+.ln-sea .lg{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-2);margin-top:8px}
+.ln-sea .lg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.ln-tpl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.ln-tpl h4{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);margin:0 0 8px;font-weight:500}
+.ln-tpl ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ln-tpl li{border:1px solid var(--line);border-radius:4px;padding:7px 10px;font-size:13.5px;background:var(--bg)}
+.ln-tpl li span{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+@media (max-width:760px){.ln-grid{grid-template-columns:1fr 1fr}.ln-grid.masonry{columns:2}.ln-track .ln-card{flex-basis:100%}.ln-gal{columns:2}.ln-about{grid-template-columns:1fr}.ln-tpl{grid-template-columns:1fr}.ln-lb{padding:14px 44px}}
+@media (max-width:460px){.ln-grid{grid-template-columns:1fr}.ln-grid.masonry{columns:1}.ln-slider{padding:0 38px}}
+@media (max-width:640px){.logbars .b{margin-right:62px}}
+.grid>*,.ladder>*,.load>*,.fallback>*,.strings li>*{min-width:0}
+.strings li span{overflow-wrap:anywhere}
+#lenta .src,#lenta code,.ln-tpl li{overflow-wrap:anywhere}
+.ln-about .btn{white-space:normal}
+@media (min-width:641px) and (max-width:900px){.ladder{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -517,6 +609,59 @@ footer li{margin:4px 0}
 <p class="note">Так внутрь сайта встраивается и этот лонгрид: отдельный стиль без боковых колонок — и он живёт рядом с навигацией и модулями Joomla. В приложении «Конвейер новости в скриншотах» это показано на одной установке: главная на штатном стиле, раздел на дочернем, лонгрид внутри материала.</p>
 </div></section>
 
+<section class="sec alt" id="lenta" data-title="лента и адрес"><div class="wrap">
+<p class="eyebrow">07¾ · модули, адрес, каталог</p>
+<h2>Над ядром: лента, адрес статьи и море расширений</h2>
+<p class="text">Ядро даёт редакцию, но главную страницу новостного сайта собирают модули, а адрес статьи задаёт плагин. Ниже&nbsp;— четыре бесплатных модуля Webmarka Articles и плагин Timealias автора исследования, которые закрывают ленту и адреса, и карта того, сколько готового уже лежит в каталоге Joomla.</p>
+
+<div class="panel" style="margin-top:26px">
+<h3 style="margin-top:0">Четыре модуля ленты: потрогайте каждый</h3>
+<div class="ln-tabs" role="tablist" id="lnTabs"></div>
+<div class="ln-stage" id="lnStage"></div>
+<div class="ln-about" id="lnAbout"></div>
+<p class="src" style="margin-top:12px">материалы в демонстрации условные · модули: github.com/bsakhanov/mod_wmarka_articles_grid, _slider, _portfolio, _gallery · версия 1.1.0, 15 октября 2026</p>
+</div>
+
+<div class="grid g2" style="margin-top:22px">
+<div class="panel">
+<h3 style="margin-top:0">Адрес статьи: метка времени против транслита</h3>
+<p class="muted" style="font-size:14.5px">Впишите заголовок&nbsp;— и сравните три способа, которыми Joomla может сделать адрес. Потом поправьте заголовок, как это делают редакторы после публикации.</p>
+<input class="ln-input" id="lnTitle" value="Акимат Астаны утвердил план ремонта дорог на 2027 год" aria-label="Заголовок новости">
+<div class="ln-ctl">
+<button class="btn" type="button" id="lnEdit">Поправить заголовок</button>
+<select id="lnTz" aria-label="Часовой пояс"><option value="Asia/Almaty">пояс сайта: Астана, UTC+5</option><option value="UTC">часы сервера: UTC</option></select>
+</div>
+<div class="ln-url" id="lnUrl"></div>
+</div>
+<div class="panel">
+<div class="ln-myth">
+<div class="q"><small>миф</small>«Транслит заголовка в адресе двигает статью вверх в выдаче»</div>
+<ol>
+<li>Google называл слова в адресе очень малым фактором ранжирования, ради которого не стоит перестраивать сайт (2016), затем&nbsp;— переоценённым (2017) и очень-очень лёгким (2021); после индексации адрес значит ещё меньше.</li>
+<li>Руководство Google по адресам советует слова на языке аудитории в кодировке UTF-8&nbsp;— для русскоязычного читателя это кириллица, а не транслит.</li>
+<li>Google News требует от адресов статей уникальности и постоянства&nbsp;— как раз того, что ломает правка заголовка при транслите.</li>
+<li>Если транслит не даёт латиницы, ядро Joomla само сохраняет вместо алиаса дату и время. Timealias делает это правилом для всей ленты.</li>
+</ol>
+</div>
+<p class="src" style="margin-top:12px">Search Engine Journal: URLs as a ranking factor · Google Search Central: URL structure best practices · Search Engine Land: Google News и правило трёх цифр · github.com/bsakhanov/plg_content_timealias</p>
+</div>
+</div>
+
+<div class="panel ln-sea" style="margin-top:22px">
+<h3 style="margin-top:0">Море расширений и шаблонов</h3>
+<p class="muted" style="font-size:14.5px">Каждая точка&nbsp;— двадцать расширений официального каталога. Золотом отмечен раздел вывода новостей: ленты, карусели, хроники, связанные материалы, архивы по месяцам.</p>
+<div id="lnSea"></div>
+<div class="lg"><span><i style="background:var(--line-2)"></i>≈&nbsp;5&nbsp;800 расширений в каталоге JED</span><span><i style="background:var(--gold)"></i>≈&nbsp;400&nbsp;— раздел «News Display»</span></div>
+<div class="ln-tpl">
+<div><h4>шаблоны · бесплатно</h4><ul><li>Cassiopeia<span>в ядре Joomla 6</span></li><li>Helix Ultimate<span>фреймворк JoomShaper</span></li><li>Astroid<span>фреймворк TemplaZa</span></li><li>RSVario!<span>RSJoomla, Joomla 3–6</span></li></ul></div>
+<div><h4>новостные · платно</h4><ul><li>JA Teline V<span>JoomlArt · Joomla 4–6 · 220&nbsp;тыс.+ загрузок</span></li><li>News365<span>JoomShaper · Helix 3 · Joomla 4–6</span></li><li>Zmagazine<span>JoomLead · Gantry 5.6 · Joomla 5–6</span></li><li>Goodnews<span>Unitemplates · 8 готовых сайтов</span></li><li>RSNoticia!<span>RSJoomla · Joomla 3–6</span></li></ul></div>
+<div><h4>маркетплейсы и студии</h4><ul><li>ThemeForest<span>22 шаблона в «News &amp; Editorial»</span></li><li>JoomLead<span>80 шаблонов обновлены под Joomla 6.0.3</span></li><li>YOOtheme Pro<span>конструктор с динамическим содержимым</span></li></ul></div>
+</div>
+<p class="note">Выбор широк, поэтому критерий исследования прежний: на главной портала под нагрузкой&nbsp;— лёгкий шаблон без конструктора и немногие проверенные модули.</p>
+<p class="src">extensions.joomla.org, подсчёт по страницам каталога и раздела News Display на 15 октября 2026 · страницы шаблонов студий и маркетплейсов</p>
+</div>
+</div></section>
+
 <section class="sec" id="portaly" data-title="живые порталы"><div class="wrap">
 <p class="eyebrow">08 · проверено по карточкам W3Techs</p>
 <h2>Кто уже живёт на этом под нагрузкой</h2>
@@ -567,7 +712,7 @@ footer li{margin:4px 0}
 
 <section class="sec" id="chto-delat" data-title="что делать"><div class="wrap">
 <p class="eyebrow">12 · рекомендации</p>
-<h2>Восемь решений, которые превращают оценку в проект</h2>
+<h2>Девять решений, которые превращают оценку в проект</h2>
 <p class="text">Отмечайте то, что уже решено. Каждый пункт разобран в соответствующей главе доклада; вместе они — техническое задание первого этапа.</p>
 <ul class="check" id="check"></ul>
 <div class="meter"><i id="meter"></i></div>
@@ -575,7 +720,7 @@ footer li{margin:4px 0}
 
 <footer><div class="wrap">
 <div class="cols">
-<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.3, 15 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
+<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.4, 15 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
 <div><h4>интерактивные части</h4><ul><li>таймлайн релизов</li><li>симулятор ролей и конвейера</li><li>дерево меток с потомками</li><li>модель нагрузки</li><li>генератор NewsArticle</li><li>созвездие экосистемы</li><li>весы рисков</li></ul></div>
 <div><h4>главные источники</h4><ul><li>developer.joomla.org/roadmap</li><li>guide.joomla.org</li><li>manual.joomla.org</li><li>w3techs.com</li><li>github.com/joomla/joomla-cms</li><li>joomlaportal.ru</li></ul></div>
 </div>
@@ -862,10 +1007,136 @@ function weigh(){const sum=sel=>$$(sel+' input:checked').reduce((a,i)=>a+ +i.dat
 $$('.weights input').forEach(i=>i.addEventListener('change',weigh));weigh();
 
 /* ---------- чек-лист ---------- */
-const TODO=['Платформа: Joomla 6.2, PHP 8.4, MariaDB 11+, Nginx за CDN, Redis в консервативном режиме','Конвейер: четыре собственные группы, процесс из пяти стадий, уведомления переходов, своё административное меню на роль','Таксономия: категории как отделы (не больше восьми), дерево меток в пяти ветвях, право создавать метки — у редакторов отделов','Видимость: JL Sitemap по планировщику с картой изображений, новостная карта Google News, WT IndexNow, разметка NewsArticle через Google Structured Data или свой плагин','Медиа: Quantum Manager с автоуменьшением и WebP, области для фотоархива и документов','База и поиск: индекс по catid и state с первого дня, ночная переиндексация из CLI, Solr при архиве свыше 300 тыс. материалов','Казахстан: официальный казахский пакет kk-KZ для Joomla 6 и запасной язык ru-RU для строк сторонних расширений с версии 6.2; магазин на RadicalMart с готовыми Halyk Bank ePay и Freedom Pay (PayBox), первая разработка проекта — плагин Kaspi Pay','Бюджет: обновления ядра и расширений как постоянная статья — минор раз в полгода, мажор раз в два года'];
+const TODO=['Платформа: Joomla 6.2, PHP 8.4, MariaDB 11+, Nginx за CDN, Redis в консервативном режиме','Конвейер: четыре собственные группы, процесс из пяти стадий, уведомления переходов, своё административное меню на роль','Таксономия: категории как отделы (не больше восьми), дерево меток в пяти ветвях, право создавать метки — у редакторов отделов','Видимость: JL Sitemap по планировщику с картой изображений, новостная карта Google News, WT IndexNow, разметка NewsArticle через Google Structured Data или свой плагин; адреса — метки времени Timealias или юникод-алиасы, без транслита ради SEO','Медиа: Quantum Manager с автоуменьшением и WebP, области для фотоархива и документов','Лента и шаблон: лёгкий шаблон на UIkit 3 с переопределениями ядра; ленты, карусели, портфолио и фотогалереи — модулями Webmarka Articles или немногими проверенными модулями каталога','База и поиск: индекс по catid и state с первого дня, ночная переиндексация из CLI, Solr при архиве свыше 300 тыс. материалов','Казахстан: официальный казахский пакет kk-KZ для Joomla 6 и запасной язык ru-RU для строк сторонних расширений с версии 6.2; магазин на RadicalMart с готовыми Halyk Bank ePay и Freedom Pay (PayBox), первая разработка проекта — плагин Kaspi Pay','Бюджет: обновления ядра и расширений как постоянная статья — минор раз в полгода, мажор раз в два года'];
 $('#check').innerHTML=TODO.map((t,i)=>`<li><label><input type="checkbox" id="t${i}"><span>${t}</span></label></li>`).join('');
 const meter=()=>{const n=$$('#check input:checked').length;$('#meter').style.width=(n/TODO.length*100)+'%';};
 $$('#check input').forEach(i=>i.addEventListener('change',meter));
+
+/* ---------- 07¾: модули Webmarka Articles ---------- */
+(function(){
+const NEWS=[
+ {c:'Политика',d:'15.10',t:'Мажилис принял поправки о местном самоуправлении',g:['#E0683C','#F2C14E'],h:11},
+ {c:'Экономика',d:'15.10',t:'Нацбанк сохранил базовую ставку',g:['#6FB3B8','#2A3238'],h:7},
+ {c:'Общество',d:'14.10',t:'В Астане открыли новую линию LRT',g:['#8FB996','#151A1E'],h:9},
+ {c:'Спорт',d:'14.10',t:'«Барыс» выиграл выездную серию',g:['#F2C14E','#B54A24'],h:6},
+ {c:'Экономика',d:'14.10',t:'Экспорт зерна вырос на треть',g:['#B54A24','#6FB3B8'],h:10},
+ {c:'Общество',d:'13.10',t:'Колледжи начали приём на гранты',g:['#6FB3B8','#8FB996'],h:8},
+ {c:'Политика',d:'13.10',t:'Акимат утвердил план ремонта дорог',g:['#39434A','#E0683C'],h:9},
+ {c:'Спорт',d:'12.10',t:'Сборная сыграет с Норвегией в Астане',g:['#8FB996','#F2C14E'],h:7}];
+const bg=n=>`background:linear-gradient(135deg,${n.g[0]},${n.g[1]})`;
+const card=(n,i,tag='div',extra='')=>`<${tag} class="ln-card" data-c="${esc(n.c)}" data-i="${i}" ${extra}><span class="ln-thumb" style="${bg(n)}"></span><span class="b"><span class="m">${esc(n.c)} · ${n.d}</span><span class="t">${esc(n.t)}</span></span></${tag}>`;
+const MODS={
+ grid:{name:'Articles Grid',rel:'https://github.com/bsakhanov/mod_wmarka_articles_grid/releases/tag/v1.1.0',
+  pts:['сетка от одной до пяти колонок или мозаика без просветов','фильтр на странице: категории, метки, авторы, годы, месяцы','группировка по году, месяцу, автору, категории, меткам','JSON-LD ItemList, WebP с srcset, своя миниатюра для телефона']},
+ slider:{name:'Articles Slider',rel:'https://github.com/bsakhanov/mod_wmarka_articles_slider/releases/tag/v1.1.0',
+  pts:['лента новостей на главной, анонсы, «читайте также»','стрелки, точки, свайп, бесконечная прокрутка','автопрокрутка останавливается под курсором','каждая группа — свой слайдер со своим подзаголовком']},
+ portfolio:{name:'Articles Portfolio',rel:'https://github.com/bsakhanov/mod_wmarka_articles_portfolio/releases/tag/v1.1.0',
+  pts:['спецпроекты и мультимедиа карточками, сеткой или слайдером','материал открывается в окне, не уводя с главной','в окне — полное фото, вводный текст, переход к статье','окна трёх размеров, фото над текстом или слева']},
+ gallery:{name:'Articles Gallery',rel:'https://github.com/bsakhanov/mod_wmarka_articles_gallery/releases/tag/v1.1.0',
+  pts:['фоторепортажи из материалов: мозаика и лайтбокс','под фото — заголовок, текст и ссылка на статью','материалы без картинок пропускаются','разметка ImageObject — для поиска по картинкам']}};
+const tabs=$('#lnTabs'), stage=$('#lnStage'), about=$('#lnAbout');
+if(!tabs) return;
+let timer=null;
+tabs.innerHTML=Object.entries(MODS).map(([k,m],i)=>`<button type="button" role="tab" data-m="${k}" aria-selected="${i?'false':'true'}">${esc(m.name)}</button>`).join('');
+function show(k){
+  clearInterval(timer); timer=null;
+  $$('button',tabs).forEach(b=>b.setAttribute('aria-selected',b.dataset.m===k?'true':'false'));
+  const m=MODS[k];
+  about.innerHTML=`<ul>${m.pts.map(p=>`<li>${esc(p)}</li>`).join('')}</ul><a class="btn" href="${m.rel}" target="_blank" rel="noopener">${esc(m.name)} 1.1.0 →</a>`;
+  ({grid,slider,portfolio,gallery})[k]();
+}
+function grid(){
+  const cats=['Все',...new Set(NEWS.map(n=>n.c))];
+  stage.innerHTML=`<div class="ln-chips">${cats.map((c,i)=>`<button type="button" data-f="${esc(c)}" class="${i?'':'on'}">${esc(c)}</button>`).join('')}<label><input type="checkbox" id="lnMas"> мозаика</label></div>
+  <div class="ln-grid" id="lnGrid">${NEWS.slice(0,6).map((n,i)=>card(n,i)).join('')}</div>`;
+  $$('.ln-chips button',stage).forEach(b=>b.addEventListener('click',()=>{
+    $$('.ln-chips button',stage).forEach(x=>x.classList.toggle('on',x===b));
+    $$('#lnGrid .ln-card').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='Все'&&c.dataset.c!==b.dataset.f));
+  }));
+  $('#lnMas').addEventListener('change',e=>{const g=$('#lnGrid');g.classList.toggle('masonry',e.target.checked);
+    $$('.ln-thumb',g).forEach((t,i)=>t.style.aspectRatio=e.target.checked?`16/${NEWS[i].h}`:'');});
+}
+function slider(){
+  stage.innerHTML=`<div class="ln-slider"><button class="ln-arrow l" type="button" aria-label="Назад">‹</button><div class="ln-view"><div class="ln-track" id="lnTrack">${NEWS.map((n,i)=>card(n,i)).join('')}</div></div><button class="ln-arrow r" type="button" aria-label="Вперёд">›</button></div><div class="ln-dots" id="lnDots"></div><div class="ln-status" id="lnSt"></div>`;
+  const tr=$('#lnTrack'), dots=$('#lnDots'), st=$('#lnSt'); let pos=0;
+  const per=()=>innerWidth<=760?1:3, max=()=>NEWS.length-per();
+  const go=p=>{pos=(p+max()+1)%(max()+1);const w=tr.children[0].getBoundingClientRect().width+12;tr.style.transform=`translateX(${-pos*w}px)`;
+    dots.innerHTML=Array.from({length:max()+1},(_,i)=>`<button type="button" aria-label="Слайд ${i+1}" class="${i===pos?'on':''}"></button>`).join('');
+    $$('button',dots).forEach((b,i)=>b.addEventListener('click',()=>go(i)));};
+  $('.ln-arrow.l',stage).addEventListener('click',()=>go(pos-1)); $('.ln-arrow.r',stage).addEventListener('click',()=>go(pos+1));
+  let paused=false; const view=$('.ln-slider',stage);
+  const say=()=>st.textContent=reduced?'автопрокрутка отключена: в системе выбрано «уменьшить движение»':paused?'пауза: курсор над лентой':'автопрокрутка · наведите курсор — лента остановится';
+  view.addEventListener('mouseenter',()=>{paused=true;say();}); view.addEventListener('mouseleave',()=>{paused=false;say();});
+  view.addEventListener('focusin',()=>{paused=true;say();}); view.addEventListener('focusout',()=>{paused=false;say();});
+  go(0); say(); if(!reduced) timer=setInterval(()=>{if(!paused&&stage.isConnected) go(pos+1);},2600);
+}
+function portfolio(){
+  stage.innerHTML=`<div class="ln-grid">${NEWS.slice(0,6).map((n,i)=>card(n,i,'button',`type="button" aria-haspopup="dialog"`)).join('')}</div>
+  <div class="ln-modal" id="lnModal" role="dialog" aria-modal="true" aria-label="Проект"><div class="ln-dialog"><span class="ln-thumb" id="lnMT"></span><div class="b"><h4 id="lnMH"></h4><p id="lnMP"></p><div class="acts"><button type="button" class="p">Перейти на страницу</button><button type="button" id="lnMX">Закрыть</button></div></div></div></div>`;
+  const md=$('#lnModal');
+  const close=()=>md.classList.remove('open');
+  $$('.ln-card',stage).forEach(c=>c.addEventListener('click',()=>{const n=NEWS[+c.dataset.i];$('#lnMT').setAttribute('style',bg(n));$('#lnMH').textContent=n.t;
+    $('#lnMP').textContent=`${n.c}, ${n.d}. Полное фото и вводный текст материала открываются поверх ленты; на страницу статьи читатель переходит, только когда тема его зацепила.`;md.classList.add('open');$('#lnMX').focus();}));
+  $('#lnMX').addEventListener('click',close); md.addEventListener('click',e=>{if(e.target===md)close();});
+  md.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+}
+function gallery(){
+  const H=[10,14,8,12,9,13,11,8];
+  stage.innerHTML=`<div class="ln-gal">${NEWS.map((n,i)=>`<button type="button" class="ln-tile" data-i="${i}" style="${bg(n)};aspect-ratio:10/${H[i]}" aria-label="${esc(n.t)}"><span class="z"></span></button>`).join('')}</div>
+  <div class="ln-lb" id="lnLb" role="dialog" aria-modal="true" aria-label="Просмотр фото"><span class="cnt" id="lnLc"></span><button type="button" class="x" aria-label="Закрыть">×</button><button type="button" class="nav l" aria-label="Назад">‹</button><span class="ph" id="lnLp"></span><button type="button" class="nav r" aria-label="Вперёд">›</button><div class="cap"><b id="lnLt"></b><span id="lnLm"></span> · <a href="#lenta">к статье</a></div></div>`;
+  const lb=$('#lnLb'); let cur=0;
+  const open=i=>{cur=(i+NEWS.length)%NEWS.length;const n=NEWS[cur];$('#lnLp').setAttribute('style',bg(n));$('#lnLt').textContent=n.t;$('#lnLm').textContent=`${n.c}, ${n.d}`;$('#lnLc').textContent=`${cur+1} / ${NEWS.length}`;lb.classList.add('open');};
+  $$('.ln-tile',stage).forEach(t=>t.addEventListener('click',()=>{open(+t.dataset.i);$('.x',lb).focus();}));
+  $('.x',lb).addEventListener('click',()=>lb.classList.remove('open'));
+  $('.nav.l',lb).addEventListener('click',()=>open(cur-1)); $('.nav.r',lb).addEventListener('click',()=>open(cur+1));
+  lb.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowLeft')open(cur-1);if(e.key==='ArrowRight')open(cur+1);});
+}
+$$('button',tabs).forEach(b=>b.addEventListener('click',()=>show(b.dataset.m)));
+show('grid');
+})();
+
+/* ---------- 07¾: адрес статьи ---------- */
+(function(){
+const inp=$('#lnTitle'), out=$('#lnUrl'), tz=$('#lnTz'), edit=$('#lnEdit');
+if(!inp) return;
+const MAP={а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'e',ж:'zh',з:'z',и:'i',й:'j',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'c',ч:'ch',ш:'sh',щ:'shch',ъ:'',ы:'y',ь:'',э:'e',ю:'yu',я:'ya',ә:'a',ғ:'g',қ:'k',ң:'n',ө:'o',ұ:'u',ү:'u',һ:'h',і:'i'};
+const slug=s=>s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-+|-+$/g,'');
+const translit=s=>slug([...s.toLowerCase()].map(ch=>MAP[ch]??ch).join('')).replace(/[^a-z0-9-]/g,'').replace(/-+/g,'-');
+const born=new Date();
+const stamp=()=>{const p=new Intl.DateTimeFormat('en-GB',{timeZone:tz.value,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(born).reduce((a,x)=>(a[x.type]=x.value,a),{});return `${p.year}${p.month}${p.day}-${p.hour}${p.minute}${p.second}`;};
+const EDITS=[' — уточнено',' и тротуаров',', сроки сдвинуты'];
+let first=null, nEdits=0;
+function render(){
+  const t=inp.value.trim()||'Без заголовка', tl=translit(t), uni=slug(t);
+  if(first===null) first=tl;
+  const changed=nEdits>0&&tl!==first;
+  out.innerHTML=`
+  <div class="ln-row"><div class="k"><span>транслит · ядро по умолчанию (упрощённо)</span><span>${tl.length} симв.</span></div>
+   <code>/news/${changed?`<s>${esc(first)}</s><br>/news/`:''}${esc(tl)}</code>${changed?'<div class="k" style="margin-top:6px"><span class="bad">адрес сменился: старые ссылки ведут в пустоту без редиректа</span></div>':''}</div>
+  <div class="ln-row"><div class="k"><span>юникод-алиас · настройка ядра</span><span>${encodeURIComponent(uni).length} симв. в запросе</span></div>
+   <code>/news/${esc(uni)}</code></div>
+  <div class="ln-row ta"><div class="k"><span>Timealias · метка времени при создании</span><span>${stamp().length} симв.</span></div>
+   <code>/news/${stamp()}</code>${nEdits?'<div class="k" style="margin-top:6px"><span class="ok">заголовок правили — адрес прежний</span></div>':''}</div>`;
+}
+inp.addEventListener('input',()=>{if(!nEdits) first=null; render();});
+tz.addEventListener('change',render);
+edit.addEventListener('click',()=>{if(first===null) first=translit(inp.value.trim()); inp.value=inp.value.replace(/( — уточнено| и тротуаров|, сроки сдвинуты)$/,'')+EDITS[nEdits%EDITS.length]; nEdits++; render();});
+render();
+})();
+
+/* ---------- 07¾: море расширений ---------- */
+(function(){
+const box=$('#lnSea'); if(!box) return;
+const W=960, H=210, cols=29, rows=10, gold=new Set();
+let k=0; while(gold.size<20){gold.add((k*37+11)%(cols*rows)); k++;}
+let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Около 5800 расширений каталога Joomla, около 400 из них — вывод новостей">`;
+for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){const i=r*cols+c, x=24+c*(W-48)/(cols-1), y=18+r*19+Math.sin(c/2.2+r)*5;
+  s+=`<circle class="sd" data-p="${(c/2.2+r).toFixed(2)}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${gold.has(i)?5.2:3.6}" fill="${gold.has(i)?'var(--gold)':'var(--line-2)'}"/>`;}
+s+='</svg>'; box.innerHTML=s;
+if(!reduced){const dots=$$('.sd',box).map(d=>[d,+d.dataset.p,+d.getAttribute('cy')]);let t0=performance.now();
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{box.dataset.vis=e.isIntersecting?'1':'';});});io.observe(box);
+  const step=now=>{if(box.dataset.vis){const t=(now-t0)/900;dots.forEach(([d,p,y])=>d.setAttribute('cy',(y+Math.sin(t+p)*2.4).toFixed(1)));}requestAnimationFrame(step);};requestAnimationFrame(step);}
+})();
 })();
 </script>
 </body>

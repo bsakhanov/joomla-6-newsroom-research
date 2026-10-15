@@ -170,6 +170,59 @@
 <p class="note">Так внутрь сайта встраивается и этот лонгрид: отдельный стиль без боковых колонок — и он живёт рядом с навигацией и модулями Joomla. В приложении «Конвейер новости в скриншотах» это показано на одной установке: главная на штатном стиле, раздел на дочернем, лонгрид внутри материала.</p>
 </div></section>
 
+<section class="sec alt" id="lenta" data-title="лента и адрес"><div class="wrap">
+<p class="eyebrow">07¾ · модули, адрес, каталог</p>
+<h2>Над ядром: лента, адрес статьи и море расширений</h2>
+<p class="text">Ядро даёт редакцию, но главную страницу новостного сайта собирают модули, а адрес статьи задаёт плагин. Ниже&nbsp;— четыре бесплатных модуля Webmarka Articles и плагин Timealias автора исследования, которые закрывают ленту и адреса, и карта того, сколько готового уже лежит в каталоге Joomla.</p>
+
+<div class="panel" style="margin-top:26px">
+<h3 style="margin-top:0">Четыре модуля ленты: потрогайте каждый</h3>
+<div class="ln-tabs" role="tablist" id="lnTabs"></div>
+<div class="ln-stage" id="lnStage"></div>
+<div class="ln-about" id="lnAbout"></div>
+<p class="src" style="margin-top:12px">материалы в демонстрации условные · модули: github.com/bsakhanov/mod_wmarka_articles_grid, _slider, _portfolio, _gallery · версия 1.1.0, 15 октября 2026</p>
+</div>
+
+<div class="grid g2" style="margin-top:22px">
+<div class="panel">
+<h3 style="margin-top:0">Адрес статьи: метка времени против транслита</h3>
+<p class="muted" style="font-size:14.5px">Впишите заголовок&nbsp;— и сравните три способа, которыми Joomla может сделать адрес. Потом поправьте заголовок, как это делают редакторы после публикации.</p>
+<input class="ln-input" id="lnTitle" value="Акимат Астаны утвердил план ремонта дорог на 2027 год" aria-label="Заголовок новости">
+<div class="ln-ctl">
+<button class="btn" type="button" id="lnEdit">Поправить заголовок</button>
+<select id="lnTz" aria-label="Часовой пояс"><option value="Asia/Almaty">пояс сайта: Астана, UTC+5</option><option value="UTC">часы сервера: UTC</option></select>
+</div>
+<div class="ln-url" id="lnUrl"></div>
+</div>
+<div class="panel">
+<div class="ln-myth">
+<div class="q"><small>миф</small>«Транслит заголовка в адресе двигает статью вверх в выдаче»</div>
+<ol>
+<li>Google называл слова в адресе очень малым фактором ранжирования, ради которого не стоит перестраивать сайт (2016), затем&nbsp;— переоценённым (2017) и очень-очень лёгким (2021); после индексации адрес значит ещё меньше.</li>
+<li>Руководство Google по адресам советует слова на языке аудитории в кодировке UTF-8&nbsp;— для русскоязычного читателя это кириллица, а не транслит.</li>
+<li>Google News требует от адресов статей уникальности и постоянства&nbsp;— как раз того, что ломает правка заголовка при транслите.</li>
+<li>Если транслит не даёт латиницы, ядро Joomla само сохраняет вместо алиаса дату и время. Timealias делает это правилом для всей ленты.</li>
+</ol>
+</div>
+<p class="src" style="margin-top:12px">Search Engine Journal: URLs as a ranking factor · Google Search Central: URL structure best practices · Search Engine Land: Google News и правило трёх цифр · github.com/bsakhanov/plg_content_timealias</p>
+</div>
+</div>
+
+<div class="panel ln-sea" style="margin-top:22px">
+<h3 style="margin-top:0">Море расширений и шаблонов</h3>
+<p class="muted" style="font-size:14.5px">Каждая точка&nbsp;— двадцать расширений официального каталога. Золотом отмечен раздел вывода новостей: ленты, карусели, хроники, связанные материалы, архивы по месяцам.</p>
+<div id="lnSea"></div>
+<div class="lg"><span><i style="background:var(--line-2)"></i>≈&nbsp;5&nbsp;800 расширений в каталоге JED</span><span><i style="background:var(--gold)"></i>≈&nbsp;400&nbsp;— раздел «News Display»</span></div>
+<div class="ln-tpl">
+<div><h4>шаблоны · бесплатно</h4><ul><li>Cassiopeia<span>в ядре Joomla 6</span></li><li>Helix Ultimate<span>фреймворк JoomShaper</span></li><li>Astroid<span>фреймворк TemplaZa</span></li><li>RSVario!<span>RSJoomla, Joomla 3–6</span></li></ul></div>
+<div><h4>новостные · платно</h4><ul><li>JA Teline V<span>JoomlArt · Joomla 4–6 · 220&nbsp;тыс.+ загрузок</span></li><li>News365<span>JoomShaper · Helix 3 · Joomla 4–6</span></li><li>Zmagazine<span>JoomLead · Gantry 5.6 · Joomla 5–6</span></li><li>Goodnews<span>Unitemplates · 8 готовых сайтов</span></li><li>RSNoticia!<span>RSJoomla · Joomla 3–6</span></li></ul></div>
+<div><h4>маркетплейсы и студии</h4><ul><li>ThemeForest<span>22 шаблона в «News &amp; Editorial»</span></li><li>JoomLead<span>80 шаблонов обновлены под Joomla 6.0.3</span></li><li>YOOtheme Pro<span>конструктор с динамическим содержимым</span></li></ul></div>
+</div>
+<p class="note">Выбор широк, поэтому критерий исследования прежний: на главной портала под нагрузкой&nbsp;— лёгкий шаблон без конструктора и немногие проверенные модули.</p>
+<p class="src">extensions.joomla.org, подсчёт по страницам каталога и раздела News Display на 15 октября 2026 · страницы шаблонов студий и маркетплейсов</p>
+</div>
+</div></section>
+
 <section class="sec" id="portaly" data-title="живые порталы"><div class="wrap">
 <p class="eyebrow">08 · проверено по карточкам W3Techs</p>
 <h2>Кто уже живёт на этом под нагрузкой</h2>
@@ -220,7 +273,7 @@
 
 <section class="sec" id="chto-delat" data-title="что делать"><div class="wrap">
 <p class="eyebrow">12 · рекомендации</p>
-<h2>Восемь решений, которые превращают оценку в проект</h2>
+<h2>Девять решений, которые превращают оценку в проект</h2>
 <p class="text">Отмечайте то, что уже решено. Каждый пункт разобран в соответствующей главе доклада; вместе они — техническое задание первого этапа.</p>
 <ul class="check" id="check"></ul>
 <div class="meter"><i id="meter"></i></div>
@@ -228,7 +281,7 @@
 
 <footer><div class="wrap">
 <div class="cols">
-<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.3, 15 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
+<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.4, 15 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
 <div><h4>интерактивные части</h4><ul><li>таймлайн релизов</li><li>симулятор ролей и конвейера</li><li>дерево меток с потомками</li><li>модель нагрузки</li><li>генератор NewsArticle</li><li>созвездие экосистемы</li><li>весы рисков</li></ul></div>
 <div><h4>главные источники</h4><ul><li>developer.joomla.org/roadmap</li><li>guide.joomla.org</li><li>manual.joomla.org</li><li>w3techs.com</li><li>github.com/joomla/joomla-cms</li><li>joomlaportal.ru</li></ul></div>
 </div>
