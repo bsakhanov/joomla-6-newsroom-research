@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<!-- build: joomla-6-news-platform-research v1.4.1 · 2026-10-17 -->
 <meta charset="UTF-8">
 <link rel="canonical" href="https://webmarka.kz/research/joomla-6-newsroom/doklad/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,21 +80,28 @@ ol.sources li:target{background:var(--steel-soft);outline:2px solid var(--steel-
 .closing-box p{margin:0 0 .6em;font-size:15px;line-height:1.7}
 .closing-box p:last-child{margin:0;color:var(--ink-soft);font-size:13.5px}
 @media print{.progress-track,.topnav,.side-rail{display:none}.section{padding:28px 0;page-break-inside:avoid}}
+
+/* редакция 1.4.1 — телефоны и планшеты */
+.topnav-links{flex:1 1 auto;min-width:0}
+@media (max-width:720px){.topnav-mark .mark-tail{display:none}.topnav-inner{gap:12px}}
+.topnav-links.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+.topnav-links.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px);mask-image:linear-gradient(90deg,transparent,#000 28px)}
+.topnav-links.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent)}
 </style>
 </head>
 <body>
 <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 <nav class="topnav" aria-label="Оглавление"><div class="topnav-inner">
-<a class="topnav-mark" href="#top">joomla 6 · новостная редакция</a>
+<a class="topnav-mark" href="#top">joomla 6<span class="mark-tail"> · новостная редакция</span></a>
 <div class="topnav-links"><a href="#rezyume">резюме</a><a href="#chto-takoe">что такое</a><a href="#relizy">релизы</a><a href="#fundament">фундамент</a><a href="#rynok">рынок</a><a href="#kontur">контур</a><a href="#konveyer">конвейер</a><a href="#taksonomiya">таксономия</a><a href="#adminka">админка</a><a href="#nagruzka">нагрузка</a><a href="#vidimost">видимость</a><a href="#portaly">порталы</a><a href="#ekosistema">экосистема</a><a href="#shablony">шаблоны</a><a href="#riski">риски</a><a href="#rekomendatsii">рекомендации</a><a href="#glossariy">глоссарий</a><a href="#reestry">реестры</a><a href="#ukazatel">указатель</a><a href="#istochniki">источники</a></div>
 </div></nav>
 <aside class="side-rail" aria-hidden="true"><a href="#rezyume" title="Резюме">01</a><a href="#chto-takoe" title="Что такое Joomla сегодня">02</a><a href="#relizy" title="Релизы и дорожная карта">03</a><a href="#fundament" title="Технический фундамент">04</a><a href="#rynok" title="Рынок без прикрас">05</a><a href="#kontur" title="Редакционный контур в ядре">06</a><a href="#konveyer" title="Конвейер новости">07</a><a href="#taksonomiya" title="Таксономия: костяк и дерево смыслов">08</a><a href="#adminka" title="Админка и инструменты автора">09</a><a href="#nagruzka" title="Высокая нагрузка на практике">10</a><a href="#vidimost" title="Видимость: поиск, схемы, карты сайта">11</a><a href="#portaly" title="Живые порталы на Joomla">12</a><a href="#ekosistema" title="Русская и казахстанская экосистема">13</a><a href="#shablony" title="Шаблоны и конструкторы">14</a><a href="#riski" title="Конкуренты и риски">15</a><a href="#rekomendatsii" title="Рекомендации">16</a></aside>
 <header class="hero-report" id="top"><div class="wrap hero-inner">
-<p class="eyebrow">исследование-доклад · редакция 1.4 · 15 октября 2026</p>
+<p class="eyebrow">исследование-доклад · редакция 1.4.1 · 17 октября 2026</p>
 <h1>Joomla 6 для новостной редакции</h1>
 <p class="hero-lead">Исследование-доклад о платформе для высоконагруженного новостного сайта: что система даёт редакции в ядре, как выстроить конвейер новости и дерево смыслов, где она держит нагрузку и где требует инженерной работы.</p>
 <p class="hero-sub">Автор — Бейбит Саханов, Астана. Все цифры и даты сверены по первоисточникам 8 октября 2026 года, сведения о казахском пакете и каталоге SovMart — 15 октября; расхождения и белые пятна вынесены в реестры, а не спрятаны в тексте.</p>
-<div class="method-box"><p class="eyebrow">метод</p><p>Факты взяты с официальных страниц проекта Joomla, из руководства пользователя и разработчика, исходного кода ядра, карточек W3Techs и репозиториев расширений. Каждое утверждение несёт номер источника; список источников построен по первому упоминанию. Текст прошёл языковой прогон по четырём проходам и вычитку Редколлегией; типографика поставлена детерминированным типографом.</p></div>
+<div class="method-box"><p class="eyebrow">метод</p><p>Факты взяты с официальных страниц проекта Joomla, из руководства пользователя и разработчика, исходного кода ядра, карточек W3Techs и репозиториев расширений. Каждое утверждение несёт номер источника; список источников построен по первому упоминанию.</p></div>
 </div></header>
 <main>
 <section id="rezyume" class="section"><div class="wrap"><div class="section-head"><p class="eyebrow">глава 01</p><h2>Резюме</h2></div><div class="prose">
@@ -713,7 +721,7 @@ ol.sources li:target{background:var(--steel-soft);outline:2px solid var(--steel-
 </main>
 <footer class="closing"><div class="wrap"><div class="closing-box">
 <p>Доклад подготовлен как основание для выбора платформы новостного сайта. Рекомендации главы шестнадцатой самодостаточны; главы о конвейере и таксономии годятся как техническое задание на настройку.</p>
-<p>Редакция 1.4 · 15 октября 2026 · Бейбит Саханов · открытая публикация, лицензия CC BY 4.0</p>
+<p>Редакция 1.4.1 · 17 октября 2026 · Бейбит Саханов · открытая публикация, лицензия CC BY 4.0</p>
 </div></div></footer>
 <script>
 (function(){
@@ -722,11 +730,34 @@ ol.sources li:target{background:var(--steel-soft);outline:2px solid var(--steel-
   document.addEventListener('scroll',up,{passive:true});up();
   var secs=[].slice.call(document.querySelectorAll('section[id]'));
   var links=[].slice.call(document.querySelectorAll('.topnav-links a, .side-rail a'));
-  function setActive(id){links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+id);});}
+  var nav=document.querySelector('.topnav-links');function fade(){if(!nav)return;var sc=nav.scrollWidth>nav.clientWidth+2;nav.classList.toggle('fade-l',sc&&nav.scrollLeft>2);nav.classList.toggle('fade-r',sc&&nav.scrollLeft+nav.clientWidth<nav.scrollWidth-2);}if(nav){nav.addEventListener('scroll',fade,{passive:true});window.addEventListener('resize',fade,{passive:true});window.addEventListener('load',fade);fade();}function setActive(id){links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+id);});var on=nav&&nav.querySelector('a.active');if(on&&nav.scrollWidth>nav.clientWidth+2)nav.scrollTo({left:nav.scrollLeft+on.getBoundingClientRect().left-nav.getBoundingClientRect().left-(nav.clientWidth-on.offsetWidth)/2,behavior:'smooth'});}
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setActive(e.target.id);}});},{rootMargin:'-40% 0px -55% 0px',threshold:0});
     secs.forEach(function(s){io.observe(s);});
   }
+})();
+</script>
+<script>
+/* нижняя плашка площадки (например, ссылка «все материалы исследования») не закрывает текст: прячется при прокрутке вниз, возвращается при прокрутке вверх и в конце страницы */
+(function(){
+  function own(el){return el.closest('.topbar,.topnav,.progress,.progress-track,.dots,.side-rail,.ln-lb');}
+  function bars(){var out=[];document.querySelectorAll('body *').forEach(function(el){
+    if(own(el))return;var cs=getComputedStyle(el);if(cs.position!=='fixed'||cs.display==='none')return;
+    var r=el.getBoundingClientRect();if(r.height<16||r.height>140)return;
+    if(innerHeight-r.bottom<=56&&r.top>innerHeight*0.55)out.push(el);});return out;}
+  function init(){
+    var b=bars();if(!b.length)return;
+    var h=0;b.forEach(function(el){h=Math.max(h,innerHeight-el.getBoundingClientRect().top);});
+    document.body.style.paddingBottom='calc('+Math.ceil(h+16)+'px + env(safe-area-inset-bottom, 0px))';
+    b.forEach(function(el){el.style.transition='transform .25s ease, opacity .25s ease';});
+    var last=scrollY;
+    function hide(v){b.forEach(function(el){el.style.transform=v?'translateY(calc(100% + 32px))':'';el.style.opacity=v?'0':'';el.style.pointerEvents=v?'none':'';});}
+    addEventListener('scroll',function(){
+      var y=scrollY,end=innerHeight+y>=document.documentElement.scrollHeight-160;
+      if(y>last+6&&y>200&&!end)hide(true);else if(y<last-6||end||y<=200)hide(false);
+      last=y;},{passive:true});
+  }
+  if(document.readyState==='complete')setTimeout(init,300);else addEventListener('load',function(){setTimeout(init,300);});
 })();
 </script>
 </body>

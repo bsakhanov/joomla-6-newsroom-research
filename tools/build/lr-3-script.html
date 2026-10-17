@@ -12,10 +12,12 @@ secs.forEach(s=>{
   chapters.insertAdjacentHTML('beforeend',`<a href="#${s.id}">${esc(s.dataset.title)}</a>`);
   dots.insertAdjacentHTML('beforeend',`<a href="#${s.id}"><span>${esc(s.dataset.title)}</span></a>`);
 });
+const chEl=$('#chapters');const chFade=()=>{const sc=chEl.scrollWidth>chEl.clientWidth+2;chEl.classList.toggle('fade-l',sc&&chEl.scrollLeft>2);chEl.classList.toggle('fade-r',sc&&chEl.scrollLeft+chEl.clientWidth<chEl.scrollWidth-2);};
+chEl.addEventListener('scroll',chFade,{passive:true});addEventListener('resize',chFade,{passive:true});addEventListener('load',chFade);chFade();
 const prog=$('#prog');
 const onScroll=()=>{const h=document.documentElement;const m=h.scrollHeight-h.clientHeight;prog.style.width=(m>0?h.scrollTop/m*100:0)+'%';};
 addEventListener('scroll',onScroll,{passive:true});onScroll();
-const setOn=id=>$$('#chapters a, #dots a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+const setOn=id=>{$$('#chapters a, #dots a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));const a=$('#chapters a.on');if(a&&chEl.scrollWidth>chEl.clientWidth+2)chEl.scrollTo({left:chEl.scrollLeft+a.getBoundingClientRect().left-chEl.getBoundingClientRect().left-(chEl.clientWidth-a.offsetWidth)/2,behavior:'smooth'});};
 if('IntersectionObserver' in window){
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setOn(e.target.id);}),{rootMargin:'-40% 0px -55% 0px'});
   secs.forEach(s=>io.observe(s));
@@ -101,7 +103,7 @@ const PL={core:'<span class="pill core">в ядре</span>',plug:'<span class="p
   const t=$('#matrix');
   t.innerHTML='<thead><tr><th>возможность</th><th class="c">Joomla 6</th><th class="c">WordPress 7</th><th class="c">Drupal 11</th></tr></thead><tbody>'+
    CAP.map((r,i)=>`<tr data-i="${i}"><td class="cap">${esc(r[0])}<small hidden>${esc(r[1])}</small></td><td class="c">${PL[r[2]]}</td><td class="c">${PL[r[3]]}</td><td class="c">${PL[r[4]]}</td></tr>`).join('')+'</tbody>';
-  $$('tbody tr',t).forEach(tr=>tr.addEventListener('click',()=>{const sm=$('small',tr);sm.hidden=!sm.hidden;}));
+  $$('tbody tr',t).forEach(tr=>{tr.tabIndex=0;tr.addEventListener('click',()=>{const sm=$('small',tr);sm.hidden=!sm.hidden;tr.classList.toggle('open',!sm.hidden);});tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tr.click();}});});
 })();
 
 /* ---------- симулятор ролей ---------- */
@@ -239,6 +241,8 @@ const PORT=[
 ];
 $('#portals').innerHTML=PORT.map(p=>`<div class="portal reveal"><span class="rank ${p.top?'top1k':''}">${p.r}</span><h3>${p.h}</h3><div class="country">${p.c}</div><div class="stack">${p.s.map(s=>`<span>${s}</span>`).join('')}</div><p>${p.p}</p></div>`).join('');
 $('#rankbar').innerHTML='<div class="ax"></div>'+[['топ-1000',0.03],['топ-10 тыс.',0.37],['топ-100 тыс.',0.72],['топ-1 млн',0.97]].map(t=>`<div class="tick" style="left:${t[1]*100}%">${t[0]}</div>`).join('')+PORT.map((p,i)=>`<div class="pin" style="left:${p.x*100}%"><span style="${i>0&&i<5?'display:none':''}">${i===1?'4 греко-хорватских':p.h}</span><i></i></div>`).join('');
+const clampRank=()=>{const rb=$('#rankbar');if(!rb)return;const R=rb.getBoundingClientRect();$$('.tick, .pin span',rb).forEach(el=>{el.style.marginLeft='';const r=el.getBoundingClientRect();if(!r.width)return;if(r.left<R.left)el.style.marginLeft=(R.left-r.left)+'px';else if(r.right>R.right)el.style.marginLeft=(R.right-r.right)+'px';});};
+addEventListener('resize',clampRank,{passive:true});addEventListener('load',clampRank);clampRank();
 $$('.portal.reveal').forEach(el=>{if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});io.observe(el);}else el.classList.add('in');});
 
 /* ---------- созвездие ---------- */
@@ -265,7 +269,8 @@ const STARS=[
 
 /* ---------- запасной язык ---------- */
 const STR=[['JSAVE','Сақтау','Сохранить',true],['JPUBLISHED','Жарияланған','Опубликовано',true],['JSEARCH_FILTER','Іздеу','Поиск',true],['COM_WORKFLOW_TRANSITIONS','Өтулер','Переходы',true],['COM_SCHEDULER_MANAGER_TASKS','Жоспарланған тапсырмалар','Запланированные задачи',true],['COM_MYSHOP_CART','—','Корзина',false],['PLG_MYSHOP_KASPIPAY','—','Оплата через Kaspi Pay',false]];
-function renderStr(){const fb=$('#fb').checked;$('#strings').innerHTML=STR.map(r=>`<li class="${r[3]?'':(fb?'ru':'miss')}"><span>${r[0]}</span><span>${r[3]?r[1]:(fb?r[2]+' ·  ru-RU':r[0])}</span></li>`).join('');}
+const wb=s=>String(s).replace(/_/g,'_<wbr>');
+function renderStr(){const fb=$('#fb').checked;$('#strings').innerHTML=STR.map(r=>`<li class="${r[3]?'':(fb?'ru':'miss')}"><span>${wb(r[0])}</span><span>${r[3]?r[1]:(fb?r[2]+' ·  ru-RU':wb(r[0]))}</span></li>`).join('');}
 $('#fb').addEventListener('change',renderStr);renderStr();
 bars($('#payBars'),[{n:'Kaspi Pay',v:10},{n:'Freedom Pay · JoomShopping',v:45},{n:'ЮKassa (шлюз РК) · Phoca Cart',v:80},{n:'Freedom Pay (PayBox) · RadicalMart',v:100},{n:'Halyk Bank ePay · RadicalMart',v:100,gold:1}],100,' / 100');
 $('#payBars').insertAdjacentHTML('beforeend','<p class="src" style="margin-top:8px">условная шкала готовности плагинов под Joomla 6: нет → не подтверждено → есть</p>');
@@ -410,6 +415,29 @@ if(!reduced){const dots=$$('.sd',box).map(d=>[d,+d.dataset.p,+d.getAttribute('cy
   const io=new IntersectionObserver(es=>{es.forEach(e=>{box.dataset.vis=e.isIntersecting?'1':'';});});io.observe(box);
   const step=now=>{if(box.dataset.vis){const t=(now-t0)/900;dots.forEach(([d,p,y])=>d.setAttribute('cy',(y+Math.sin(t+p)*2.4).toFixed(1)));}requestAnimationFrame(step);};requestAnimationFrame(step);}
 })();
+})();
+</script>
+<script>
+/* нижняя плашка площадки (например, ссылка «все материалы исследования») не закрывает текст: прячется при прокрутке вниз, возвращается при прокрутке вверх и в конце страницы */
+(function(){
+  function own(el){return el.closest('.topbar,.topnav,.progress,.progress-track,.dots,.side-rail,.ln-lb');}
+  function bars(){var out=[];document.querySelectorAll('body *').forEach(function(el){
+    if(own(el))return;var cs=getComputedStyle(el);if(cs.position!=='fixed'||cs.display==='none')return;
+    var r=el.getBoundingClientRect();if(r.height<16||r.height>140)return;
+    if(innerHeight-r.bottom<=56&&r.top>innerHeight*0.55)out.push(el);});return out;}
+  function init(){
+    var b=bars();if(!b.length)return;
+    var h=0;b.forEach(function(el){h=Math.max(h,innerHeight-el.getBoundingClientRect().top);});
+    document.body.style.paddingBottom='calc('+Math.ceil(h+16)+'px + env(safe-area-inset-bottom, 0px))';
+    b.forEach(function(el){el.style.transition='transform .25s ease, opacity .25s ease';});
+    var last=scrollY;
+    function hide(v){b.forEach(function(el){el.style.transform=v?'translateY(calc(100% + 32px))':'';el.style.opacity=v?'0':'';el.style.pointerEvents=v?'none':'';});}
+    addEventListener('scroll',function(){
+      var y=scrollY,end=innerHeight+y>=document.documentElement.scrollHeight-160;
+      if(y>last+6&&y>200&&!end)hide(true);else if(y<last-6||end||y<=200)hide(false);
+      last=y;},{passive:true});
+  }
+  if(document.readyState==='complete')setTimeout(init,300);else addEventListener('load',function(){setTimeout(init,300);});
 })();
 </script>
 </body>

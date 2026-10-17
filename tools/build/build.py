@@ -125,6 +125,13 @@ ol.sources li:target{background:var(--steel-soft);outline:2px solid var(--steel-
 .closing-box p{margin:0 0 .6em;font-size:15px;line-height:1.7}
 .closing-box p:last-child{margin:0;color:var(--ink-soft);font-size:13.5px}
 @media print{.progress-track,.topnav,.side-rail{display:none}.section{padding:28px 0;page-break-inside:avoid}}
+
+/* редакция 1.4.1 — телефоны и планшеты */
+.topnav-links{flex:1 1 auto;min-width:0}
+@media (max-width:720px){.topnav-mark .mark-tail{display:none}.topnav-inner{gap:12px}}
+.topnav-links.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+.topnav-links.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px);mask-image:linear-gradient(90deg,transparent,#000 28px)}
+.topnav-links.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent)}
 """
 
 JS = r"""
@@ -134,12 +141,37 @@ JS = r"""
   document.addEventListener('scroll',up,{passive:true});up();
   var secs=[].slice.call(document.querySelectorAll('section[id]'));
   var links=[].slice.call(document.querySelectorAll('.topnav-links a, .side-rail a'));
-  function setActive(id){links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+id);});}
+  var nav=document.querySelector('.topnav-links');function fade(){if(!nav)return;var sc=nav.scrollWidth>nav.clientWidth+2;nav.classList.toggle('fade-l',sc&&nav.scrollLeft>2);nav.classList.toggle('fade-r',sc&&nav.scrollLeft+nav.clientWidth<nav.scrollWidth-2);}if(nav){nav.addEventListener('scroll',fade,{passive:true});window.addEventListener('resize',fade,{passive:true});window.addEventListener('load',fade);fade();}function setActive(id){links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+id);});var on=nav&&nav.querySelector('a.active');if(on&&nav.scrollWidth>nav.clientWidth+2)nav.scrollTo({left:nav.scrollLeft+on.getBoundingClientRect().left-nav.getBoundingClientRect().left-(nav.clientWidth-on.offsetWidth)/2,behavior:'smooth'});}
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setActive(e.target.id);}});},{rootMargin:'-40% 0px -55% 0px',threshold:0});
     secs.forEach(function(s){io.observe(s);});
   }
 })();
+"""
+
+GUARD_JS = r"""<script>
+/* нижняя плашка площадки (например, ссылка «все материалы исследования») не закрывает текст: прячется при прокрутке вниз, возвращается при прокрутке вверх и в конце страницы */
+(function(){
+  function own(el){return el.closest('.topbar,.topnav,.progress,.progress-track,.dots,.side-rail,.ln-lb');}
+  function bars(){var out=[];document.querySelectorAll('body *').forEach(function(el){
+    if(own(el))return;var cs=getComputedStyle(el);if(cs.position!=='fixed'||cs.display==='none')return;
+    var r=el.getBoundingClientRect();if(r.height<16||r.height>140)return;
+    if(innerHeight-r.bottom<=56&&r.top>innerHeight*0.55)out.push(el);});return out;}
+  function init(){
+    var b=bars();if(!b.length)return;
+    var h=0;b.forEach(function(el){h=Math.max(h,innerHeight-el.getBoundingClientRect().top);});
+    document.body.style.paddingBottom='calc('+Math.ceil(h+16)+'px + env(safe-area-inset-bottom, 0px))';
+    b.forEach(function(el){el.style.transition='transform .25s ease, opacity .25s ease';});
+    var last=scrollY;
+    function hide(v){b.forEach(function(el){el.style.transform=v?'translateY(calc(100% + 32px))':'';el.style.opacity=v?'0':'';el.style.pointerEvents=v?'none':'';});}
+    addEventListener('scroll',function(){
+      var y=scrollY,end=innerHeight+y>=document.documentElement.scrollHeight-160;
+      if(y>last+6&&y>200&&!end)hide(true);else if(y<last-6||end||y<=200)hide(false);
+      last=y;},{passive:true});
+  }
+  if(document.readyState==='complete')setTimeout(init,300);else addEventListener('load',function(){setTimeout(init,300);});
+})();
+</script>
 """
 
 doc = f"""<!DOCTYPE html>
@@ -158,7 +190,7 @@ doc = f"""<!DOCTYPE html>
 <body>
 <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
 <nav class="topnav" aria-label="Оглавление"><div class="topnav-inner">
-<a class="topnav-mark" href="#top">joomla 6 · новостная редакция</a>
+<a class="topnav-mark" href="#top">joomla 6<span class="mark-tail"> · новостная редакция</span></a>
 <div class="topnav-links">{''.join(nav)}</div>
 </div></nav>
 <aside class="side-rail" aria-hidden="true">{''.join(rail)}</aside>
@@ -167,7 +199,7 @@ doc = f"""<!DOCTYPE html>
 <h1>{html.escape(title)}</h1>
 <p class="hero-lead">{html.escape(subtitle).capitalize()}: что система даёт редакции в ядре, как выстроить конвейер новости и дерево смыслов, где она держит нагрузку и где требует инженерной работы.</p>
 <p class="hero-sub">Автор — Бейбит Саханов, Астана. Все цифры и даты сверены по первоисточникам 8 октября 2026 года, сведения о казахском пакете и каталоге SovMart — 15 октября; расхождения и белые пятна вынесены в реестры, а не спрятаны в тексте.</p>
-<div class="method-box"><p class="eyebrow">метод</p><p>Факты взяты с официальных страниц проекта Joomla, из руководства пользователя и разработчика, исходного кода ядра, карточек W3Techs и репозиториев расширений. Каждое утверждение несёт номер источника; список источников построен по первому упоминанию. Текст прошёл языковой прогон по четырём проходам и вычитку Редколлегией; типографика поставлена детерминированным типографом.</p></div>
+<div class="method-box"><p class="eyebrow">метод</p><p>Факты взяты с официальных страниц проекта Joomla, из руководства пользователя и разработчика, исходного кода ядра, карточек W3Techs и репозиториев расширений. Каждое утверждение несёт номер источника; список источников построен по первому упоминанию.</p></div>
 </div></header>
 <main>
 {''.join(out_sections)}
@@ -177,7 +209,7 @@ doc = f"""<!DOCTYPE html>
 <p>{meta.get('date', '').capitalize()} · Бейбит Саханов · открытая публикация, лицензия CC BY 4.0</p>
 </div></div></footer>
 <script>{JS}</script>
-</body>
+{GUARD_JS}</body>
 </html>
 """
 open(OUT, 'w', encoding='utf-8').write(doc)

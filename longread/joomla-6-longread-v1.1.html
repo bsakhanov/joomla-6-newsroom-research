@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<!-- build: joomla-6-longread v1.4 · 2026-10-15 -->
+<!-- build: joomla-6-longread v1.4.1 · 2026-10-17 -->
 <meta charset="UTF-8">
 <link rel="canonical" href="https://webmarka.kz/research/joomla-6-newsroom/longread/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -433,12 +433,47 @@ footer li{margin:4px 0}
 #lenta .src,#lenta code,.ln-tpl li{overflow-wrap:anywhere}
 .ln-about .btn{white-space:normal}
 @media (min-width:641px) and (max-width:900px){.ladder{grid-template-columns:1fr 1fr}}
+
+/* редакция 1.4.1 — телефоны и планшеты */
+.topbar .wrap{height:auto;min-height:52px}
+.brand{white-space:nowrap;flex:0 0 auto}
+.chapters{flex:1 1 auto;min-width:0}
+.chapters a:first-child{margin-left:auto}
+.chapters.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+.chapters.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px);mask-image:linear-gradient(90deg,transparent,#000 28px)}
+.chapters.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent)}
+@media (max-width:720px){.brand-tail{display:none}.topbar .wrap{gap:10px}}
+.card-fly{height:auto;min-height:54px;width:126px;transform:translateY(calc(-100% - 30px))}
+@media (max-width:720px){.conveyor .node span{font-size:10px;white-space:normal;width:70px;text-align:center;line-height:1.25;left:50%;transform:translateX(-50%)}}
+.matrix th{white-space:nowrap}
+@media (max-width:640px){
+ .matrix,.matrix tbody{display:block}
+ .matrix thead{display:none}
+ .matrix tbody tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px;padding:12px 0;border-bottom:1px solid var(--line)}
+ .matrix td{border:0;padding:0}
+ .matrix td.cap{grid-column:1/-1;padding-bottom:4px}
+ .matrix td.c{text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+ .matrix td.c::before{font-family:var(--mono);font-size:11px;color:var(--muted)}
+ .matrix td:nth-child(2)::before{content:"Joomla 6"}
+ .matrix td:nth-child(3)::before{content:"WordPress 7"}
+ .matrix td:nth-child(4)::before{content:"Drupal 11"}
+}
+.rankbar{height:78px}
+.rankbar .tick{white-space:nowrap}
+@media (max-width:1024px){#kazakhstan .g2{grid-template-columns:1fr}}
+@media (max-width:640px){pre.code{white-space:pre-wrap;word-break:break-word;min-height:0;font-size:11.5px}}
+.matrix tbody tr{cursor:pointer}
+.matrix td.cap small[hidden]{display:none}
+.matrix td.cap::before{content:"+";display:inline-block;width:1.1em;color:var(--gold);font-family:var(--mono);font-weight:400}
+.matrix tr.open td.cap::before{content:"−"}
+.matrix tbody tr:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+@media (max-width:520px){.rankbar{height:94px}.rankbar .tick{font-size:10.5px}.rankbar .tick:nth-child(3),.rankbar .tick:nth-child(5){top:56px}}
 </style>
 </head>
 <body>
 <div class="progress"><i id="prog"></i></div>
 <nav class="topbar"><div class="wrap">
-<a class="brand" href="#top"><b>joomla 6</b> · редакция в ядре</a>
+<a class="brand" href="#top"><b>joomla 6</b><span class="brand-tail"> · редакция в ядре</span></a>
 <div class="chapters" id="chapters"></div>
 </div></nav>
 <aside class="dots" id="dots" aria-hidden="true"></aside>
@@ -720,7 +755,7 @@ footer li{margin:4px 0}
 
 <footer><div class="wrap">
 <div class="cols">
-<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.4, 15 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
+<div><h4>о лонгриде</h4><p>Интерактивная подача исследования-доклада «Joomla 6 для новостной редакции» (редакция 1.4.1, 17 октября 2026). Все цифры, даты и утверждения сверены по первоисточникам: официальные страницы проекта Joomla, руководство пользователя и разработчика, исходный код ядра, карточки W3Techs, репозитории расширений. Полный список из девяноста источников, реестры расхождений и белых пятен — в докладе.</p><p class="src">Автор: Бейбит Саханов, Астана. Страница самодостаточна: без внешних библиотек, только шрифты Google Fonts.</p></div>
 <div><h4>интерактивные части</h4><ul><li>таймлайн релизов</li><li>симулятор ролей и конвейера</li><li>дерево меток с потомками</li><li>модель нагрузки</li><li>генератор NewsArticle</li><li>созвездие экосистемы</li><li>весы рисков</li></ul></div>
 <div><h4>главные источники</h4><ul><li>developer.joomla.org/roadmap</li><li>guide.joomla.org</li><li>manual.joomla.org</li><li>w3techs.com</li><li>github.com/joomla/joomla-cms</li><li>joomlaportal.ru</li></ul></div>
 </div>
@@ -739,10 +774,12 @@ secs.forEach(s=>{
   chapters.insertAdjacentHTML('beforeend',`<a href="#${s.id}">${esc(s.dataset.title)}</a>`);
   dots.insertAdjacentHTML('beforeend',`<a href="#${s.id}"><span>${esc(s.dataset.title)}</span></a>`);
 });
+const chEl=$('#chapters');const chFade=()=>{const sc=chEl.scrollWidth>chEl.clientWidth+2;chEl.classList.toggle('fade-l',sc&&chEl.scrollLeft>2);chEl.classList.toggle('fade-r',sc&&chEl.scrollLeft+chEl.clientWidth<chEl.scrollWidth-2);};
+chEl.addEventListener('scroll',chFade,{passive:true});addEventListener('resize',chFade,{passive:true});addEventListener('load',chFade);chFade();
 const prog=$('#prog');
 const onScroll=()=>{const h=document.documentElement;const m=h.scrollHeight-h.clientHeight;prog.style.width=(m>0?h.scrollTop/m*100:0)+'%';};
 addEventListener('scroll',onScroll,{passive:true});onScroll();
-const setOn=id=>$$('#chapters a, #dots a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+const setOn=id=>{$$('#chapters a, #dots a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));const a=$('#chapters a.on');if(a&&chEl.scrollWidth>chEl.clientWidth+2)chEl.scrollTo({left:chEl.scrollLeft+a.getBoundingClientRect().left-chEl.getBoundingClientRect().left-(chEl.clientWidth-a.offsetWidth)/2,behavior:'smooth'});};
 if('IntersectionObserver' in window){
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setOn(e.target.id);}),{rootMargin:'-40% 0px -55% 0px'});
   secs.forEach(s=>io.observe(s));
@@ -828,7 +865,7 @@ const PL={core:'<span class="pill core">в ядре</span>',plug:'<span class="p
   const t=$('#matrix');
   t.innerHTML='<thead><tr><th>возможность</th><th class="c">Joomla 6</th><th class="c">WordPress 7</th><th class="c">Drupal 11</th></tr></thead><tbody>'+
    CAP.map((r,i)=>`<tr data-i="${i}"><td class="cap">${esc(r[0])}<small hidden>${esc(r[1])}</small></td><td class="c">${PL[r[2]]}</td><td class="c">${PL[r[3]]}</td><td class="c">${PL[r[4]]}</td></tr>`).join('')+'</tbody>';
-  $$('tbody tr',t).forEach(tr=>tr.addEventListener('click',()=>{const sm=$('small',tr);sm.hidden=!sm.hidden;}));
+  $$('tbody tr',t).forEach(tr=>{tr.tabIndex=0;tr.addEventListener('click',()=>{const sm=$('small',tr);sm.hidden=!sm.hidden;tr.classList.toggle('open',!sm.hidden);});tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tr.click();}});});
 })();
 
 /* ---------- симулятор ролей ---------- */
@@ -966,6 +1003,8 @@ const PORT=[
 ];
 $('#portals').innerHTML=PORT.map(p=>`<div class="portal reveal"><span class="rank ${p.top?'top1k':''}">${p.r}</span><h3>${p.h}</h3><div class="country">${p.c}</div><div class="stack">${p.s.map(s=>`<span>${s}</span>`).join('')}</div><p>${p.p}</p></div>`).join('');
 $('#rankbar').innerHTML='<div class="ax"></div>'+[['топ-1000',0.03],['топ-10 тыс.',0.37],['топ-100 тыс.',0.72],['топ-1 млн',0.97]].map(t=>`<div class="tick" style="left:${t[1]*100}%">${t[0]}</div>`).join('')+PORT.map((p,i)=>`<div class="pin" style="left:${p.x*100}%"><span style="${i>0&&i<5?'display:none':''}">${i===1?'4 греко-хорватских':p.h}</span><i></i></div>`).join('');
+const clampRank=()=>{const rb=$('#rankbar');if(!rb)return;const R=rb.getBoundingClientRect();$$('.tick, .pin span',rb).forEach(el=>{el.style.marginLeft='';const r=el.getBoundingClientRect();if(!r.width)return;if(r.left<R.left)el.style.marginLeft=(R.left-r.left)+'px';else if(r.right>R.right)el.style.marginLeft=(R.right-r.right)+'px';});};
+addEventListener('resize',clampRank,{passive:true});addEventListener('load',clampRank);clampRank();
 $$('.portal.reveal').forEach(el=>{if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});io.observe(el);}else el.classList.add('in');});
 
 /* ---------- созвездие ---------- */
@@ -992,7 +1031,8 @@ const STARS=[
 
 /* ---------- запасной язык ---------- */
 const STR=[['JSAVE','Сақтау','Сохранить',true],['JPUBLISHED','Жарияланған','Опубликовано',true],['JSEARCH_FILTER','Іздеу','Поиск',true],['COM_WORKFLOW_TRANSITIONS','Өтулер','Переходы',true],['COM_SCHEDULER_MANAGER_TASKS','Жоспарланған тапсырмалар','Запланированные задачи',true],['COM_MYSHOP_CART','—','Корзина',false],['PLG_MYSHOP_KASPIPAY','—','Оплата через Kaspi Pay',false]];
-function renderStr(){const fb=$('#fb').checked;$('#strings').innerHTML=STR.map(r=>`<li class="${r[3]?'':(fb?'ru':'miss')}"><span>${r[0]}</span><span>${r[3]?r[1]:(fb?r[2]+' ·  ru-RU':r[0])}</span></li>`).join('');}
+const wb=s=>String(s).replace(/_/g,'_<wbr>');
+function renderStr(){const fb=$('#fb').checked;$('#strings').innerHTML=STR.map(r=>`<li class="${r[3]?'':(fb?'ru':'miss')}"><span>${wb(r[0])}</span><span>${r[3]?r[1]:(fb?r[2]+' ·  ru-RU':wb(r[0]))}</span></li>`).join('');}
 $('#fb').addEventListener('change',renderStr);renderStr();
 bars($('#payBars'),[{n:'Kaspi Pay',v:10},{n:'Freedom Pay · JoomShopping',v:45},{n:'ЮKassa (шлюз РК) · Phoca Cart',v:80},{n:'Freedom Pay (PayBox) · RadicalMart',v:100},{n:'Halyk Bank ePay · RadicalMart',v:100,gold:1}],100,' / 100');
 $('#payBars').insertAdjacentHTML('beforeend','<p class="src" style="margin-top:8px">условная шкала готовности плагинов под Joomla 6: нет → не подтверждено → есть</p>');
@@ -1137,6 +1177,29 @@ if(!reduced){const dots=$$('.sd',box).map(d=>[d,+d.dataset.p,+d.getAttribute('cy
   const io=new IntersectionObserver(es=>{es.forEach(e=>{box.dataset.vis=e.isIntersecting?'1':'';});});io.observe(box);
   const step=now=>{if(box.dataset.vis){const t=(now-t0)/900;dots.forEach(([d,p,y])=>d.setAttribute('cy',(y+Math.sin(t+p)*2.4).toFixed(1)));}requestAnimationFrame(step);};requestAnimationFrame(step);}
 })();
+})();
+</script>
+<script>
+/* нижняя плашка площадки (например, ссылка «все материалы исследования») не закрывает текст: прячется при прокрутке вниз, возвращается при прокрутке вверх и в конце страницы */
+(function(){
+  function own(el){return el.closest('.topbar,.topnav,.progress,.progress-track,.dots,.side-rail,.ln-lb');}
+  function bars(){var out=[];document.querySelectorAll('body *').forEach(function(el){
+    if(own(el))return;var cs=getComputedStyle(el);if(cs.position!=='fixed'||cs.display==='none')return;
+    var r=el.getBoundingClientRect();if(r.height<16||r.height>140)return;
+    if(innerHeight-r.bottom<=56&&r.top>innerHeight*0.55)out.push(el);});return out;}
+  function init(){
+    var b=bars();if(!b.length)return;
+    var h=0;b.forEach(function(el){h=Math.max(h,innerHeight-el.getBoundingClientRect().top);});
+    document.body.style.paddingBottom='calc('+Math.ceil(h+16)+'px + env(safe-area-inset-bottom, 0px))';
+    b.forEach(function(el){el.style.transition='transform .25s ease, opacity .25s ease';});
+    var last=scrollY;
+    function hide(v){b.forEach(function(el){el.style.transform=v?'translateY(calc(100% + 32px))':'';el.style.opacity=v?'0':'';el.style.pointerEvents=v?'none':'';});}
+    addEventListener('scroll',function(){
+      var y=scrollY,end=innerHeight+y>=document.documentElement.scrollHeight-160;
+      if(y>last+6&&y>200&&!end)hide(true);else if(y<last-6||end||y<=200)hide(false);
+      last=y;},{passive:true});
+  }
+  if(document.readyState==='complete')setTimeout(init,300);else addEventListener('load',function(){setTimeout(init,300);});
 })();
 </script>
 </body>

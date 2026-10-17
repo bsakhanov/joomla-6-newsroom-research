@@ -432,6 +432,41 @@ footer li{margin:4px 0}
 #lenta .src,#lenta code,.ln-tpl li{overflow-wrap:anywhere}
 .ln-about .btn{white-space:normal}
 @media (min-width:641px) and (max-width:900px){.ladder{grid-template-columns:1fr 1fr}}
+
+/* редакция 1.4.1 — телефоны и планшеты */
+.topbar .wrap{height:auto;min-height:52px}
+.brand{white-space:nowrap;flex:0 0 auto}
+.chapters{flex:1 1 auto;min-width:0}
+.chapters a:first-child{margin-left:auto}
+.chapters.fade-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+.chapters.fade-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px);mask-image:linear-gradient(90deg,transparent,#000 28px)}
+.chapters.fade-l.fade-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 28px,#000 calc(100% - 36px),transparent)}
+@media (max-width:720px){.brand-tail{display:none}.topbar .wrap{gap:10px}}
+.card-fly{height:auto;min-height:54px;width:126px;transform:translateY(calc(-100% - 30px))}
+@media (max-width:720px){.conveyor .node span{font-size:10px;white-space:normal;width:70px;text-align:center;line-height:1.25;left:50%;transform:translateX(-50%)}}
+.matrix th{white-space:nowrap}
+@media (max-width:640px){
+ .matrix,.matrix tbody{display:block}
+ .matrix thead{display:none}
+ .matrix tbody tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px;padding:12px 0;border-bottom:1px solid var(--line)}
+ .matrix td{border:0;padding:0}
+ .matrix td.cap{grid-column:1/-1;padding-bottom:4px}
+ .matrix td.c{text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+ .matrix td.c::before{font-family:var(--mono);font-size:11px;color:var(--muted)}
+ .matrix td:nth-child(2)::before{content:"Joomla 6"}
+ .matrix td:nth-child(3)::before{content:"WordPress 7"}
+ .matrix td:nth-child(4)::before{content:"Drupal 11"}
+}
+.rankbar{height:78px}
+.rankbar .tick{white-space:nowrap}
+@media (max-width:1024px){#kazakhstan .g2{grid-template-columns:1fr}}
+@media (max-width:640px){pre.code{white-space:pre-wrap;word-break:break-word;min-height:0;font-size:11.5px}}
+.matrix tbody tr{cursor:pointer}
+.matrix td.cap small[hidden]{display:none}
+.matrix td.cap::before{content:"+";display:inline-block;width:1.1em;color:var(--gold);font-family:var(--mono);font-weight:400}
+.matrix tr.open td.cap::before{content:"−"}
+.matrix tbody tr:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+@media (max-width:520px){.rankbar{height:94px}.rankbar .tick{font-size:10.5px}.rankbar .tick:nth-child(3),.rankbar .tick:nth-child(5){top:56px}}
 </style>
 </head>
 <body>
