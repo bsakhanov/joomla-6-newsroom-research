@@ -102,7 +102,7 @@ a{color:inherit}
 .prose h3{font-family:var(--serif);font-weight:500;font-size:1.45rem;margin:2.2em 0 .7em;line-height:1.2}
 .prose ol,.prose ul{padding-left:1.3em;margin:0 0 1.2em}
 .prose li{margin:.35em 0;line-height:1.6}
-.prose code{font-family:var(--mono);font-size:.86em;background:var(--steel-soft);padding:1px 5px;border-radius:2px}
+.prose code{font-family:var(--mono);font-size:.86em;background:var(--steel-soft);padding:1px 5px;border-radius:2px;overflow-wrap:anywhere}
 .prose strong{font-weight:700}
 .prose table{border-collapse:collapse;width:100%;max-width:100%;margin:1.4em 0 1.8em;font-size:14.5px;display:block;overflow-x:auto}
 .prose th,.prose td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}

@@ -2,7 +2,7 @@
 
 **Исследование-доклад, интерактивный лонгрид и пошаговый разбор редакционного конвейера на чистой Joomla 6.1.4**
 
-*Редакция 1.4 · 15 октября 2026 · автор — Бейбит Саханов, Астана*
+*Редакция 1.4.2 · 17 октября 2026 · автор — Бейбит Саханов, Астана*
 
 [English version below](#joomla-6-for-the-newsroom)
 
@@ -60,7 +60,7 @@ python3 tools/screenshots/plans.py && tools/screenshots/run_shots.sh admin repor
 
 **A research report, an interactive long-read, and a step-by-step walkthrough of an editorial pipeline on a clean Joomla 6.1.4 install**
 
-*Edition 1.4 · 15 October 2026 · by Beibit Sakhanov, Astana*
+*Edition 1.4.2 · 17 October 2026 · by Beibit Sakhanov, Astana*
 
 ## What this is
 
